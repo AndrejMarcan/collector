@@ -16,7 +16,8 @@ import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import net.proteanit.sql.DbUtils;  //TODO need to deal with this
+import org.apache.commons.dbutils.DbUtils;
+
 
 /**
  * The AlbumCommands provides methods for new user registration, login, loading data from database and
@@ -85,7 +86,7 @@ public class AlbumCommands {
             Album.jTableAlbum.setModel(DbUtils.resultSetToTableModel(resultSet));
             
             while(resultSet.next()) {
-                Album.jTableAlbum.setModel(DbUtils.resultSetToTableModel(resultSet));
+            	Album.jTableAlbum.setModel(DbUtils.resultSetToTableModel(resultSet));
             }          
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
