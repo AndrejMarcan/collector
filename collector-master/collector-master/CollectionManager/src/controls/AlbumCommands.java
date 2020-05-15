@@ -83,10 +83,10 @@ public class AlbumCommands {
             preparedStatement = controls.MyConnection.getConnection().prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
             
-            Album.jTableAlbum.setModel(DbUtils.resultSetToTableModel(resultSet));
+            //Album.jTableAlbum.setModel(DbUtils.resultSetToTableModel(resultSet));
             
             while(resultSet.next()) {
-            	Album.jTableAlbum.setModel(DbUtils.resultSetToTableModel(resultSet));
+            	//Album.jTableAlbum.setModel(DbUtils.resultSetToTableModel(resultSet));
             }          
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex);

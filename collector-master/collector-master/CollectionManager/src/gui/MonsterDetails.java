@@ -3,12 +3,11 @@
  */
 package gui;
 
-
-import javax.swing.JOptionPane;
-
 import card.MonsterCard;
+import card.Rarities;
 import controls.CardDetails;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  * The AddSpell class connects user interface to back end functions and classes for spell card.
@@ -353,7 +352,7 @@ public class MonsterDetails extends javax.swing.JFrame {
     private void jButtonEditCardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_EditCardActionPerformed
         String cardName = jTextFieldMDName.getText();			//card name
         String edition = jTextFieldMDEdition.getText();			//card edition
-        String rarity = jTextFieldMDRarity.getText();			//card rarity
+        String rarityShort = jTextFieldMDRarity.getText();			//card rarity
         String set = jTextFieldMDSet.getText();					//card set
         String language = jTextFieldMDLanguage.getText();		//card language
         String type = jTextFieldMDType.getText();				//card type
@@ -362,7 +361,35 @@ public class MonsterDetails extends javax.swing.JFrame {
         String level = jTextFieldMDLevel.getText();				//monster level
         String atk = jTextFieldMDATK.getText();					//monster attack
         String def = jTextFieldMDDEF.getText();					//monster defense
-
+        Rarities rarity = null;
+        
+        switch(rarityShort) {
+        case "COM":
+        	rarity = Rarities.COM;
+        	break;
+        case "RARE":
+        	rarity = Rarities.RARE;
+        	break;
+        case "SUR":
+        	rarity = Rarities.SUR;
+        	break;
+        case "UR":
+        	rarity = Rarities.UR;
+        	break;
+        case "SR":
+        	rarity = Rarities.SR;
+        	break;
+        case "ULT":
+        	rarity = Rarities.ULT;
+        	break;
+        case "SP":
+        	rarity = Rarities.SP;
+        	break;
+        case "GHOST":
+        	rarity = Rarities.GHOST;
+        	break;
+        }
+        
         if (cardName.equals("")) { 
             JOptionPane.showMessageDialog(null, "Add a Name");
         } else if (edition.equals("")) { 
