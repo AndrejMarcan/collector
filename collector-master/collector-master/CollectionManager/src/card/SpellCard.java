@@ -22,7 +22,7 @@ public class SpellCard extends Card{
     private String type;	//card type
     
     /* Constructor for SpellCard class */
-    public SpellCard (String name, String rarity, String edition,String set,
+    public SpellCard (String name, Rarities rarity, String edition,String set,
     				  String language, String type) {
         super(name, rarity, edition, set, language);
         this.type = type;

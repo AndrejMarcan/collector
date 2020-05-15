@@ -4,6 +4,7 @@
 package gui;
 
 import card.MonsterCard;
+import card.Rarities;
 import javax.swing.JOptionPane;
 
 /**
@@ -339,7 +340,7 @@ public class AddMonster extends javax.swing.JFrame {
     private void jButtonAddCardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ADDcardActionPerformed
         String cardName = jTextFieldName.getText();			//card name
         String edition = jTextFieldEdition.getText();		//card edition
-        String rarity = jTextFieldRarity.getText();			//card rarity
+        String rarityShort = jTextFieldRarity.getText();			//card rarity
         String set = jTextFieldSet.getText();				//card set
         String language = jTextFieldLanguage.getText();		//card language
         String type = jTextFieldType.getText();				//monster type
@@ -348,7 +349,34 @@ public class AddMonster extends javax.swing.JFrame {
         String level = jTextFieldLevel.getText();			//monster level
         String atk = jTextFieldAtk.getText();				//monster attack
         String def = jTextFieldDef.getText();				//monster defense
+        Rarities rarity = null;
         
+        switch(rarityShort) {
+        case "COM":
+        	rarity = Rarities.COM;
+        	break;
+        case "RARE":
+        	rarity = Rarities.RARE;
+        	break;
+        case "SUR":
+        	rarity = Rarities.SUR;
+        	break;
+        case "UR":
+        	rarity = Rarities.UR;
+        	break;
+        case "SR":
+        	rarity = Rarities.SR;
+        	break;
+        case "ULT":
+        	rarity = Rarities.ULT;
+        	break;
+        case "SP":
+        	rarity = Rarities.SP;
+        	break;
+        case "GHOST":
+        	rarity = Rarities.GHOST;
+        	break;
+        }
         if (cardName.equals("")) { 
             JOptionPane.showMessageDialog(null, "Add a Name");
         } else if (edition.equals("")) { 
