@@ -3,6 +3,7 @@
  */
 package gui;
 
+import card.Editions;
 import card.Rarities;
 import card.SpellCard;
 import javax.swing.JOptionPane;
@@ -239,46 +240,17 @@ public class AddSpell extends javax.swing.JFrame {
     /* Method jButtonAddCardActionPerformed set button to insert spell card to database */
     private void jButtonAddCardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ADDcardActionPerformed
         String cardName = jTextFieldName.getText();		//spell card name
-        String edition = jTextFieldEdition.getText();	//card edition
-        String rarityShort = jTextFieldRarity.getText();		//card rarity
+        String editionShort = jTextFieldEdition.getText();	//card edition short name
+        String rarityShort = jTextFieldRarity.getText();		//card rarity short name
         String set = jTextFieldSet.getText();			//card set
         String language = jTextFieldLanguage.getText();	//card language
         String type = jTextFieldType.getText();			//spell card type
-        Rarities rarity = null;
-        
-        switch(rarityShort) {
-        case "COM":
-        	rarity = Rarities.COM;
-        	break;
-        case "RARE":
-        	rarity = Rarities.RARE;
-        	break;
-        case "SUR":
-        	rarity = Rarities.SUR;
-        	break;
-        case "UR":
-        	rarity = Rarities.UR;
-        	break;
-        case "SR":
-        	rarity = Rarities.SR;
-        	break;
-        case "ULT":
-        	rarity = Rarities.ULT;
-        	break;
-        case "SP":
-        	rarity = Rarities.SP;
-        	break;
-        case "GHOST":
-        	rarity = Rarities.GHOST;
-        	break;
-        }
+       
+        Rarities rarity = EnumPickers.rarityPicker(rarityShort);	
+        Editions edition = EnumPickers.editionPicker(editionShort);
         
         if (cardName.equals("")) {
             JOptionPane.showMessageDialog(null, "Add a Name");
-        } else if (edition.equals("")) {
-            JOptionPane.showMessageDialog(null, "Add adition");
-        } else if (rarity.equals("")) {
-            JOptionPane.showMessageDialog(null, "Add rarity");
         } else if (set.equals("")) {
             JOptionPane.showMessageDialog(null, "Add set");
         } else if (language.equals("")) {

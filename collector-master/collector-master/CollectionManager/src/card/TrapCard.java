@@ -22,7 +22,7 @@ public class TrapCard extends Card{
     private String type; //card type
     
     /* Constructor for TrapCard class */
-    public TrapCard (String name, Rarities rarity, String edition, String set,String language,
+    public TrapCard (String name, Rarities rarity, Editions edition, String set,String language,
     				 String type) {
         super(name, rarity, edition, set, language);
         this.type = type;

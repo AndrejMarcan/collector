@@ -3,9 +3,6 @@
  */
 package controls;
 
-import card.MonsterCard;
-import card.SpellCard;
-import card.TrapCard;
 import gui.AddMonster;
 import gui.Album;
 import gui.CardCollector;
@@ -13,11 +10,8 @@ import gui.CardCollectorLogin;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import org.apache.commons.dbutils.DbUtils;
-
 
 /**
  * The AlbumCommands provides methods for new user registration, login, loading data from database and
@@ -83,10 +77,10 @@ public class AlbumCommands {
             preparedStatement = controls.MyConnection.getConnection().prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
             
-            //Album.jTableAlbum.setModel(DbUtils.resultSetToTableModel(resultSet));
+            Album.jTableAlbum.setModel(DbUtils.resultSetToTableModel(resultSet));
             
             while(resultSet.next()) {
-            	//Album.jTableAlbum.setModel(DbUtils.resultSetToTableModel(resultSet));
+            	Album.jTableAlbum.setModel(DbUtils.resultSetToTableModel(resultSet));
             }          
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
