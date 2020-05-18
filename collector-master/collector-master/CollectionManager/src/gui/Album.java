@@ -4,6 +4,7 @@
 package gui;
 
 import card.Card;
+import card.Editions;
 import card.MonsterCard;
 import card.Rarities;
 import card.SpellCard;
@@ -204,43 +205,18 @@ public class Album extends javax.swing.JFrame {
         if (cardType.equalsIgnoreCase("Monster card")) {
             String name = jTableAlbum.getModel().getValueAt(row,1).toString();
             String set = jTableAlbum.getModel().getValueAt(row,2).toString();
-            String edition = jTableAlbum.getModel().getValueAt(row,3).toString();
+            String editionShort = jTableAlbum.getModel().getValueAt(row,3).toString();
             String language = jTableAlbum.getModel().getValueAt(row,4).toString();
-            String rarityShort = jTableAlbum.getModel().getValueAt(row,6).toString();       //variable for switch
+            String rarityShort = jTableAlbum.getModel().getValueAt(row,6).toString();      
             String type = jTableAlbum.getModel().getValueAt(row,7).toString();
             String summMethod = jTableAlbum.getModel().getValueAt(row,8).toString();
             String attribute = jTableAlbum.getModel().getValueAt(row,9).toString();
             String level = jTableAlbum.getModel().getValueAt(row,10).toString();
             String atk = jTableAlbum.getModel().getValueAt(row,11).toString();
             String def = jTableAlbum.getModel().getValueAt(row,12).toString();
-            Rarities rarity = null;
             
-            switch(rarityShort) {
-            case "COM":
-            	rarity = Rarities.COM;
-            	break;
-            case "RARE":
-            	rarity = Rarities.RARE;
-            	break;
-            case "SUR":
-            	rarity = Rarities.SUR;
-            	break;
-            case "UR":
-            	rarity = Rarities.UR;
-            	break;
-            case "SR":
-            	rarity = Rarities.SR;
-            	break;
-            case "ULT":
-            	rarity = Rarities.ULT;
-            	break;
-            case "SP":
-            	rarity = Rarities.SP;
-            	break;
-            case "GHOST":
-            	rarity = Rarities.GHOST;
-            	break;
-            }
+            Rarities rarity = EnumPickers.rarityPicker(rarityShort);	
+            Editions edition = EnumPickers.editionPicker(editionShort);
             
             card = new MonsterCard(name, rarity, edition,set, language,
             					   type,summMethod, attribute, level,
@@ -249,76 +225,26 @@ public class Album extends javax.swing.JFrame {
         } else if (cardType.equalsIgnoreCase("Spell card")) {
             String name = jTableAlbum.getModel().getValueAt(row,1).toString();
             String set = jTableAlbum.getModel().getValueAt(row,2).toString();
-            String edition = jTableAlbum.getModel().getValueAt(row,3).toString();
+            String editionShort = jTableAlbum.getModel().getValueAt(row,3).toString();
             String language = jTableAlbum.getModel().getValueAt(row,4).toString();
-            String rarityShort = jTableAlbum.getModel().getValueAt(row,6).toString();   //variable for switch    
+            String rarityShort = jTableAlbum.getModel().getValueAt(row,6).toString();    
             String type = jTableAlbum.getModel().getValueAt(row,7).toString();
-            Rarities rarity = null;
             
-            switch(rarityShort) {
-            case "COM":
-            	rarity = Rarities.COM;
-            	break;
-            case "RARE":
-            	rarity = Rarities.RARE;
-            	break;
-            case "SUR":
-            	rarity = Rarities.SUR;
-            	break;
-            case "UR":
-            	rarity = Rarities.UR;
-            	break;
-            case "SR":
-            	rarity = Rarities.SR;
-            	break;
-            case "ULT":
-            	rarity = Rarities.ULT;
-            	break;
-            case "SP":
-            	rarity = Rarities.SP;
-            	break;
-            case "GHOST":
-            	rarity = Rarities.GHOST;
-            	break;
-            }
+            Rarities rarity = EnumPickers.rarityPicker(rarityShort);	
+            Editions edition = EnumPickers.editionPicker(editionShort);
             
             card = new SpellCard(name, rarity, edition, set, language, type);            
             
         } else if (cardType.equalsIgnoreCase("Trap card")) {
             String name = jTableAlbum.getModel().getValueAt(row,1).toString();
             String set = jTableAlbum.getModel().getValueAt(row,2).toString();
-            String edition = jTableAlbum.getModel().getValueAt(row,3).toString();
+            String editionShort = jTableAlbum.getModel().getValueAt(row,3).toString();
             String language = jTableAlbum.getModel().getValueAt(row,4).toString();
-            String rarityShort = jTableAlbum.getModel().getValueAt(row,6).toString();      //variable for switch 
+            String rarityShort = jTableAlbum.getModel().getValueAt(row,6).toString();     
             String type = jTableAlbum.getModel().getValueAt(row,7).toString();
-            Rarities rarity = null;
             
-            switch(rarityShort) {
-            case "COM":
-            	rarity = Rarities.COM;
-            	break;
-            case "RARE":
-            	rarity = Rarities.RARE;
-            	break;
-            case "SUR":
-            	rarity = Rarities.SUR;
-            	break;
-            case "UR":
-            	rarity = Rarities.UR;
-            	break;
-            case "SR":
-            	rarity = Rarities.SR;
-            	break;
-            case "ULT":
-            	rarity = Rarities.ULT;
-            	break;
-            case "SP":
-            	rarity = Rarities.SP;
-            	break;
-            case "GHOST":
-            	rarity = Rarities.GHOST;
-            	break;
-            }
+            Rarities rarity = EnumPickers.rarityPicker(rarityShort);	
+            Editions edition = EnumPickers.editionPicker(editionShort);
             
             card = new TrapCard(name, rarity, edition, set, language, type);            
         }

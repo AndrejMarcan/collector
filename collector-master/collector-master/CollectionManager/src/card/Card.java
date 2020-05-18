@@ -13,12 +13,12 @@ package card;
 public abstract class Card {
     private String name;		//card name
     private Rarities rarity;		//card rarity
-    private String edition;		//card edition
+    private Editions edition;		//card edition
     private String set;			//card set
     private String language;	//card language
     
     /* Constructor for Card class */
-    public Card (String name, Rarities rarity, String edition, String set, String language) { 
+    public Card (String name, Rarities rarity, Editions edition, String set, String language) { 
         this.name = name;
         this.rarity = rarity;
         this.edition = edition;
@@ -41,7 +41,7 @@ public abstract class Card {
     }
     
     public String getEdition() {
-        return edition;
+        return edition.getEdition();
     }
     
     public String getSet() {
@@ -60,7 +60,7 @@ public abstract class Card {
         this.rarity = rarity;
     }
     
-    public void setEdition(String edition) {
+    public void setEdition(Editions edition) {
         this.edition = edition;
     }
     

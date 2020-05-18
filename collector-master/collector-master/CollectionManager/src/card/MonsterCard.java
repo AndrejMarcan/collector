@@ -27,7 +27,7 @@ public class MonsterCard extends Card {
     private String level;		//monster level
     
     /* Constructor for MonsterCard class */
-    public MonsterCard (String name, Rarities rarity, String edition, String set, String language,
+    public MonsterCard (String name, Rarities rarity, Editions edition, String set, String language,
     					String type, String summMethod, String atribute, String level,
     					String atk, String def) {
         super(name, rarity, edition, set, language);

@@ -3,11 +3,13 @@
  */
 package gui;
 
+import card.Editions;
 import card.MonsterCard;
 import card.Rarities;
 import controls.CardDetails;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import gui.EnumPickers;
 
 /**
  * The AddSpell class connects user interface to back end functions and classes for spell card.
@@ -350,52 +352,23 @@ public class MonsterDetails extends javax.swing.JFrame {
     
     /* Method jButtonEditCardActionPerformed sets button to save all changes to database */
     private void jButtonEditCardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_EditCardActionPerformed
-        String cardName = jTextFieldMDName.getText();			//card name
-        String edition = jTextFieldMDEdition.getText();			//card edition
-        String rarityShort = jTextFieldMDRarity.getText();			//card rarity
-        String set = jTextFieldMDSet.getText();					//card set
-        String language = jTextFieldMDLanguage.getText();		//card language
-        String type = jTextFieldMDType.getText();				//card type
-        String summMethod = jTextFieldMDSummMethod.getText();	//summoning method
-        String attribute = jTextFieldMDAtribute.getText();		//monster attribute
-        String level = jTextFieldMDLevel.getText();				//monster level
-        String atk = jTextFieldMDATK.getText();					//monster attack
-        String def = jTextFieldMDDEF.getText();					//monster defense
-        Rarities rarity = null;
+        String cardName = jTextFieldMDName.getText();				//card name
+        String editionShort = jTextFieldMDEdition.getText();				//card edition short name
+        String rarityShort = jTextFieldMDRarity.getText();			//card rarity short name
+        String set = jTextFieldMDSet.getText();						//card set
+        String language = jTextFieldMDLanguage.getText();			//card language
+        String type = jTextFieldMDType.getText();					//card type
+        String summMethod = jTextFieldMDSummMethod.getText();		//summoning method
+        String attribute = jTextFieldMDAtribute.getText();			//monster attribute
+        String level = jTextFieldMDLevel.getText();					//monster level
+        String atk = jTextFieldMDATK.getText();						//monster attack
+        String def = jTextFieldMDDEF.getText();						//monster defense
         
-        switch(rarityShort) {
-        case "COM":
-        	rarity = Rarities.COM;
-        	break;
-        case "RARE":
-        	rarity = Rarities.RARE;
-        	break;
-        case "SUR":
-        	rarity = Rarities.SUR;
-        	break;
-        case "UR":
-        	rarity = Rarities.UR;
-        	break;
-        case "SR":
-        	rarity = Rarities.SR;
-        	break;
-        case "ULT":
-        	rarity = Rarities.ULT;
-        	break;
-        case "SP":
-        	rarity = Rarities.SP;
-        	break;
-        case "GHOST":
-        	rarity = Rarities.GHOST;
-        	break;
-        }
+        Rarities rarity = EnumPickers.rarityPicker(rarityShort);	
+        Editions edition = EnumPickers.editionPicker(editionShort);
         
         if (cardName.equals("")) { 
             JOptionPane.showMessageDialog(null, "Add a Name");
-        } else if (edition.equals("")) { 
-            JOptionPane.showMessageDialog(null, "Add adition");
-        } else if (rarity.equals("")) {
-            JOptionPane.showMessageDialog(null, "Add rarity");
         } else if (set.equals("")) {
             JOptionPane.showMessageDialog(null, "Add set");
         } else if (language.equals("")) {
