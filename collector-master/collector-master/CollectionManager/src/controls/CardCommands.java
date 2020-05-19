@@ -12,11 +12,9 @@ import card.Card;
  * @author 		Andrej Marcan
  */
 public class CardCommands<T extends Card> {
-	private T t;
 	
     /* Method editCard will update data in database */
-	public void editCard(T t, String cell) {
-		this.t = t;
-		t.editCard(cell);
+	public void editCard(T t) {
+		t.getInfo();
 	}
 }

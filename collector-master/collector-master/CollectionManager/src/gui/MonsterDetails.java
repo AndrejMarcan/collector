@@ -6,10 +6,12 @@ package gui;
 import card.Editions;
 import card.MonsterCard;
 import card.Rarities;
-import controls.CardDetails;
+import controls.EnumPickers;
+import controls.db.CardDetails;
+import controls.db.DbControls;
+
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import gui.EnumPickers;
 
 /**
  * The AddSpell class connects user interface to back end functions and classes for spell card.
@@ -389,7 +391,7 @@ public class MonsterDetails extends javax.swing.JFrame {
             MonsterCard monsterCard = new MonsterCard(cardName, rarity, edition, set, language, 
                                                 type,summMethod, attribute, level,
                                                 atk, def);
-            monsterCard.addCard();
+            DbControls.addMonsterCard(monsterCard);
         }
         
         new AddCards().setVisible(true);

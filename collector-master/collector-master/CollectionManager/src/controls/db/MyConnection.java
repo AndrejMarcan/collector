@@ -1,7 +1,7 @@
 /*
  * Copyright (c) ...
  */
-package controls;
+package controls.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

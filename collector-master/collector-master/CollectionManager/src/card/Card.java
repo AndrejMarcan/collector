@@ -26,10 +26,6 @@ public abstract class Card {
         this.language = language;
     }
     
-    public abstract void addCard();
-    
-    public abstract void editCard(String cell);
-    
     public abstract void getInfo();
     
     public String getName() {

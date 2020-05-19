@@ -1,7 +1,7 @@
 /*
  * Copyright (c) ...
  */
-package controls;
+package controls.db;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,12 +32,12 @@ public class CardDetails {
             resultSet = preparedStatement.executeQuery();
             
             while(resultSet.next()) {
-                details.add(resultSet.getString("id")); //no need to add to array
+                details.add(resultSet.getString("id")); 
                 details.add(resultSet.getString("name"));
                 details.add(resultSet.getString("set"));
                 details.add(resultSet.getString("edition"));
                 details.add(resultSet.getString("language"));
-                details.add(resultSet.getString("cardType")); // no need to add to array
+                details.add(resultSet.getString("cardType")); 
                 details.add(resultSet.getString("rarity"));
                 details.add(resultSet.getString("type"));
                 details.add(resultSet.getString("summMethod"));

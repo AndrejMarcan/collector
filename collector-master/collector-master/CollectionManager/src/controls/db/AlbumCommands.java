@@ -1,7 +1,7 @@
 /*
  * Copyright (c) ...
  */
-package controls;
+package controls.db;
 
 import gui.AddMonster;
 import gui.Album;
@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+
+import controls.DbUtils;
 
 /**
  * The AlbumCommands provides methods for new user registration, login, loading data from database and
@@ -74,7 +76,7 @@ public class AlbumCommands {
         String query = "SELECT * FROM `album`";
         
         try {
-            preparedStatement = controls.MyConnection.getConnection().prepareStatement(query);
+            preparedStatement = controls.db.MyConnection.getConnection().prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
             
             Album.jTableAlbum.setModel(DbUtils.resultSetToTableModel(resultSet));
@@ -87,21 +89,7 @@ public class AlbumCommands {
         }       
     }
     
-    /* Method deleteCard will delete data for selected card by ID of the card */
-    public static void deleteCard(String cell) {
-        PreparedStatement preparedStatement;
-        String query = "DELETE FROM `album` WHERE `id` = " + cell; // cell represents table block where card ID is found
-        
-        try {
-            preparedStatement = MyConnection.getConnection().prepareStatement(query);
-            preparedStatement.execute();
-            
-            loadAlbum();
-            JOptionPane.showMessageDialog(null, "Card was removed.");            
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex);
-        }
-    }
+    
 }
 
 

@@ -3,9 +3,15 @@
  */
 package gui;
 
+import card.Card;
 import card.Editions;
 import card.Rarities;
 import card.SpellCard;
+import card.TrapCard;
+import controls.CardCommands;
+import controls.EnumPickers;
+import controls.db.DbControls;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -258,8 +264,8 @@ public class AddSpell extends javax.swing.JFrame {
         } else if (type.equals("")) {
             JOptionPane.showMessageDialog(null, "Add type");
         } else {
-            SpellCard sc = new SpellCard(cardName, rarity, edition, set, language, type);
-            sc.addCard();
+        	SpellCard spellCard = new SpellCard(cardName, rarity, edition, set, language, type);
+            DbControls.addSpellCard(spellCard);
         }
         
         new AddCards().setVisible(true);

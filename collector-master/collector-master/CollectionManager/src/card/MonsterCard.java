@@ -3,14 +3,6 @@
  */
 package card;
 
-import controls.AlbumCommands;
-import controls.MyConnection;
-import gui.AddMonster;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-
 /**
  * The MonsterCard class provides methods for adding a new monster card to database,
  * edit data for monster card in database and to get data for monster card from the database.
@@ -37,64 +29,6 @@ public class MonsterCard extends Card {
         this.level = level;
         this.atk = atk;
         this.def = def;   
-    }
-    
-    /* Method adds trap card to database */
-    @Override
-    public void addCard() {
-        PreparedStatement preparedStatement;
-        String query = "INSERT INTO `album`(`name`, `set`, `edition`, `language`,"
-                + "`cardType`, `rarity`, `type`,`summMethod`, `attribute`, `level`,"
-                + " `atk`, `def` ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
-
-            try {
-                preparedStatement = MyConnection.getConnection().prepareStatement(query);
-                preparedStatement.setString(1, getName());
-                preparedStatement.setString(2, getSet());
-                preparedStatement.setString(3, getEdition());
-                preparedStatement.setString(4, getLanguage());
-                preparedStatement.setString(5, "Monster card");
-                preparedStatement.setString(6, getRarity());
-                preparedStatement.setString(7, getType());
-                preparedStatement.setString(8, getSummMethod());
-                preparedStatement.setString(9, getAtribute());
-                preparedStatement.setString(10, getLevel());
-                preparedStatement.setString(11, getAtk());
-                preparedStatement.setString(12, getDef());
-                
-                if (preparedStatement.executeUpdate() > 0) {
-                    JOptionPane.showMessageDialog(null, "Card saved.");
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(AddMonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            }
-    }
-    
-    /* Method for editing data of monster card in database */
-    @Override
-    public void editCard(String cell) {
-        PreparedStatement preparedStatement;
-        String query = "UPDATE `album` SET `name` ='"+getName()+"'"
-                + " , `rarity` ='"+getRarity()+"'"
-                + " , `edition` ='"+getEdition()+"'"
-                + " , `set`='"+getSet()+"'"
-                + " , `language`='"+getLanguage()+"'"
-                + " , `type`='"+getType()+"'"
-                + " , `summMethod`='"+getSummMethod()+"'"
-                + " , `attribute`='"+getAtribute()+"'"
-                + " , `level`='"+getLevel()+"'"
-                + " , `atk`='"+getAtk()+"'"
-                + " , `def`='"+getDef()+"'"
-                + " WHERE `id`="+cell;
-        
-        try {
-            preparedStatement = MyConnection.getConnection().prepareStatement(query);
-            preparedStatement.execute();
-            AlbumCommands.loadAlbum();
-            JOptionPane.showMessageDialog(null, "Change saved.");     
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex);
-        }  
     }
     
     /* Method shows informations about monster card in console */
