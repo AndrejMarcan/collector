@@ -3,8 +3,9 @@
  */
 package gui;
 
-import controls.AlbumCommands;
 import javax.swing.JFrame;
+
+import controls.db.AlbumCommands;
 
 /**
  * The AddSpell class connects user interface to back end functions and classes for spell card.

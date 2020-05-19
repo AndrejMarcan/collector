@@ -1,4 +1,4 @@
-package gui;
+package controls;
 
 import card.Editions;
 import card.Rarities;

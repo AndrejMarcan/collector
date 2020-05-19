@@ -6,6 +6,9 @@ package gui;
 import card.Editions;
 import card.MonsterCard;
 import card.Rarities;
+import controls.EnumPickers;
+import controls.db.DbControls;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -373,9 +376,9 @@ public class AddMonster extends javax.swing.JFrame {
         } else if (def.equals("")) {
             JOptionPane.showMessageDialog(null, "ADD def numbers");
         } else {
-            MonsterCard mc = new MonsterCard(cardName, rarity, edition, set, language, type,
+            MonsterCard monsterCard = new MonsterCard(cardName, rarity, edition, set, language, type,
             								 summMethod, atribute, level, atk, def);
-            mc.addCard();
+            DbControls.addMonsterCard(monsterCard);
         }
         
         new AddCards().setVisible(true);
