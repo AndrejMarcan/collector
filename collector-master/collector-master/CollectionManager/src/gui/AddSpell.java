@@ -10,7 +10,7 @@ import card.SpellCard;
 import card.TrapCard;
 import controls.CardCommands;
 import controls.EnumPickers;
-import controls.db.DbControls;
+import controls.db.CardControls;
 
 import javax.swing.JOptionPane;
 
@@ -264,8 +264,8 @@ public class AddSpell extends javax.swing.JFrame {
         } else if (type.equals("")) {
             JOptionPane.showMessageDialog(null, "Add type");
         } else {
-        	SpellCard spellCard = new SpellCard(cardName, rarity, edition, set, language, type);
-            DbControls.addSpellCard(spellCard);
+        	Card spellCard = new SpellCard(cardName, rarity, edition, set, language, type);
+            CardControls.addCard(spellCard);
         }
         
         new AddCards().setVisible(true);

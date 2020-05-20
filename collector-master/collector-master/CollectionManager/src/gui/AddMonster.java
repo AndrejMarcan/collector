@@ -7,7 +7,7 @@ import card.Editions;
 import card.MonsterCard;
 import card.Rarities;
 import controls.EnumPickers;
-import controls.db.DbControls;
+import controls.db.CardControls;
 
 import javax.swing.JOptionPane;
 
@@ -378,7 +378,7 @@ public class AddMonster extends javax.swing.JFrame {
         } else {
             MonsterCard monsterCard = new MonsterCard(cardName, rarity, edition, set, language, type,
             								 summMethod, atribute, level, atk, def);
-            DbControls.addMonsterCard(monsterCard);
+            CardControls.addMonsterCard(monsterCard);
         }
         
         new AddCards().setVisible(true);

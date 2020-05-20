@@ -16,17 +16,21 @@ public abstract class Card {
     private Editions edition;		//card edition
     private String set;			//card set
     private String language;	//card language
+    private String type;		//card type
     
     /* Constructor for Card class */
-    public Card (String name, Rarities rarity, Editions edition, String set, String language) { 
+    public Card (String name, Rarities rarity, Editions edition, String set, String language, String type) { 
         this.name = name;
         this.rarity = rarity;
         this.edition = edition;
         this.set = set;
         this.language = language;
+        this.type = type;
     }
     
     public abstract void getInfo();
+    
+    public abstract String getCardType();
     
     public String getName() {
         return name;
@@ -46,6 +50,10 @@ public abstract class Card {
     
     public String getLanguage() {
         return language;
+    }
+    
+    public String getType() {
+    	return type;
     }
     
     public void setName(String name) {
@@ -68,7 +76,9 @@ public abstract class Card {
         this.language=language;
     }
 
-    
+    public void setType(String type) {
+    	this.type = type;
+    }
     
 }
 

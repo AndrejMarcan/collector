@@ -3,11 +3,12 @@
  */
 package gui;
 
+import card.Card;
 import card.Editions;
 import card.Rarities;
 import card.TrapCard;
 import controls.EnumPickers;
-import controls.db.DbControls;
+import controls.db.CardControls;
 
 import javax.swing.JOptionPane;
 
@@ -264,8 +265,8 @@ public class AddTrap extends javax.swing.JFrame {
         } else if (type.equals("")) {
             JOptionPane.showMessageDialog(null, "Add type");
         } else {
-            TrapCard trapCard = new TrapCard(cardName, rarity, edition, set, language, type);
-            DbControls.addTrapCard(trapCard);
+            Card trapCard = new TrapCard(cardName, rarity, edition, set, language, type);
+            CardControls.addCard(trapCard);
         }
         
         new AddCards().setVisible(true);

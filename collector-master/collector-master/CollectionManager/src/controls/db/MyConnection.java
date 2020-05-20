@@ -17,16 +17,16 @@ public class MyConnection {
     
 	/* Method getConnection provides connection to database */
     public static Connection getConnection() {
-        Connection con = null;	
+        Connection connection = null;	
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/cardcollectordb"
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/cardcollectordb"
                     + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false"   //deals with time-zone problem
                     + "&serverTimezone=UTC", "root", "");
-            return con;            
+            return connection;            
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex);
-            return null;
+        	ex.printStackTrace();
+        	return null;
         }        
     }  
 }
