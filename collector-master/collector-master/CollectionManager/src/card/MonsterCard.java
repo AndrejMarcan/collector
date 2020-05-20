@@ -11,19 +11,18 @@ package card;
  * @author 		Andrej Marcan
  */
 public class MonsterCard extends Card {
-    private String type;		//monster type
     private String summMethod;	//summoning method
     private String attribute;	//monster attribute
     private String atk;			//attack points
     private String def;			//defense points
     private String level;		//monster level
+    private final String CARD_TYPE = "monster card";
     
     /* Constructor for MonsterCard class */
     public MonsterCard (String name, Rarities rarity, Editions edition, String set, String language,
     					String type, String summMethod, String atribute, String level,
     					String atk, String def) {
-        super(name, rarity, edition, set, language);
-        this.type = type;
+        super(name, rarity, edition, set, language, type);
         this.summMethod = summMethod;
         this.attribute = atribute;
         this.level = level;
@@ -39,15 +38,14 @@ public class MonsterCard extends Card {
         System.out.println(super.getEdition());
         System.out.println(super.getSet());
         System.out.println(super.getLanguage());
-        System.out.println(type);
         System.out.println(attribute);
         System.out.println(level);
         System.out.println(atk);
         System.out.println(def);    
     }
-    
-    public void setType(String type) {
-        this.type = type;
+    @Override
+    public String getCardType() {
+    	return CARD_TYPE;
     }
     
     public void setLevel(String level) {
@@ -68,10 +66,6 @@ public class MonsterCard extends Card {
     
     public void setSummMethod(String summMethod) {
         this.summMethod = summMethod;
-    }
-
-    public String getType() {
-        return type;
     }
     
     public String getAtribute() {

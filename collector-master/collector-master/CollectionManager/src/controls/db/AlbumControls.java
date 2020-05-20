@@ -7,13 +7,13 @@ import gui.AddMonster;
 import gui.Album;
 import gui.CardCollector;
 import gui.CardCollectorLogin;
+
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-
-import controls.DbUtils;
 
 /**
  * The AlbumCommands provides methods for new user registration, login, loading data from database and
@@ -22,36 +22,42 @@ import controls.DbUtils;
  * @version		0.1 14. May 2020
  * @author 		Andrej Marcan
  */
-public class AlbumCommands {
+public class AlbumControls {
     
 	/* Method addUser is used for new user registration */
     public static void addUser(String name, String password) {        
-        PreparedStatement preparedStatement;
+    	Connection connection = null;
+    	PreparedStatement preparedStatement = null;
         String query = "INSERT INTO `users`(`userName`, `userPassword`) VALUES (?,?)";
 
         try {
-        	preparedStatement = MyConnection.getConnection().prepareStatement(query);
+        	connection  = MyConnection.getConnection();
+            preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
 
             if (preparedStatement.executeUpdate() > 0) {
-            	JOptionPane.showMessageDialog(null, "Registration succesfull");
+            	//TODO replace JOptionPane..  
             }
+        	preparedStatement.close();
+            connection.close();
         } catch (SQLException ex) {
-          	Logger.getLogger(AddMonster.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        	ex.printStackTrace();
     	}
     }
     
     /* Method login checks if user name and password are right */
     public static void login(String name, String pass) {
-        PreparedStatement preparedStatement;
-        ResultSet resultSet;
+    	Connection connection = null;
+    	PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         String username = name; //variable of user name
         String password = pass;	//variable for password
         String query = "SELECT * FROM `users` WHERE `userName` =? AND `userPassword` =?";
 
         try {
-            preparedStatement = MyConnection.getConnection().prepareStatement(query);
+        	connection  = MyConnection.getConnection();
+            preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
             resultSet = preparedStatement.executeQuery();
@@ -61,31 +67,39 @@ public class AlbumCommands {
                 cardCollector.setVisible(true);
                 cardCollector.pack();
                 cardCollector.setLocationRelativeTo(null);
-            } else {
-                JOptionPane.showMessageDialog(null, "NO");
             }
+            //TODO replace JOptionPane..  
+            resultSet.close();
+        	preparedStatement.close();
+            connection.close();
         } catch (SQLException ex) {
-            Logger.getLogger(CardCollectorLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        	ex.printStackTrace();
         }
     }
     
     /* Method loadAlbum fetches data from database for every card and displays them in gui table */
     public static void loadAlbum() {
-        PreparedStatement preparedStatement;
-        ResultSet resultSet;
+    	Connection connection = null;
+    	PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         String query = "SELECT * FROM `album`";
         
         try {
-            preparedStatement = controls.db.MyConnection.getConnection().prepareStatement(query);
+        	connection  = MyConnection.getConnection();
+            preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
             
             Album.jTableAlbum.setModel(DbUtils.resultSetToTableModel(resultSet));
             
             while(resultSet.next()) {
             	Album.jTableAlbum.setModel(DbUtils.resultSetToTableModel(resultSet));
-            }          
+            }
+          //TODO replace JOptionPane..  
+            resultSet.close();
+        	preparedStatement.close();
+            connection.close();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex);
+        	ex.printStackTrace();
         }       
     }
     

@@ -12,7 +12,7 @@ import card.TrapCard;
 import controls.CardCommands;
 import controls.EnumPickers;
 import controls.WebViewControl;
-import controls.db.DbControls;
+import controls.db.CardControls;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -35,7 +35,7 @@ public class Album extends javax.swing.JFrame {
     public Album() {
         this.initComponents();
         this.setLocationRelativeTo(null);
-        controls.db.AlbumCommands.loadAlbum();
+        controls.db.AlbumControls.loadAlbum();
     }
 
     /**
@@ -190,12 +190,12 @@ public class Album extends javax.swing.JFrame {
         int row = jTableAlbum.getSelectedRow();
         String cell = jTableAlbum.getModel().getValueAt(row,0).toString();
         
-        controls.db.DbControls.deleteCard(cell);
+        controls.db.CardControls.deleteCard(cell);
     }//GEN-LAST:event_jButton_DeleteActionPerformed
     
     /* Method jButtonUpadateTableActionPerformed sets button to update date in table */
     private void jButtonUpadateTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_UpadateTableActionPerformed
-        controls.db.AlbumCommands.loadAlbum();
+        controls.db.AlbumControls.loadAlbum();
     }//GEN-LAST:event_jButton_UpadateTableActionPerformed
     
     /* Method jButtonSaveChangesActionPerformed set button to save changes in table and database */
@@ -223,7 +223,7 @@ public class Album extends javax.swing.JFrame {
             MonsterCard monsterCard = new MonsterCard(name, rarity, edition,set, language,
             					   type,summMethod, attribute, level,
             					   atk, def);
-            DbControls.editMonsterCard(monsterCard, cell);
+            CardControls.editMonsterCard(monsterCard, cell);
             
         } else if (cardType.equalsIgnoreCase("Spell card")) {
             String name = jTableAlbum.getModel().getValueAt(row,1).toString();
@@ -236,8 +236,8 @@ public class Album extends javax.swing.JFrame {
             Rarities rarity = EnumPickers.rarityPicker(rarityShort);	
             Editions edition = EnumPickers.editionPicker(editionShort);
             
-            SpellCard spellCard = new SpellCard(name, rarity, edition, set, language, type);
-            DbControls.editSpellCard(spellCard, cell);
+            Card spellCard = new SpellCard(name, rarity, edition, set, language, type);
+            CardControls.editCard(spellCard, cell);
             
         } else if (cardType.equalsIgnoreCase("Trap card")) {
             String name = jTableAlbum.getModel().getValueAt(row,1).toString();
@@ -250,8 +250,8 @@ public class Album extends javax.swing.JFrame {
             Rarities rarity = EnumPickers.rarityPicker(rarityShort);	
             Editions edition = EnumPickers.editionPicker(editionShort);
             
-            TrapCard trapCard = new TrapCard(name, rarity, edition, set, language, type);        
-            DbControls.editTrapCard(trapCard, cell);
+            Card trapCard = new TrapCard(name, rarity, edition, set, language, type);        
+            CardControls.editCard(trapCard, cell);
         }       
     }//GEN-LAST:event_jButton_SaveChangesActionPerformed
 

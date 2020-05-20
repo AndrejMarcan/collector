@@ -1,4 +1,4 @@
-package controls;
+package controls.db;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;

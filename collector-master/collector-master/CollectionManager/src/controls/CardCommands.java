@@ -14,7 +14,7 @@ import card.Card;
 public class CardCommands<T extends Card> {
 	
     /* Method editCard will update data in database */
-	public void editCard(T t) {
+	public void infoCard(T t) {
 		t.getInfo();
 	}
 }

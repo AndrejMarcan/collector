@@ -5,7 +5,7 @@ package gui;
 
 import javax.swing.JFrame;
 
-import controls.db.AlbumCommands;
+import controls.db.AlbumControls;
 
 /**
  * The AddSpell class connects user interface to back end functions and classes for spell card.
@@ -219,7 +219,7 @@ public class CardCollectorLogin extends javax.swing.JFrame {
     private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLogin_ActionPerformed
         String username = jTextLoginUsername.getText();
         String password = String.valueOf(jPasswordField1.getPassword());        
-        AlbumCommands.login(username, password);
+        AlbumControls.login(username, password);
         
         this.dispose();  
     }//GEN-LAST:event_jButtonLogin_ActionPerformed

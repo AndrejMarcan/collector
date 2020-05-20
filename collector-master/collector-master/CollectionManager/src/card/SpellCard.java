@@ -12,12 +12,12 @@ package card;
  */
 public class SpellCard extends Card{
     private String type;	//card type
+    private final String CARD_TYPE = "spell card";
     
     /* Constructor for SpellCard class */
     public SpellCard (String name, Rarities rarity, Editions edition,String set,
     				  String language, String type) {
-        super(name, rarity, edition, set, language);
-        this.type = type;
+        super(name, rarity, edition, set, language, type);
     }
     
     /* Method shows informations about spell card in console */
@@ -31,14 +31,10 @@ public class SpellCard extends Card{
         System.out.println(type);
     }
     
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getType() {
-        return type;
-    }
-    
+    @Override
+    public String getCardType() {
+    	return CARD_TYPE;
+    } 
 }
 
 

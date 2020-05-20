@@ -7,8 +7,7 @@ import card.Editions;
 import card.MonsterCard;
 import card.Rarities;
 import controls.EnumPickers;
-import controls.db.CardDetails;
-import controls.db.DbControls;
+import controls.db.CardControls;
 
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -391,14 +390,14 @@ public class MonsterDetails extends javax.swing.JFrame {
             MonsterCard monsterCard = new MonsterCard(cardName, rarity, edition, set, language, 
                                                 type,summMethod, attribute, level,
                                                 atk, def);
-            DbControls.addMonsterCard(monsterCard);
+            CardControls.addMonsterCard(monsterCard);
         }
         
         new AddCards().setVisible(true);
         int row = Album.jTableAlbum.getSelectedRow();						// row in the table
         int cell = (int) Album.jTableAlbum.getModel().getValueAt(row,0);	// cell in the table
         
-        CardDetails.addNotes(cell,jTextArea1MNNotes.getText().toString());
+        CardControls.addNotes(cell,jTextArea1MNNotes.getText().toString());
         this.dispose();
     }//GEN-LAST:event_jButton_EditCardActionPerformed
     
@@ -412,7 +411,7 @@ public class MonsterDetails extends javax.swing.JFrame {
         int row = Album.jTableAlbum.getSelectedRow();
         String cell = Album.jTableAlbum.getModel().getValueAt(row,0).toString();
         
-        ArrayList<String> details = CardDetails.loadCardDetails(cell);
+        ArrayList<String> details = CardControls.loadCardDetails(cell);
         
         jTextFieldMDName.setText(details.get(1));
         jTextFieldMDEdition.setText(details.get(3));
@@ -425,7 +424,7 @@ public class MonsterDetails extends javax.swing.JFrame {
         jTextFieldMDLevel.setText(details.get(10));
         jTextFieldMDATK.setText(details.get(11));
         jTextFieldMDDEF.setText(details.get(12));     
-        jTextArea1MNNotes.setText(CardDetails.loadNotes(cell));
+        jTextArea1MNNotes.setText(CardControls.loadNotes(cell));
     }
     
     public static void main(String args[]) {
