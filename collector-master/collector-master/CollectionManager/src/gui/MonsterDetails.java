@@ -367,6 +367,7 @@ public class MonsterDetails extends javax.swing.JFrame {
         String level = jTextFieldMDLevel.getText();					//monster level
         String atk = jTextFieldMDATK.getText();						//monster attack
         String def = jTextFieldMDDEF.getText();						//monster defense
+        String text = jTextArea1MNNotes.getText();
         
         Rarities rarity = EnumPickers.rarityPicker(rarityShort);	
         Editions edition = EnumPickers.editionPicker(editionShort);
@@ -394,7 +395,7 @@ public class MonsterDetails extends javax.swing.JFrame {
                                                 type,summMethod, attribute, level,
                                                 atk, def);
             try {
-				if (CardControls.editMonsterCard(monsterCard, cardId)) {
+				if (CardControls.editMonsterCard(monsterCard, cardId) && CardControls.addNotes(cardId, text)) {
 					JOptionPane.showMessageDialog(null, "Card edited succesfully");
 				} else {
 					JOptionPane.showMessageDialog(null, "Card edited succesfully");
@@ -431,7 +432,7 @@ public class MonsterDetails extends javax.swing.JFrame {
 	      	jTextFieldMDLevel.setText(details.get(10));
 	    	jTextFieldMDATK.setText(details.get(11));
 	        jTextFieldMDDEF.setText(details.get(12));     
-	        jTextArea1MNNotes.setText("NOTES");
+	        jTextArea1MNNotes.setText(CardControls.loadNotes(cell));
 			
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());

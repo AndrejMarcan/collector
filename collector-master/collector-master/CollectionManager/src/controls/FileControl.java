@@ -19,9 +19,9 @@ import java.util.stream.Collectors;
  */
 public class FileControl {
     /* path to the text file with short name versions */
-    private static String adrShorts = "D://Projects//project//CollectionManager//textFiles/Editions.txt";
+    private static String adrShorts = "D:/Projects/project/CollectionManager/textFiles/Editions.txt";
     /* path to the text file with full name versions */
-    private static String adrFullNames = "D://Projects//project//CollectionManager//textFiles/EditionsFullNames.txt";
+    private static String adrFullNames = "D:/Projects/project/CollectionManager/textFiles/EditionsFullNames.txt";
     
     /* method readFromShortsFile returns ArrayList of short names from file */
     public static ArrayList<String> readFromShortsFile() {     

@@ -22,10 +22,12 @@ public class CardControls {
                 + "card_type, rarity, type) VALUES (?,?,?,?,?,?,?)";
         String queryDetails = "INSERT INTO monster_details(id_monster, summ_method, attribute, level,"
                 + " atk, def ) VALUES ((select max(id) from album),?,?,?,?,?)";
+        String queryNotes = "INSERT INTO notes(id_card, note) VALUES ((select max(id) from album), ?)";
         boolean output = false;
             try(Connection connection  = MyConnection.getConnection();
             	PreparedStatement preparedStatement = connection.prepareStatement(query);
-            	PreparedStatement preparedStatementDetails = connection.prepareStatement(queryDetails);) {
+            	PreparedStatement preparedStatementDetails = connection.prepareStatement(queryDetails);
+            	PreparedStatement preparedStatementNotes = connection.prepareStatement(queryNotes);) {
             	
             	connection.setAutoCommit(false);
                 
@@ -44,6 +46,9 @@ public class CardControls {
                 preparedStatementDetails.setString(4, monsterCard.getAtk());
                 preparedStatementDetails.setString(5, monsterCard.getDef());
                 preparedStatementDetails.executeUpdate();
+                
+                preparedStatementNotes.setString(1, "note");
+                preparedStatementNotes.executeUpdate();
                 
                 connection.commit();
                 connection.setAutoCommit(true);                
@@ -193,13 +198,12 @@ public class CardControls {
     }
     
     /* Method addNotes is used for inserting notes for specific card by card ID */
-    public static boolean addNotes(int cardID, String text) throws SQLException {
-        String query = "INSERT INTO notes (card_id, noteText) VALUES (?,?)";
+    public static boolean addNotes(String cell, String text) throws SQLException {
+        String query = "UPDATE notes SET note = ? WHERE id_card = " + cell;
         boolean output = false;
         try(Connection connection  = MyConnection.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);) {
-            preparedStatement.setInt(1, cardID);		// card ID 
-            preparedStatement.setString(2, text);		// note text
+            preparedStatement.setString(1, text);		// note text
             preparedStatement.executeUpdate();          
             output = true;
         } catch (SQLException ex){
@@ -211,13 +215,15 @@ public class CardControls {
     
     /* Method loadNotes fetches notes for specific card based on card ID */
     public static String loadNotes(String cell) throws SQLException {
-        String query = "SELECT `noteText` FROM `notes` WHERE `card_id`="+cell;
-        
+        String query = "SELECT note FROM notes WHERE id_card = " + cell;
+        String notes = "";
         try(Connection connection  = MyConnection.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
         	ResultSet resultSet = preparedStatement.executeQuery();) {
             
-        	String notes = resultSet.getString("noteText");
+        	while(resultSet.next()) {
+        		notes = resultSet.getString("note");
+        	}
             return notes;
         } catch (SQLException ex){
             ex.printStackTrace();
