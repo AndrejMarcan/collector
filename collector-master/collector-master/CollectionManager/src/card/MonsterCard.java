@@ -52,7 +52,7 @@ public class MonsterCard extends Card {
         this.level = level;
     }
     
-    public void setAtribute(String atribute) {
+    public void setAttribute(String atribute) {
         this.attribute = atribute;
     }
     
@@ -68,7 +68,7 @@ public class MonsterCard extends Card {
         this.summMethod = summMethod;
     }
     
-    public String getAtribute() {
+    public String getAttribute() {
         return attribute;
     }
     

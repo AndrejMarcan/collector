@@ -16,8 +16,11 @@ import controls.db.CardControls;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.JOptionPane;
 
 /**
  * The Album class connects user interface to back end functions and classes to display all cards
@@ -35,7 +38,12 @@ public class Album extends javax.swing.JFrame {
     public Album() {
         this.initComponents();
         this.setLocationRelativeTo(null);
-        controls.db.AlbumControls.loadAlbum();
+        try {
+			controls.db.AlbumControls.loadAlbum();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     /**
@@ -190,12 +198,22 @@ public class Album extends javax.swing.JFrame {
         int row = jTableAlbum.getSelectedRow();
         String cell = jTableAlbum.getModel().getValueAt(row,0).toString();
         
-        controls.db.CardControls.deleteCard(cell);
+        try {
+			controls.db.CardControls.deleteCard(cell);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }//GEN-LAST:event_jButton_DeleteActionPerformed
     
     /* Method jButtonUpadateTableActionPerformed sets button to update date in table */
     private void jButtonUpadateTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_UpadateTableActionPerformed
-        controls.db.AlbumControls.loadAlbum();
+        try {
+			controls.db.AlbumControls.loadAlbum();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }//GEN-LAST:event_jButton_UpadateTableActionPerformed
     
     /* Method jButtonSaveChangesActionPerformed set button to save changes in table and database */
@@ -205,53 +223,87 @@ public class Album extends javax.swing.JFrame {
         String cell = jTableAlbum.getModel().getValueAt(row,0).toString();
         
         if (cardType.equalsIgnoreCase("Monster card")) {
-            String name = jTableAlbum.getModel().getValueAt(row,1).toString();
-            String set = jTableAlbum.getModel().getValueAt(row,2).toString();
-            String editionShort = jTableAlbum.getModel().getValueAt(row,3).toString();
-            String language = jTableAlbum.getModel().getValueAt(row,4).toString();
-            String rarityShort = jTableAlbum.getModel().getValueAt(row,6).toString();      
-            String type = jTableAlbum.getModel().getValueAt(row,7).toString();
-            String summMethod = jTableAlbum.getModel().getValueAt(row,8).toString();
-            String attribute = jTableAlbum.getModel().getValueAt(row,9).toString();
-            String level = jTableAlbum.getModel().getValueAt(row,10).toString();
-            String atk = jTableAlbum.getModel().getValueAt(row,11).toString();
-            String def = jTableAlbum.getModel().getValueAt(row,12).toString();
-            
-            Rarities rarity = EnumPickers.rarityPicker(rarityShort);	
-            Editions edition = EnumPickers.editionPicker(editionShort);
-            
-            MonsterCard monsterCard = new MonsterCard(name, rarity, edition,set, language,
-            					   type,summMethod, attribute, level,
-            					   atk, def);
-            CardControls.editMonsterCard(monsterCard, cell);
+        	try {
+	            String name = jTableAlbum.getModel().getValueAt(row,1).toString();
+	            String set = jTableAlbum.getModel().getValueAt(row,2).toString();
+	            String editionShort = jTableAlbum.getModel().getValueAt(row,3).toString();
+	            String language = jTableAlbum.getModel().getValueAt(row,4).toString();
+	            String rarityShort = jTableAlbum.getModel().getValueAt(row,6).toString();      
+	            String type = jTableAlbum.getModel().getValueAt(row,7).toString();
+	            String summMethod = jTableAlbum.getModel().getValueAt(row,8).toString();
+	            String attribute = jTableAlbum.getModel().getValueAt(row,9).toString();
+	            String level = jTableAlbum.getModel().getValueAt(row,10).toString();
+	            String atk = jTableAlbum.getModel().getValueAt(row,11).toString();
+	            String def = jTableAlbum.getModel().getValueAt(row,12).toString();
+	            
+	            Rarities rarity = EnumPickers.rarityPicker(rarityShort);	
+	            Editions edition = EnumPickers.editionPicker(editionShort);
+	            
+	            MonsterCard monsterCard = new MonsterCard(name, rarity, edition,set, language,
+	            					   type,summMethod, attribute, level,
+	            					   atk, def);
+	            try {
+					if (CardControls.editMonsterCard(monsterCard, cell)) {
+						JOptionPane.showMessageDialog(null, "Card edited succesfully");
+					} else {
+						JOptionPane.showMessageDialog(null, "Card edited succesfully");
+					}
+				} catch (SQLException e) {
+					JOptionPane.showMessageDialog(null, e.getMessage());
+					e.printStackTrace();
+				}
+        	} catch (NullPointerException ex) {
+        		ex.printStackTrace();
+        		JOptionPane.showMessageDialog(null, ex.getMessage());
+        	}
             
         } else if (cardType.equalsIgnoreCase("Spell card")) {
-            String name = jTableAlbum.getModel().getValueAt(row,1).toString();
-            String set = jTableAlbum.getModel().getValueAt(row,2).toString();
-            String editionShort = jTableAlbum.getModel().getValueAt(row,3).toString();
-            String language = jTableAlbum.getModel().getValueAt(row,4).toString();
-            String rarityShort = jTableAlbum.getModel().getValueAt(row,6).toString();    
-            String type = jTableAlbum.getModel().getValueAt(row,7).toString();
-            
-            Rarities rarity = EnumPickers.rarityPicker(rarityShort);	
-            Editions edition = EnumPickers.editionPicker(editionShort);
-            
-            Card spellCard = new SpellCard(name, rarity, edition, set, language, type);
-            CardControls.editCard(spellCard, cell);
+            try {
+            	String name = jTableAlbum.getModel().getValueAt(row,1).toString();
+            	String set = jTableAlbum.getModel().getValueAt(row,2).toString();
+                String editionShort = jTableAlbum.getModel().getValueAt(row,3).toString();
+                String language = jTableAlbum.getModel().getValueAt(row,4).toString();
+                String rarityShort = jTableAlbum.getModel().getValueAt(row,6).toString();    
+                String type = jTableAlbum.getModel().getValueAt(row,7).toString();
+                
+                Rarities rarity = EnumPickers.rarityPicker(rarityShort);	
+                Editions edition = EnumPickers.editionPicker(editionShort);
+                
+                Card spellCard = new SpellCard(name, rarity, edition, set, language, type);
+                try {
+    				CardControls.editCard(spellCard, cell);
+    			} catch (SQLException e) {
+    				JOptionPane.showMessageDialog(null, e.getMessage());
+    				e.printStackTrace();
+    			}
+            }	catch (NullPointerException ex) {
+        		ex.printStackTrace();
+        		JOptionPane.showMessageDialog(null, ex.getMessage());
+        	}
             
         } else if (cardType.equalsIgnoreCase("Trap card")) {
-            String name = jTableAlbum.getModel().getValueAt(row,1).toString();
-            String set = jTableAlbum.getModel().getValueAt(row,2).toString();
-            String editionShort = jTableAlbum.getModel().getValueAt(row,3).toString();
-            String language = jTableAlbum.getModel().getValueAt(row,4).toString();
-            String rarityShort = jTableAlbum.getModel().getValueAt(row,6).toString();     
-            String type = jTableAlbum.getModel().getValueAt(row,7).toString();
-            
-            Rarities rarity = EnumPickers.rarityPicker(rarityShort);	
-            Editions edition = EnumPickers.editionPicker(editionShort);
-            
-            Card trapCard = new TrapCard(name, rarity, edition, set, language, type);        
-            CardControls.editCard(trapCard, cell);
+            try {
+	        	String name = jTableAlbum.getModel().getValueAt(row,1).toString();
+	            String set = jTableAlbum.getModel().getValueAt(row,2).toString();
+	            String editionShort = jTableAlbum.getModel().getValueAt(row,3).toString();
+	            String language = jTableAlbum.getModel().getValueAt(row,4).toString();
+	            String rarityShort = jTableAlbum.getModel().getValueAt(row,6).toString();     
+	            String type = jTableAlbum.getModel().getValueAt(row,7).toString();
+	            
+	            Rarities rarity = EnumPickers.rarityPicker(rarityShort);	
+	            Editions edition = EnumPickers.editionPicker(editionShort);
+	            
+	            Card trapCard = new TrapCard(name, rarity, edition, set, language, type);        
+	            try {
+					CardControls.editCard(trapCard, cell);
+				} catch (SQLException e) {
+					JOptionPane.showMessageDialog(null, e.getMessage());
+					e.printStackTrace();
+				}
+            } catch (NullPointerException ex) {
+        		ex.printStackTrace();
+        		JOptionPane.showMessageDialog(null, ex.getMessage());
+        	}
         }       
     }//GEN-LAST:event_jButton_SaveChangesActionPerformed
 

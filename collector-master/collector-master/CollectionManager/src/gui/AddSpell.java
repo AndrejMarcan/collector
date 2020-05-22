@@ -7,10 +7,11 @@ import card.Card;
 import card.Editions;
 import card.Rarities;
 import card.SpellCard;
-import card.TrapCard;
-import controls.CardCommands;
 import controls.EnumPickers;
 import controls.db.CardControls;
+
+import java.awt.HeadlessException;
+import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
@@ -265,7 +266,16 @@ public class AddSpell extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Add type");
         } else {
         	Card spellCard = new SpellCard(cardName, rarity, edition, set, language, type);
-            CardControls.addCard(spellCard);
+        	try {
+				if (CardControls.addCard(spellCard)) {
+				   JOptionPane.showMessageDialog(null, "Card saved");
+				 } 
+			} catch (HeadlessException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(null, e.getMessage());
+				e.printStackTrace();
+			}
         }
         
         new AddCards().setVisible(true);

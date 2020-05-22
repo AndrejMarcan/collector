@@ -9,6 +9,7 @@ import card.Rarities;
 import controls.EnumPickers;
 import controls.db.CardControls;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -19,14 +20,16 @@ import javax.swing.JOptionPane;
  * @author 		Andrej Marcan
  */
 public class MonsterDetails extends javax.swing.JFrame {
-
+	private String cardId;
     /**
      * Creates new form AddMonster
      */
     public MonsterDetails() {
         this.initComponents();
         this.setLocationRelativeTo(null);
-        this.load();    
+        this.load();
+        int row = Album.jTableAlbum.getSelectedRow();
+        this.cardId = Album.jTableAlbum.getModel().getValueAt(row,0).toString();
     }
 
     /**
@@ -390,14 +393,17 @@ public class MonsterDetails extends javax.swing.JFrame {
             MonsterCard monsterCard = new MonsterCard(cardName, rarity, edition, set, language, 
                                                 type,summMethod, attribute, level,
                                                 atk, def);
-            CardControls.addMonsterCard(monsterCard);
+            try {
+				if (CardControls.editMonsterCard(monsterCard, cardId)) {
+					JOptionPane.showMessageDialog(null, "Card edited succesfully");
+				} else {
+					JOptionPane.showMessageDialog(null, "Card edited succesfully");
+				}
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(null, "SQLException");
+				e.printStackTrace();
+			}
         }
-        
-        new AddCards().setVisible(true);
-        int row = Album.jTableAlbum.getSelectedRow();						// row in the table
-        int cell = (int) Album.jTableAlbum.getModel().getValueAt(row,0);	// cell in the table
-        
-        CardControls.addNotes(cell,jTextArea1MNNotes.getText().toString());
         this.dispose();
     }//GEN-LAST:event_jButton_EditCardActionPerformed
     
@@ -411,20 +417,29 @@ public class MonsterDetails extends javax.swing.JFrame {
         int row = Album.jTableAlbum.getSelectedRow();
         String cell = Album.jTableAlbum.getModel().getValueAt(row,0).toString();
         
-        ArrayList<String> details = CardControls.loadCardDetails(cell);
+        ArrayList<String> details;
+		try {
+			details = CardControls.loadCardDetails(cell);
+			jTextFieldMDName.setText(details.get(1));
+	        jTextFieldMDEdition.setText(details.get(3));
+	        jTextFieldMDRarity.setText(details.get(6));
+	        jTextFieldMDSet.setText(details.get(2));
+	        jTextFieldMDLanguage.setText(details.get(4));
+	        jTextFieldMDType.setText(details.get(7));
+	      	jTextFieldMDSummMethod.setText(details.get(8));
+	       	jTextFieldMDAtribute.setText(details.get(9));
+	      	jTextFieldMDLevel.setText(details.get(10));
+	    	jTextFieldMDATK.setText(details.get(11));
+	        jTextFieldMDDEF.setText(details.get(12));     
+	        jTextArea1MNNotes.setText("NOTES");
+			
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			e.printStackTrace();
+		}
         
-        jTextFieldMDName.setText(details.get(1));
-        jTextFieldMDEdition.setText(details.get(3));
-        jTextFieldMDRarity.setText(details.get(6));
-        jTextFieldMDSet.setText(details.get(2));
-        jTextFieldMDLanguage.setText(details.get(4));
-        jTextFieldMDType.setText(details.get(7));
-        jTextFieldMDSummMethod.setText(details.get(8));
-        jTextFieldMDAtribute.setText(details.get(9));
-        jTextFieldMDLevel.setText(details.get(10));
-        jTextFieldMDATK.setText(details.get(11));
-        jTextFieldMDDEF.setText(details.get(12));     
-        jTextArea1MNNotes.setText(CardControls.loadNotes(cell));
+        
+        
     }
     
     public static void main(String args[]) {

@@ -3,6 +3,7 @@
  */
 package card.manager;
 
+import controls.db.DbControls;
 import gui.CardCollector;
 
 /**
@@ -13,7 +14,17 @@ import gui.CardCollector;
  */
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+    	DbControls dbControls = new DbControls();
+    	try {
+    		dbControls.createTableAlbum();
+    		dbControls.createTableMonsterDetail();
+        	dbControls.createTableNotes();
+    	} catch (Exception ex) {
+    		ex.printStackTrace();
+    		throw new Exception("Table creation failed.");
+    	}
+    	
         CardCollector cardCollector = new CardCollector();
         cardCollector.setVisible(true);
     }

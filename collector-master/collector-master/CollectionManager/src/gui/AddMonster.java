@@ -9,6 +9,9 @@ import card.Rarities;
 import controls.EnumPickers;
 import controls.db.CardControls;
 
+import java.awt.HeadlessException;
+import java.sql.SQLException;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -41,7 +44,7 @@ public class AddMonster extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButtonAddCard = new javax.swing.JButton();
+        jButton_ADDcard = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -91,12 +94,12 @@ public class AddMonster extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(102, 102, 102));
         jLabel1.setText("Monster card");
 
-        jButtonAddCard.setBackground(new java.awt.Color(51, 51, 51));
-        jButtonAddCard.setForeground(new java.awt.Color(0, 255, 0));
-        jButtonAddCard.setText("Add card");
-        jButtonAddCard.addActionListener(new java.awt.event.ActionListener() {
+        jButton_ADDcard.setBackground(new java.awt.Color(51, 51, 51));
+        jButton_ADDcard.setForeground(new java.awt.Color(0, 255, 0));
+        jButton_ADDcard.setText("Add card");
+        jButton_ADDcard.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAddCardActionPerformed(evt);
+                jButton_ADDcardActionPerformed(evt);
             }
         });
 
@@ -126,7 +129,7 @@ public class AddMonster extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 217, Short.MAX_VALUE)
-                .addComponent(jButtonAddCard)
+                .addComponent(jButton_ADDcard)
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
                 .addGap(18, 18, 18)
@@ -139,7 +142,7 @@ public class AddMonster extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonAddCard)
+                    .addComponent(jButton_ADDcard)
                     .addComponent(jButton2)
                     .addComponent(jButton3))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -341,7 +344,7 @@ public class AddMonster extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     
     /* Method jButtonAddCardActionPerformed set button to insert monster card to database */
-    private void jButtonAddCardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ADDcardActionPerformed
+    private void jButton_ADDcardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ADDcardActionPerformed
         String cardName = jTextFieldName.getText();			//card name
         String editionShort = jTextFieldEdition.getText();		//card edition short name
         String rarityShort = jTextFieldRarity.getText();	//card rarity short name
@@ -378,7 +381,19 @@ public class AddMonster extends javax.swing.JFrame {
         } else {
             MonsterCard monsterCard = new MonsterCard(cardName, rarity, edition, set, language, type,
             								 summMethod, atribute, level, atk, def);
-            CardControls.addMonsterCard(monsterCard);
+           try {
+			if (CardControls.addMonsterCard(monsterCard)) {
+				   JOptionPane.showMessageDialog(null, "Card saved");
+			   } else {
+				   JOptionPane.showMessageDialog(null, "Card was not saved");
+			   }
+		} catch (HeadlessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         }
         
         new AddCards().setVisible(true);
@@ -432,7 +447,7 @@ public class AddMonster extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButtonAddCard;
+    private javax.swing.JButton jButton_ADDcard;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
