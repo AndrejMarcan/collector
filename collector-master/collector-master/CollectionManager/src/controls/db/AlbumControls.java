@@ -26,7 +26,7 @@ public class AlbumControls {
     
 	/* Method addUser is used for new user registration */
     public static boolean addUser(String name, String password) throws SQLException {        
-        String query = "INSERT INTO `users`(`userName`, `userPassword`) VALUES (?,?)";
+        String query = "INSERT INTO users(userName, userPassword) VALUES (?,?)";
         boolean output = false;
 
         try (Connection connection = MyConnection.getConnection();
@@ -48,7 +48,7 @@ public class AlbumControls {
     	
         String username = name; //variable of user name
         String password = pass;	//variable for password
-        String query = "SELECT * FROM `users` WHERE `userName` =? AND `userPassword` =?";
+        String query = "SELECT * FROM users WHERE userName = ? AND userPassword = ?";
         boolean output = false;
         
         try (Connection connection = MyConnection.getConnection();
