@@ -35,15 +35,6 @@ public class TrapCard extends Card{
     public String getCardType() {
     	return CARD_TYPE;
     }
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getType() {
-        return type;
-    }
-    
-    
 }
 
 

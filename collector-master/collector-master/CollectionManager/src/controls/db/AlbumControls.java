@@ -25,85 +25,68 @@ import javax.swing.JOptionPane;
 public class AlbumControls {
     
 	/* Method addUser is used for new user registration */
-    public static void addUser(String name, String password) {        
-    	Connection connection = null;
-    	PreparedStatement preparedStatement = null;
+    public static boolean addUser(String name, String password) throws SQLException {        
         String query = "INSERT INTO `users`(`userName`, `userPassword`) VALUES (?,?)";
+        boolean output = false;
 
-        try {
-        	connection  = MyConnection.getConnection();
-            preparedStatement = connection.prepareStatement(query);
+        try (Connection connection = MyConnection.getConnection();
+        	 PreparedStatement preparedStatement = connection.prepareStatement(query); ) {
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
 
-            if (preparedStatement.executeUpdate() > 0) {
-            	//TODO replace JOptionPane..  
-            }
-        	preparedStatement.close();
-            connection.close();
+            preparedStatement.executeUpdate();
+            output = true;
         } catch (SQLException ex) {
         	ex.printStackTrace();
-    	}
+        	throw new SQLException("User INSERT unsuccessful !");
+        } 
+        return output;
     }
     
     /* Method login checks if user name and password are right */
-    public static void login(String name, String pass) {
-    	Connection connection = null;
-    	PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
+    public static boolean login(String name, String pass) throws SQLException {
+    	
         String username = name; //variable of user name
         String password = pass;	//variable for password
         String query = "SELECT * FROM `users` WHERE `userName` =? AND `userPassword` =?";
-
-        try {
-        	connection  = MyConnection.getConnection();
-            preparedStatement = connection.prepareStatement(query);
+        boolean output = false;
+        
+        try (Connection connection = MyConnection.getConnection();
+        	 PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery(); ) {
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
-            resultSet = preparedStatement.executeQuery();
 
-            if (resultSet.next()) {
-                CardCollector cardCollector = new CardCollector();
-                cardCollector.setVisible(true);
-                cardCollector.pack();
-                cardCollector.setLocationRelativeTo(null);
-            }
-            //TODO replace JOptionPane..  
-            resultSet.close();
-        	preparedStatement.close();
-            connection.close();
+	            if (resultSet.next()) {
+	                output = true;
+	            }          
         } catch (SQLException ex) {
         	ex.printStackTrace();
-        }
+        	throw new SQLException("Login SELECT unsuccessful !");
+        } 
+        return output;
     }
     
     /* Method loadAlbum fetches data from database for every card and displays them in gui table */
-    public static void loadAlbum() {
-    	Connection connection = null;
-    	PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        String query = "SELECT * FROM `album`";
-        
-        try {
-        	connection  = MyConnection.getConnection();
-            preparedStatement = connection.prepareStatement(query);
-            resultSet = preparedStatement.executeQuery();
-            
-            Album.jTableAlbum.setModel(DbUtils.resultSetToTableModel(resultSet));
+    public static boolean loadAlbum() throws SQLException { //TODO need some editing remove parts with jTable
+        String query = "SELECT * FROM album";
+        boolean output = false;
+        try (Connection connection = MyConnection.getConnection();
+        	 PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery(); ) {
+        	
+            Album.jTableAlbum.setModel(DbUtils.resultSetToTableModel(resultSet)); 
             
             while(resultSet.next()) {
             	Album.jTableAlbum.setModel(DbUtils.resultSetToTableModel(resultSet));
             }
-          //TODO replace JOptionPane..  
-            resultSet.close();
-        	preparedStatement.close();
-            connection.close();
-        } catch (Exception ex) {
+            output = true;
+        } catch (SQLException ex) {
         	ex.printStackTrace();
-        }       
-    }
-    
-    
+        	throw new SQLException("Abum SELECT unsuccessful !");
+        } 
+        return output;
+    }    
 }
 
 

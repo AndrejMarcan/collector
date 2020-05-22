@@ -3,6 +3,8 @@
  */
 package gui;
 
+import java.sql.SQLException;
+
 import javax.swing.JFrame;
 
 import controls.db.AlbumControls;
@@ -219,7 +221,12 @@ public class CardCollectorLogin extends javax.swing.JFrame {
     private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLogin_ActionPerformed
         String username = jTextLoginUsername.getText();
         String password = String.valueOf(jPasswordField1.getPassword());        
-        AlbumControls.login(username, password);
+        try {
+			AlbumControls.login(username, password);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         
         this.dispose();  
     }//GEN-LAST:event_jButtonLogin_ActionPerformed

@@ -10,6 +10,9 @@ import card.TrapCard;
 import controls.EnumPickers;
 import controls.db.CardControls;
 
+import java.awt.HeadlessException;
+import java.sql.SQLException;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -251,7 +254,7 @@ public class AddTrap extends javax.swing.JFrame {
         String rarityShort = jTextFieldRarity.getText();		//card rarity short name
         String set = jTextFieldSet.getText();			//card set
         String language = jTextFieldLanguage.getText();	//card language
-        String type = jTextFieldType.getText();			//trap card type
+        String type = jTextFieldType.getText();	//trap card type
         
         Rarities rarity = EnumPickers.rarityPicker(rarityShort);	
         Editions edition = EnumPickers.editionPicker(editionShort);
@@ -266,7 +269,19 @@ public class AddTrap extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Add type");
         } else {
             Card trapCard = new TrapCard(cardName, rarity, edition, set, language, type);
-            CardControls.addCard(trapCard);
+            try {
+				if (CardControls.addCard(trapCard)) {
+				   JOptionPane.showMessageDialog(null, "Card saved");
+				} else {
+				   JOptionPane.showMessageDialog(null, "Card was not saved");
+				}
+			} catch (HeadlessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(null, e.getMessage());
+				e.printStackTrace();
+			}
         }
         
         new AddCards().setVisible(true);

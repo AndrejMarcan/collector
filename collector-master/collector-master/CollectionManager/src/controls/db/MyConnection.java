@@ -5,7 +5,6 @@ package controls.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import javax.swing.JOptionPane;
 
 /**
  * The MyConnection class provides method to connect application to database.
@@ -17,12 +16,13 @@ public class MyConnection {
     
 	/* Method getConnection provides connection to database */
     public static Connection getConnection() {
+    	final String url= "jdbc:postgresql://localhost:5432/card_collector";
+    	final String user = "postgres";
+    	final String password = "root";
         Connection connection = null;	
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/cardcollectordb"
-                    + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false"   //deals with time-zone problem
-                    + "&serverTimezone=UTC", "root", "");
+        	Class.forName("org.postgresql.Driver");
+            connection = DriverManager.getConnection(url, user, password);
             return connection;            
         } catch (Exception ex) {
         	ex.printStackTrace();
