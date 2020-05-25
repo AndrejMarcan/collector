@@ -1,7 +1,7 @@
 /*
  * Copyright (c) ...
  */
-package controls;
+package main.java.guiutils;
 
 import java.io.BufferedReader;
 import java.nio.file.Files;

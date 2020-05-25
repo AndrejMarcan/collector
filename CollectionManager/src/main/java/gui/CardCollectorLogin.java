@@ -1,13 +1,13 @@
 /*
  * Copyright (c) ...
  */
-package gui;
+package main.java.gui;
 
 import java.sql.SQLException;
 
 import javax.swing.JFrame;
 
-import controls.db.AlbumControls;
+import main.java.dbutils.AlbumControls;
 
 /**
  * The AddSpell class connects user interface to back end functions and classes for spell card.

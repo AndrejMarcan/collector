@@ -1,13 +1,13 @@
 /*
  * Copyright (c) ...
  */
-package gui;
+package main.java.gui;
 
-import controls.EnumPickers;
-import controls.db.CardControls;
 import main.java.dal.Editions;
 import main.java.dal.MonsterCard;
 import main.java.dal.Rarities;
+import main.java.dbutils.CardControls;
+import main.java.guiutils.EnumPickers;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -395,7 +395,7 @@ public class MonsterDetails extends javax.swing.JFrame {
                                                 type,summMethod, attribute, level,
                                                 atk, def);
             try {
-				if (CardControls.editMonsterCard(monsterCard, cardId) && CardControls.addNotes(cardId, text)) {
+				if (CardControls.editCard(monsterCard, cardId) && CardControls.addNotes(cardId, text)) {
 					JOptionPane.showMessageDialog(null, "Card edited succesfully");
 				} else {
 					JOptionPane.showMessageDialog(null, "Card edited succesfully");

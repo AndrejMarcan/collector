@@ -1,13 +1,13 @@
 /*
  * Copyright (c) ...
  */
-package gui;
+package main.java.gui;
 
-import controls.EnumPickers;
-import controls.db.CardControls;
 import main.java.dal.Editions;
 import main.java.dal.MonsterCard;
 import main.java.dal.Rarities;
+import main.java.dbutils.CardControls;
+import main.java.guiutils.EnumPickers;
 
 import java.awt.HeadlessException;
 import java.sql.SQLException;
@@ -382,7 +382,7 @@ public class AddMonster extends javax.swing.JFrame {
             MonsterCard monsterCard = new MonsterCard(cardName, rarity, edition, set, language, type,
             								 summMethod, atribute, level, atk, def);
            try {
-			if (CardControls.addMonsterCard(monsterCard)) {
+			if (CardControls.addCard(monsterCard)) {
 				   JOptionPane.showMessageDialog(null, "Card saved");
 			   } else {
 				   JOptionPane.showMessageDialog(null, "Card was not saved");

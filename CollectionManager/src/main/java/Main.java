@@ -3,8 +3,8 @@
  */
 package main.java;
 
-import controls.db.DbControls;
-import gui.CardCollector;
+import main.java.dbutils.DbControl;
+import main.java.gui.CardCollector;
 
 /**
  * Main class of the application. Creates new object of CardCollector class and turns it visible.
@@ -15,7 +15,7 @@ import gui.CardCollector;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-    	DbControls dbControls = new DbControls();
+    	DbControl dbControls = new DbControl();
     	try {
     		dbControls.createTableAlbum();
     		dbControls.createTableMonsterDetail();

@@ -1,7 +1,7 @@
 /*
  * Copyright (c) ...
  */
-package gui;
+package main.java.gui;
 
 /**
  * The AddCard class connects user interface to backend functions and classes.
