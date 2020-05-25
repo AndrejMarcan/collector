@@ -27,7 +27,7 @@ public class AlbumControls {
         try (Connection connection = MyConnection.getConnection();
         	 PreparedStatement preparedStatement = connection.prepareStatement(query); ) {
         	connection.setAutoCommit(false);
-        	Savepoint save = connection.setSavepoint("save");
+        	
         	try {
         		preparedStatement.setString(1, name);
                 preparedStatement.setString(2, password);
@@ -37,7 +37,7 @@ public class AlbumControls {
         		ex.printStackTrace();
         		throw new SQLException("INSERT user unsuccessful !");
         	} finally {
-        		dbCommit(connection, output, save);                	
+        		dbCommit(connection, output);                	
         	}
         	connection.setAutoCommit(true);
             
@@ -60,7 +60,6 @@ public class AlbumControls {
         	 PreparedStatement preparedStatement = connection.prepareStatement(query);
              ResultSet resultSet = preparedStatement.executeQuery(); ) {
         	connection.setAutoCommit(false);
-        	Savepoint save = connection.setSavepoint("save");
         	
         	try {
         		preparedStatement.setString(1, username);
@@ -73,7 +72,7 @@ public class AlbumControls {
         		ex.printStackTrace();
         		throw new SQLException("SELECT user unsuccessful !");
         	} finally {
-        		dbCommit(connection, output, save);                	
+        		dbCommit(connection, output);                	
         	}
         	connection.setAutoCommit(true);
             
@@ -92,7 +91,6 @@ public class AlbumControls {
         	 PreparedStatement preparedStatement = connection.prepareStatement(query);
              ResultSet resultSet = preparedStatement.executeQuery(); ) {
         	connection.setAutoCommit(false);
-        	Savepoint save = connection.setSavepoint("save");
         	
         	try {
                 Album.jTableAlbum.setModel(DbUtils.resultSetToTableModel(resultSet)); 
@@ -104,7 +102,7 @@ public class AlbumControls {
         		ex.printStackTrace();
         		throw new SQLException("SELECT unsuccessful !");
         	} finally {
-        		dbCommit(connection, output, save);                	
+        		dbCommit(connection, output);                	
         	}
         	connection.setAutoCommit(true);
         	
@@ -115,12 +113,12 @@ public class AlbumControls {
         return output;
     }    
     
-    private static void dbCommit(Connection connection, Boolean output, Savepoint savepoint) throws SQLException {
+    private static void dbCommit(Connection connection, Boolean output) throws SQLException {
 		if(connection != null) {
     		if(output) {
         		connection.commit();    
         	} else {
-        		connection.rollback(savepoint);    
+        		connection.rollback();    
         	}
     	}
 	}

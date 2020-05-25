@@ -21,9 +21,9 @@ public class DbControls {
 				+ "ALTER TABLE public.album OWNER to postgres;";
 
 		try (Connection conn = MyConnection.getConnection();
-		PreparedStatement ps = conn.prepareCall(query); ) {
+				PreparedStatement ps = conn.prepareCall(query); ) {
 			boolean output = false;	
-			Savepoint save = conn.setSavepoint("save");
+
 			try {
 				ps.execute();
 				output = true;
@@ -31,7 +31,7 @@ public class DbControls {
 				ex.printStackTrace();
 				throw new SQLException("CREATE TABLE album SQL unsuccessful");
 			} finally {
-	    		dbCommit(conn, output, save);                	
+	    		dbCommit(conn, output);                	
 	    	}
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -55,9 +55,9 @@ public class DbControls {
 					+ " ALTER TABLE public.monster_details OWNER to postgres;";
 	
 		try (Connection conn = MyConnection.getConnection();
-		PreparedStatement ps = conn.prepareCall(query); ) {
+				PreparedStatement ps = conn.prepareCall(query); ) {
 			boolean output = false;
-			Savepoint save = conn.setSavepoint("save");
+
 			try {
 				ps.execute();
 				output = true;
@@ -65,7 +65,7 @@ public class DbControls {
 				ex.printStackTrace();
 				throw new SQLException("CREATE TABLE monster details SQL unsuccessful");
 			} finally {
-	    		dbCommit(conn, output, save);                	
+	    		dbCommit(conn, output);                	
 	    	}
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -85,9 +85,9 @@ public class DbControls {
 					+ " ALTER TABLE public.notes OWNER to postgres;";
 	
 		try (Connection conn = MyConnection.getConnection();
-		PreparedStatement ps = conn.prepareCall(query); ) {
+				PreparedStatement ps = conn.prepareCall(query); ) {
 			boolean output = false;
-			Savepoint save = conn.setSavepoint("save");
+
 			try {
 				ps.execute();
 				output = true;
@@ -95,7 +95,7 @@ public class DbControls {
 				ex.printStackTrace();
 				throw new SQLException("CREATE TABLE notes SQL unsuccessful");
 			} finally {
-	    		dbCommit(conn, output, save);                	
+	    		dbCommit(conn, output);                	
 	    	}
 		}catch (Exception ex) {
 			ex.printStackTrace();
@@ -103,12 +103,12 @@ public class DbControls {
 		}
 	}
 	
-	private static void dbCommit(Connection connection, Boolean output, Savepoint savepoint) throws SQLException {
+	private static void dbCommit(Connection connection, Boolean output) throws SQLException {
 		if(connection != null) {
     		if(output) {
         		connection.commit();    
         	} else {
-        		connection.rollback(savepoint);    
+        		connection.rollback();    
         	}
     	}
 	}
