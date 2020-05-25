@@ -1,7 +1,7 @@
 /*
  * Copyright (c) ...
  */
-package controls;
+package main.java.guiutils;
 
 import java.awt.Desktop;
 import java.io.IOException;

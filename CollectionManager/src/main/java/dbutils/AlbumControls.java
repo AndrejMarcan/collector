@@ -1,12 +1,14 @@
 /*
  * Copyright (c) ...
  */
-package controls.db;
+package main.java.dbutils;
 
-import gui.Album;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
+import main.java.gui.Album;
+
 import java.sql.ResultSet;
 
 /**
@@ -19,7 +21,7 @@ import java.sql.ResultSet;
 public class AlbumControls {
     
 	/* Method addUser is used for new user registration */
-    public static boolean addUser(String name, String password) throws SQLException {        
+    public boolean addUser(String name, String password) throws SQLException {        
         String query = "INSERT INTO users(userName, userPassword) VALUES (?,?)";
         boolean output = false;
 
@@ -48,7 +50,7 @@ public class AlbumControls {
     }
     
     /* Method login checks if user name and password are right */
-    public static boolean login(String name, String pass) throws SQLException {
+    public boolean login(String name, String pass) throws SQLException {
     	
         String username = name; //variable of user name
         String password = pass;	//variable for password
@@ -83,7 +85,7 @@ public class AlbumControls {
     }
     
     /* Method loadAlbum fetches data from database for every card and displays them in gui table */
-    public static boolean loadAlbum() throws SQLException { //TODO need some editing remove parts with jTable
+    public boolean loadAlbum() throws SQLException { //TODO need some editing remove parts with jTable
         String query = "SELECT * FROM album";
         boolean output = false;
         try (Connection connection = MyConnection.getConnection();
@@ -112,7 +114,7 @@ public class AlbumControls {
         return output;
     }    
     
-    private static void dbCommit(Connection connection, Boolean output) throws SQLException {
+    private void dbCommit(Connection connection, Boolean output) throws SQLException {
 		if(connection != null) {
     		if(output) {
         		connection.commit();    

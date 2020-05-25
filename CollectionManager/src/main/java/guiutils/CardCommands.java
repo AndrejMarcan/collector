@@ -1,7 +1,7 @@
 /*
  * Copyright (c) ...
  */
-package controls;
+package main.java.guiutils;
 
 import main.java.dal.Card;
 

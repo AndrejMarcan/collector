@@ -1,4 +1,4 @@
-package controls;
+package main.java.guiutils;
 
 import main.java.dal.Editions;
 import main.java.dal.Rarities;

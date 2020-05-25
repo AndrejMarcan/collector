@@ -1,18 +1,18 @@
 /*
  * Copyright (c) ...
  */
-package gui;
+package main.java.gui;
 
-import controls.CardCommands;
-import controls.EnumPickers;
-import controls.WebViewControl;
-import controls.db.CardControls;
 import main.java.dal.Card;
 import main.java.dal.Editions;
 import main.java.dal.MonsterCard;
 import main.java.dal.Rarities;
 import main.java.dal.SpellCard;
 import main.java.dal.TrapCard;
+import main.java.dbutils.CardControls;
+import main.java.guiutils.CardCommands;
+import main.java.guiutils.EnumPickers;
+import main.java.guiutils.WebViewControl;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -39,7 +39,7 @@ public class Album extends javax.swing.JFrame {
         this.initComponents();
         this.setLocationRelativeTo(null);
         try {
-			controls.db.AlbumControls.loadAlbum();
+			main.java.dbutils.AlbumControls.loadAlbum();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -199,7 +199,7 @@ public class Album extends javax.swing.JFrame {
         String cell = jTableAlbum.getModel().getValueAt(row,0).toString();
         
         try {
-			controls.db.CardControls.deleteCard(cell);
+			main.java.dbutils.CardControls.deleteCard(cell);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -209,7 +209,7 @@ public class Album extends javax.swing.JFrame {
     /* Method jButtonUpadateTableActionPerformed sets button to update date in table */
     private void jButtonUpadateTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_UpadateTableActionPerformed
         try {
-			controls.db.AlbumControls.loadAlbum();
+			main.java.dbutils.AlbumControls.loadAlbum();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

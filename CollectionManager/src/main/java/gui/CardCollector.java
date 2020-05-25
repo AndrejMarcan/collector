@@ -1,7 +1,7 @@
 /*
  * Copyright (c) ...
  */
-package gui;
+package main.java.gui;
 
 /**
  * The CardCollector class is base gui window and connects user interface to back end functions and classes.
