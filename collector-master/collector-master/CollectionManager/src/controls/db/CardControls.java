@@ -30,7 +30,7 @@ public class CardControls {
             	PreparedStatement preparedStatementNotes = connection.prepareStatement(queryNotes);) {
             	
             	connection.setAutoCommit(false);
-            	Savepoint save = connection.setSavepoint("save");
+
                 try {
                 	preparedStatement.setString(1, monsterCard.getName());
                     preparedStatement.setString(2, monsterCard.getSet());
@@ -57,7 +57,7 @@ public class CardControls {
                 	
                 	throw new SQLException("INSERT unsuccessful !");
                 } finally {
-                	dbCommit(connection, output, save);                	
+                	dbCommit(connection, output);                	
                 }
                   
             } catch (SQLException ex) {
@@ -79,7 +79,6 @@ public class CardControls {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
         	PreparedStatement preparedStatementDetails = connection.prepareStatement(queryDetails)) {        	
         	connection.setAutoCommit(false);
-        	Savepoint save = connection.setSavepoint("save");
         	
         	try {
         		preparedStatement.setString(1, monsterCard.getName());
@@ -101,7 +100,7 @@ public class CardControls {
             	ex1.printStackTrace();
             	throw new SQLException("UPDATE unsuccessful !");
             } finally {
-            	dbCommit(connection, output, save);                	
+            	dbCommit(connection, output);                	
             }
         	connection.setAutoCommit(true);
         	
@@ -120,7 +119,6 @@ public class CardControls {
         try (Connection connection  = MyConnection.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query); ) {        	
         	connection.setAutoCommit(false);
-        	Savepoint save = connection.setSavepoint("save");
         	
         	try {
         		preparedStatement.setString(1, card.getName());
@@ -137,7 +135,7 @@ public class CardControls {
                 ex.printStackTrace();
                 throw new SQLException("INSERT unsuccessful !");
             } finally {
-            	dbCommit(connection, output, save);                	
+            	dbCommit(connection, output);                	
             }
         	connection.setAutoCommit(true);       	
         } catch (SQLException ex) {
@@ -155,7 +153,6 @@ public class CardControls {
         try (Connection connection  = MyConnection.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);) {
         	connection.setAutoCommit(false);
-        	Savepoint save = connection.setSavepoint("save");
         	
         	try {
         		preparedStatement.setString(1, card.getName());
@@ -170,7 +167,7 @@ public class CardControls {
                 ex.printStackTrace();
                 throw new SQLException("UPDATE unsuccessful !");
             } finally {
-            	dbCommit(connection, output, save);                	
+            	dbCommit(connection, output);                	
             }
         	connection.setAutoCommit(true);
         	
@@ -189,7 +186,6 @@ public class CardControls {
         try (Connection connection  = MyConnection.getConnection();
         	PreparedStatement preparedStatement = connection.prepareStatement(query); ) {
         	connection.setAutoCommit(false);
-        	Savepoint save = connection.setSavepoint("save");
         	
         		try {
         			preparedStatement.execute();
@@ -198,7 +194,7 @@ public class CardControls {
         			ex.printStackTrace();
         			throw new SQLException("DELETE unsuccessful !");
         		} finally {
-        			dbCommit(connection, output, save);                	
+        			dbCommit(connection, output);                	
         		}
         	connection.setAutoCommit(true);    
         	
@@ -220,7 +216,6 @@ public class CardControls {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();) {
         	connection.setAutoCommit(false);
-        	Savepoint save = connection.setSavepoint("save");
         	
         	try {
         		while(resultSet.next()) {
@@ -250,7 +245,7 @@ public class CardControls {
         		ex.printStackTrace();
         		throw new SQLException("SELECT unsuccessful !");
         	} finally {
-        		dbCommit(connection, output, save);                	
+        		dbCommit(connection, output);                	
         	}
         	connection.setAutoCommit(true);
             return details;
@@ -268,7 +263,6 @@ public class CardControls {
         try(Connection connection  = MyConnection.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);) {
         	connection.setAutoCommit(false);
-        	Savepoint save = connection.setSavepoint("save");
         	
         	try {
                 preparedStatement.setString(1, text);		// note text
@@ -278,7 +272,7 @@ public class CardControls {
         		ex.printStackTrace();
         		throw new SQLException("UPDATE note unsuccessful !");
         	} finally {
-        		dbCommit(connection, output, save);                	
+        		dbCommit(connection, output);                	
         	}
         	connection.setAutoCommit(true);
 
@@ -299,7 +293,6 @@ public class CardControls {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
         	ResultSet resultSet = preparedStatement.executeQuery();) {
         	connection.setAutoCommit(false);
-        	Savepoint save = connection.setSavepoint("save");
         	
         	try {
         		while(resultSet.next()) {
@@ -311,7 +304,7 @@ public class CardControls {
         		ex.printStackTrace();
         		throw new SQLException("SELECT note unsuccessful !");
         	} finally {
-        		dbCommit(connection, output, save);                	
+        		dbCommit(connection, output);                	
         	}
         	connection.setAutoCommit(true);
         	return notes;
@@ -322,12 +315,12 @@ public class CardControls {
         }
     }
     
-    private static void dbCommit(Connection connection, Boolean output, Savepoint savepoint) throws SQLException {
+    private static void dbCommit(Connection connection, Boolean output) throws SQLException {
 		if(connection != null) {
     		if(output) {
         		connection.commit();    
         	} else {
-        		connection.rollback(savepoint);    
+        		connection.rollback();    
         	}
     	}
 	}
