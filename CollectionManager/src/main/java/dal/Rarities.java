@@ -1,4 +1,4 @@
-package card;
+package main.java.dal;
 
 /**
  * The Rarities enum serves as the list of all possible rarities of the cards.

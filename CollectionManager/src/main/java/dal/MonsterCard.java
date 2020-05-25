@@ -1,7 +1,7 @@
 /*
  * Copyright (c) ...
  */
-package card;
+package main.java.dal;
 
 /**
  * The MonsterCard class provides methods for adding a new monster card to database,
