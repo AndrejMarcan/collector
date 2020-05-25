@@ -2,6 +2,8 @@ package controls.db;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Savepoint;
 
 public class DbControls {
 	public void createTableAlbum() throws Exception {
@@ -20,7 +22,17 @@ public class DbControls {
 
 		try (Connection conn = MyConnection.getConnection();
 		PreparedStatement ps = conn.prepareCall(query); ) {
-		ps.execute();
+			boolean output = false;	
+			Savepoint save = conn.setSavepoint("save");
+			try {
+				ps.execute();
+				output = true;
+			} catch(SQLException ex) {
+				ex.printStackTrace();
+				throw new SQLException("CREATE TABLE album SQL unsuccessful");
+			} finally {
+	    		dbCommit(conn, output, save);                	
+	    	}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw new Exception("CREATE TABLE album unsuccessful");
@@ -44,11 +56,21 @@ public class DbControls {
 	
 		try (Connection conn = MyConnection.getConnection();
 		PreparedStatement ps = conn.prepareCall(query); ) {
-			ps.execute();
-		}catch (Exception ex) {
+			boolean output = false;
+			Savepoint save = conn.setSavepoint("save");
+			try {
+				ps.execute();
+				output = true;
+			} catch(SQLException ex) {
+				ex.printStackTrace();
+				throw new SQLException("CREATE TABLE monster details SQL unsuccessful");
+			} finally {
+	    		dbCommit(conn, output, save);                	
+	    	}
+		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw new Exception("CREATE TABLE monster_details unsuccessful");
-		}
+		} 
 	}
 	
 	public void createTableNotes() throws Exception {
@@ -64,10 +86,30 @@ public class DbControls {
 	
 		try (Connection conn = MyConnection.getConnection();
 		PreparedStatement ps = conn.prepareCall(query); ) {
-			ps.execute();
+			boolean output = false;
+			Savepoint save = conn.setSavepoint("save");
+			try {
+				ps.execute();
+				output = true;
+			} catch(SQLException ex) {
+				ex.printStackTrace();
+				throw new SQLException("CREATE TABLE notes SQL unsuccessful");
+			} finally {
+	    		dbCommit(conn, output, save);                	
+	    	}
 		}catch (Exception ex) {
 			ex.printStackTrace();
 			throw new Exception("CREATE TABLE notes unsuccessful");
 		}
+	}
+	
+	private static void dbCommit(Connection connection, Boolean output, Savepoint savepoint) throws SQLException {
+		if(connection != null) {
+    		if(output) {
+        		connection.commit();    
+        	} else {
+        		connection.rollback(savepoint);    
+        	}
+    	}
 	}
 }

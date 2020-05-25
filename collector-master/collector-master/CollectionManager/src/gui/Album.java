@@ -223,40 +223,7 @@ public class Album extends javax.swing.JFrame {
         String cell = jTableAlbum.getModel().getValueAt(row,0).toString();
         
         if (cardType.equalsIgnoreCase("Monster card")) {
-        	try {
-	            String name = jTableAlbum.getModel().getValueAt(row,1).toString();
-	            String set = jTableAlbum.getModel().getValueAt(row,2).toString();
-	            String editionShort = jTableAlbum.getModel().getValueAt(row,3).toString();
-	            String language = jTableAlbum.getModel().getValueAt(row,4).toString();
-	            String rarityShort = jTableAlbum.getModel().getValueAt(row,6).toString();      
-	            String type = jTableAlbum.getModel().getValueAt(row,7).toString();
-	            String summMethod = jTableAlbum.getModel().getValueAt(row,8).toString();
-	            String attribute = jTableAlbum.getModel().getValueAt(row,9).toString();
-	            String level = jTableAlbum.getModel().getValueAt(row,10).toString();
-	            String atk = jTableAlbum.getModel().getValueAt(row,11).toString();
-	            String def = jTableAlbum.getModel().getValueAt(row,12).toString();
-	            
-	            Rarities rarity = EnumPickers.rarityPicker(rarityShort);	
-	            Editions edition = EnumPickers.editionPicker(editionShort);
-	            
-	            MonsterCard monsterCard = new MonsterCard(name, rarity, edition,set, language,
-	            					   type,summMethod, attribute, level,
-	            					   atk, def);
-	            try {
-					if (CardControls.editMonsterCard(monsterCard, cell)) {
-						JOptionPane.showMessageDialog(null, "Card edited succesfully");
-					} else {
-						JOptionPane.showMessageDialog(null, "Card edited succesfully");
-					}
-				} catch (SQLException e) {
-					JOptionPane.showMessageDialog(null, e.getMessage());
-					e.printStackTrace();
-				}
-        	} catch (NullPointerException ex) {
-        		ex.printStackTrace();
-        		JOptionPane.showMessageDialog(null, ex.getMessage());
-        	}
-            
+        	JOptionPane.showMessageDialog(null, "Monster card need to be edited in details window.");
         } else if (cardType.equalsIgnoreCase("Spell card")) {
             try {
             	String name = jTableAlbum.getModel().getValueAt(row,1).toString();

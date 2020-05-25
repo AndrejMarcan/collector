@@ -30,33 +30,41 @@ public class CardControls {
             	PreparedStatement preparedStatementNotes = connection.prepareStatement(queryNotes);) {
             	
             	connection.setAutoCommit(false);
-                
-                preparedStatement.setString(1, monsterCard.getName());
-                preparedStatement.setString(2, monsterCard.getSet());
-                preparedStatement.setString(3, monsterCard.getEdition());
-                preparedStatement.setString(4, monsterCard.getLanguage());
-                preparedStatement.setString(5, monsterCard.getCardType());
-                preparedStatement.setString(6, monsterCard.getRarity());
-                preparedStatement.setString(7, monsterCard.getType());
-                preparedStatement.executeUpdate();
-                
-                preparedStatementDetails.setString(1, monsterCard.getSummMethod());
-                preparedStatementDetails.setString(2, monsterCard.getAttribute());
-                preparedStatementDetails.setString(3, monsterCard.getLevel());
-                preparedStatementDetails.setString(4, monsterCard.getAtk());
-                preparedStatementDetails.setString(5, monsterCard.getDef());
-                preparedStatementDetails.executeUpdate();
-                
-                preparedStatementNotes.setString(1, "note");
-                preparedStatementNotes.executeUpdate();
-                
-                connection.commit();
-                connection.setAutoCommit(true);                
-                output = true;
+            	Savepoint save = connection.setSavepoint("save");
+                try {
+                	preparedStatement.setString(1, monsterCard.getName());
+                    preparedStatement.setString(2, monsterCard.getSet());
+                    preparedStatement.setString(3, monsterCard.getEdition());
+                    preparedStatement.setString(4, monsterCard.getLanguage());
+                    preparedStatement.setString(5, monsterCard.getCardType());
+                    preparedStatement.setString(6, monsterCard.getRarity());
+                    preparedStatement.setString(7, monsterCard.getType());
+                    preparedStatement.executeUpdate();
+
+                    preparedStatementDetails.setString(1, monsterCard.getSummMethod());
+                    preparedStatementDetails.setString(2, monsterCard.getAttribute());
+                    preparedStatementDetails.setString(3, monsterCard.getLevel());
+                    preparedStatementDetails.setString(4, monsterCard.getAtk());
+                    preparedStatementDetails.setString(5, monsterCard.getDef());
+                    preparedStatementDetails.executeUpdate();
+
+                    preparedStatementNotes.setString(1, "note");
+                    preparedStatementNotes.executeUpdate();
+
+                    output = true;
+                } catch (SQLException ex1) {
+                	ex1.printStackTrace();
+                	
+                	throw new SQLException("INSERT unsuccessful !");
+                } finally {
+                	dbCommit(connection, output, save);                	
+                }
+                  
             } catch (SQLException ex) {
             	ex.printStackTrace();
             	throw new SQLException("Card INSERT unsuccessful !");
             } 
+            
       return output;
     }
 	
@@ -71,24 +79,32 @@ public class CardControls {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
         	PreparedStatement preparedStatementDetails = connection.prepareStatement(queryDetails)) {        	
         	connection.setAutoCommit(false);
+        	Savepoint save = connection.setSavepoint("save");
         	
-        	preparedStatement.setString(1, monsterCard.getName());
-            preparedStatement.setString(2, monsterCard.getRarity());
-            preparedStatement.setString(3, monsterCard.getEdition());
-            preparedStatement.setString(4, monsterCard.getSet());
-            preparedStatement.setString(5, monsterCard.getLanguage());
-            preparedStatement.setString(6, monsterCard.getType());
-            preparedStatement.executeUpdate(); 
-            
-            preparedStatementDetails.setString(1, monsterCard.getSummMethod());
-            preparedStatementDetails.setString(2, monsterCard.getAttribute());
-            preparedStatementDetails.setString(3, monsterCard.getLevel());
-            preparedStatementDetails.setString(4, monsterCard.getAtk());
-            preparedStatementDetails.setString(5, monsterCard.getDef());
-            preparedStatementDetails.executeUpdate();
-            connection.commit();
-            connection.setAutoCommit(true);
-            output = true;
+        	try {
+        		preparedStatement.setString(1, monsterCard.getName());
+                preparedStatement.setString(2, monsterCard.getRarity());
+                preparedStatement.setString(3, monsterCard.getEdition());
+                preparedStatement.setString(4, monsterCard.getSet());
+                preparedStatement.setString(5, monsterCard.getLanguage());
+                preparedStatement.setString(6, monsterCard.getType());
+                preparedStatement.executeUpdate(); 
+                
+                preparedStatementDetails.setString(1, monsterCard.getSummMethod());
+                preparedStatementDetails.setString(2, monsterCard.getAttribute());
+                preparedStatementDetails.setString(3, monsterCard.getLevel());
+                preparedStatementDetails.setString(4, monsterCard.getAtk());
+                preparedStatementDetails.setString(5, monsterCard.getDef());
+                preparedStatementDetails.executeUpdate();
+                output = true;
+        	} catch (SQLException ex1) {
+            	ex1.printStackTrace();
+            	throw new SQLException("UPDATE unsuccessful !");
+            } finally {
+            	dbCommit(connection, output, save);                	
+            }
+        	connection.setAutoCommit(true);
+        	
         } catch (Exception ex) {
         	ex.printStackTrace();
         	throw new SQLException("Card UPDATE unsuccessful !");
@@ -102,17 +118,28 @@ public class CardControls {
         boolean output = false;
 
         try (Connection connection  = MyConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query); ) {
-            preparedStatement.setString(1, card.getName());
-            preparedStatement.setString(2, card.getRarity());
-            preparedStatement.setString(3, card.getEdition());
-            preparedStatement.setString(4, card.getSet());
-            preparedStatement.setString(5, card.getLanguage());
-            preparedStatement.setString(6, card.getType());
-            preparedStatement.setString(7, card.getCardType());
+            PreparedStatement preparedStatement = connection.prepareStatement(query); ) {        	
+        	connection.setAutoCommit(false);
+        	Savepoint save = connection.setSavepoint("save");
+        	
+        	try {
+        		preparedStatement.setString(1, card.getName());
+                preparedStatement.setString(2, card.getRarity());
+                preparedStatement.setString(3, card.getEdition());
+                preparedStatement.setString(4, card.getSet());
+                preparedStatement.setString(5, card.getLanguage());
+                preparedStatement.setString(6, card.getType());
+                preparedStatement.setString(7, card.getCardType());
 
-            preparedStatement.executeUpdate();
-            output = true;
+                preparedStatement.executeUpdate();
+                output = true;
+        	} catch (SQLException ex) {
+                ex.printStackTrace();
+                throw new SQLException("INSERT unsuccessful !");
+            } finally {
+            	dbCommit(connection, output, save);                	
+            }
+        	connection.setAutoCommit(true);       	
         } catch (SQLException ex) {
             ex.printStackTrace();
             throw new SQLException("Card INSERT unsuccessful !");
@@ -127,14 +154,26 @@ public class CardControls {
         
         try (Connection connection  = MyConnection.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);) {
-        	preparedStatement.setString(1, card.getName());
-        	preparedStatement.setString(2, card.getRarity());
-        	preparedStatement.setString(3, card.getEdition());
-        	preparedStatement.setString(4, card.getSet());
-        	preparedStatement.setString(5, card.getLanguage());
-        	preparedStatement.setString(6, card.getType());
-            preparedStatement.executeUpdate();
-            output = true;
+        	connection.setAutoCommit(false);
+        	Savepoint save = connection.setSavepoint("save");
+        	
+        	try {
+        		preparedStatement.setString(1, card.getName());
+            	preparedStatement.setString(2, card.getRarity());
+            	preparedStatement.setString(3, card.getEdition());
+            	preparedStatement.setString(4, card.getSet());
+            	preparedStatement.setString(5, card.getLanguage());
+            	preparedStatement.setString(6, card.getType());
+                preparedStatement.executeUpdate();
+                output = true;
+        	} catch (SQLException ex) {
+                ex.printStackTrace();
+                throw new SQLException("UPDATE unsuccessful !");
+            } finally {
+            	dbCommit(connection, output, save);                	
+            }
+        	connection.setAutoCommit(true);
+        	
         } catch (Exception ex) {
         	ex.printStackTrace();
         	throw new SQLException("Card UPDATE unsuccessful !");
@@ -149,8 +188,20 @@ public class CardControls {
         
         try (Connection connection  = MyConnection.getConnection();
         	PreparedStatement preparedStatement = connection.prepareStatement(query); ) {
-            preparedStatement.execute();
-            output = true;
+        	connection.setAutoCommit(false);
+        	Savepoint save = connection.setSavepoint("save");
+        	
+        		try {
+        			preparedStatement.execute();
+                    output = true;		
+        		} catch (SQLException ex) {
+        			ex.printStackTrace();
+        			throw new SQLException("DELETE unsuccessful !");
+        		} finally {
+        			dbCommit(connection, output, save);                	
+        		}
+        	connection.setAutoCommit(true);    
+        	
         } catch (SQLException ex) {
         	ex.printStackTrace();
         	throw new SQLException("DELETE unsuccessful !");
@@ -163,34 +214,47 @@ public class CardControls {
         ArrayList<String> details = new ArrayList<String>();		//creating new ArrayList of Strings
         String query = "SELECT * FROM album WHERE id = " + cell; 	//cell is table block where card ID is found
         String queryDetails = "SELECT * FROM monster_details WHERE id_monster = " + cell; 
+        boolean output = false;
         
         try(Connection connection  = MyConnection.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();) {
-
-            while(resultSet.next()) {
-                details.add(resultSet.getString("id")); 
-                details.add(resultSet.getString("name"));
-                details.add(resultSet.getString("set"));
-                details.add(resultSet.getString("edition"));
-                details.add(resultSet.getString("language"));
-                details.add(resultSet.getString("card_type")); 
-                details.add(resultSet.getString("rarity"));
-                details.add(resultSet.getString("type"));
-                
-                try(PreparedStatement preparedStatementDetails = connection.prepareStatement(queryDetails);
-                	ResultSet resultSetDetails = preparedStatementDetails.executeQuery(); ) {
-                	while(resultSetDetails.next()) {
-	                	details.add(resultSetDetails.getString("summ_method"));
-	                	details.add(resultSetDetails.getString("attribute"));
-	                	details.add(resultSetDetails.getString("level"));
-	                	details.add(resultSetDetails.getString("atk"));
-	                	details.add(resultSetDetails.getString("def"));
-                	}
+        	connection.setAutoCommit(false);
+        	Savepoint save = connection.setSavepoint("save");
+        	
+        	try {
+        		while(resultSet.next()) {
+                    details.add(resultSet.getString("id")); 
+                    details.add(resultSet.getString("name"));
+                    details.add(resultSet.getString("set"));
+                    details.add(resultSet.getString("edition"));
+                    details.add(resultSet.getString("language"));
+                    details.add(resultSet.getString("card_type")); 
+                    details.add(resultSet.getString("rarity"));
+                    details.add(resultSet.getString("type"));
+                    
+                    try(PreparedStatement preparedStatementDetails = connection.prepareStatement(queryDetails);
+                    	ResultSet resultSetDetails = preparedStatementDetails.executeQuery(); ) {
+                    	while(resultSetDetails.next()) {
+    	                	details.add(resultSetDetails.getString("summ_method"));
+    	                	details.add(resultSetDetails.getString("attribute"));
+    	                	details.add(resultSetDetails.getString("level"));
+    	                	details.add(resultSetDetails.getString("atk"));
+    	                	details.add(resultSetDetails.getString("def")); 	
+    	                    
+                    	}
+                    }
                 }
-            }
-            
+                output = true;
+        	} catch (SQLException ex) {
+        		ex.printStackTrace();
+        		throw new SQLException("SELECT unsuccessful !");
+        	} finally {
+        		dbCommit(connection, output, save);                	
+        	}
+        	connection.setAutoCommit(true);
             return details;
+            
         } catch (SQLException ex){
             ex.printStackTrace();
             throw new SQLException("Card details SELECT unsuccessful !");
@@ -203,12 +267,24 @@ public class CardControls {
         boolean output = false;
         try(Connection connection  = MyConnection.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);) {
-            preparedStatement.setString(1, text);		// note text
-            preparedStatement.executeUpdate();          
-            output = true;
+        	connection.setAutoCommit(false);
+        	Savepoint save = connection.setSavepoint("save");
+        	
+        	try {
+                preparedStatement.setString(1, text);		// note text
+                preparedStatement.executeUpdate();          
+                output = true;    		
+        	} catch (SQLException ex) {
+        		ex.printStackTrace();
+        		throw new SQLException("UPDATE note unsuccessful !");
+        	} finally {
+        		dbCommit(connection, output, save);                	
+        	}
+        	connection.setAutoCommit(true);
+
         } catch (SQLException ex){
             ex.printStackTrace();
-            throw new SQLException("Note text INSERT unsuccessful !");
+            throw new SQLException("Note text UPDATE unsuccessful !");
         }
         return output;
     }
@@ -217,19 +293,42 @@ public class CardControls {
     public static String loadNotes(String cell) throws SQLException {
         String query = "SELECT note FROM notes WHERE id_card = " + cell;
         String notes = "";
+        boolean output = false;
+        
         try(Connection connection  = MyConnection.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
         	ResultSet resultSet = preparedStatement.executeQuery();) {
-            
-        	while(resultSet.next()) {
-        		notes = resultSet.getString("note");
+        	connection.setAutoCommit(false);
+        	Savepoint save = connection.setSavepoint("save");
+        	
+        	try {
+        		while(resultSet.next()) {
+        			notes = resultSet.getString("note");
+        			output = true;
+        		}
+        		
+        	} catch (SQLException ex) {
+        		ex.printStackTrace();
+        		throw new SQLException("SELECT note unsuccessful !");
+        	} finally {
+        		dbCommit(connection, output, save);                	
         	}
-            return notes;
+        	connection.setAutoCommit(true);
+        	return notes;
+        	
         } catch (SQLException ex){
             ex.printStackTrace();
             throw new SQLException("Note text SELECT unsuccessful !");
         }
     }
     
-    
+    private static void dbCommit(Connection connection, Boolean output, Savepoint savepoint) throws SQLException {
+		if(connection != null) {
+    		if(output) {
+        		connection.commit();    
+        	} else {
+        		connection.rollback(savepoint);    
+        	}
+    	}
+	}
 }

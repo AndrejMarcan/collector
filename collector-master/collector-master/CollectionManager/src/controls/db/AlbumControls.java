@@ -3,17 +3,12 @@
  */
 package controls.db;
 
-import gui.AddMonster;
 import gui.Album;
-import gui.CardCollector;
-import gui.CardCollectorLogin;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Savepoint;
 import java.sql.ResultSet;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 /**
  * The AlbumCommands provides methods for new user registration, login, loading data from database and
@@ -31,11 +26,21 @@ public class AlbumControls {
 
         try (Connection connection = MyConnection.getConnection();
         	 PreparedStatement preparedStatement = connection.prepareStatement(query); ) {
-            preparedStatement.setString(1, name);
-            preparedStatement.setString(2, password);
-
-            preparedStatement.executeUpdate();
-            output = true;
+        	connection.setAutoCommit(false);
+        	Savepoint save = connection.setSavepoint("save");
+        	try {
+        		preparedStatement.setString(1, name);
+                preparedStatement.setString(2, password);
+                preparedStatement.executeUpdate();
+                output = true;
+        	} catch (SQLException ex) {
+        		ex.printStackTrace();
+        		throw new SQLException("INSERT user unsuccessful !");
+        	} finally {
+        		dbCommit(connection, output, save);                	
+        	}
+        	connection.setAutoCommit(true);
+            
         } catch (SQLException ex) {
         	ex.printStackTrace();
         	throw new SQLException("User INSERT unsuccessful !");
@@ -54,12 +59,24 @@ public class AlbumControls {
         try (Connection connection = MyConnection.getConnection();
         	 PreparedStatement preparedStatement = connection.prepareStatement(query);
              ResultSet resultSet = preparedStatement.executeQuery(); ) {
-            preparedStatement.setString(1, username);
-            preparedStatement.setString(2, password);
+        	connection.setAutoCommit(false);
+        	Savepoint save = connection.setSavepoint("save");
+        	
+        	try {
+        		preparedStatement.setString(1, username);
+                preparedStatement.setString(2, password);
 
-	            if (resultSet.next()) {
-	                output = true;
-	            }          
+                if (resultSet.next()) {
+                	output = true;
+                }          
+        	} catch (SQLException ex) {
+        		ex.printStackTrace();
+        		throw new SQLException("SELECT user unsuccessful !");
+        	} finally {
+        		dbCommit(connection, output, save);                	
+        	}
+        	connection.setAutoCommit(true);
+            
         } catch (SQLException ex) {
         	ex.printStackTrace();
         	throw new SQLException("Login SELECT unsuccessful !");
@@ -74,19 +91,39 @@ public class AlbumControls {
         try (Connection connection = MyConnection.getConnection();
         	 PreparedStatement preparedStatement = connection.prepareStatement(query);
              ResultSet resultSet = preparedStatement.executeQuery(); ) {
+        	connection.setAutoCommit(false);
+        	Savepoint save = connection.setSavepoint("save");
         	
-            Album.jTableAlbum.setModel(DbUtils.resultSetToTableModel(resultSet)); 
-            
-            while(resultSet.next()) {
-            	Album.jTableAlbum.setModel(DbUtils.resultSetToTableModel(resultSet));
-            }
-            output = true;
+        	try {
+                Album.jTableAlbum.setModel(DbUtils.resultSetToTableModel(resultSet)); 
+                while(resultSet.next()) {
+                	Album.jTableAlbum.setModel(DbUtils.resultSetToTableModel(resultSet));
+                }
+                output = true;		
+        	} catch (SQLException ex) {
+        		ex.printStackTrace();
+        		throw new SQLException("SELECT unsuccessful !");
+        	} finally {
+        		dbCommit(connection, output, save);                	
+        	}
+        	connection.setAutoCommit(true);
+        	
         } catch (SQLException ex) {
         	ex.printStackTrace();
         	throw new SQLException("Abum SELECT unsuccessful !");
         } 
         return output;
     }    
+    
+    private static void dbCommit(Connection connection, Boolean output, Savepoint savepoint) throws SQLException {
+		if(connection != null) {
+    		if(output) {
+        		connection.commit();    
+        	} else {
+        		connection.rollback(savepoint);    
+        	}
+    	}
+	}
 }
 
 
