@@ -4,17 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Savepoint;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.swing.JOptionPane;
 
 import card.Card;
 import card.MonsterCard;
-import card.SpellCard;
-import card.TrapCard;
 
 public class CardControls {
 	public static boolean addMonsterCard(MonsterCard monsterCard) throws SQLException {
