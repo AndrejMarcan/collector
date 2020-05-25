@@ -22,6 +22,7 @@ public class DbControl {
 		try (Connection conn = MyConnection.getConnection();
 				PreparedStatement ps = conn.prepareCall(query); ) {
 			boolean output = false;	
+			conn.setAutoCommit(false);
 
 			try {
 				ps.execute();
@@ -32,6 +33,8 @@ public class DbControl {
 			} finally {
 	    		dbCommit(conn, output);                	
 	    	}
+			conn.setAutoCommit(true);
+			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw new Exception("CREATE TABLE album unsuccessful");
@@ -56,6 +59,7 @@ public class DbControl {
 		try (Connection conn = MyConnection.getConnection();
 				PreparedStatement ps = conn.prepareCall(query); ) {
 			boolean output = false;
+			conn.setAutoCommit(false);
 
 			try {
 				ps.execute();
@@ -66,6 +70,7 @@ public class DbControl {
 			} finally {
 	    		dbCommit(conn, output);                	
 	    	}
+			conn.setAutoCommit(true);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw new Exception("CREATE TABLE monster_details unsuccessful");
@@ -86,6 +91,7 @@ public class DbControl {
 		try (Connection conn = MyConnection.getConnection();
 				PreparedStatement ps = conn.prepareCall(query); ) {
 			boolean output = false;
+			conn.setAutoCommit(false);
 
 			try {
 				ps.execute();
@@ -96,6 +102,7 @@ public class DbControl {
 			} finally {
 	    		dbCommit(conn, output);                	
 	    	}
+			conn.setAutoCommit(true);
 		}catch (Exception ex) {
 			ex.printStackTrace();
 			throw new Exception("CREATE TABLE notes unsuccessful");
