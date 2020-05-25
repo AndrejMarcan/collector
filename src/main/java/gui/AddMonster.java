@@ -24,8 +24,11 @@ public class AddMonster extends javax.swing.JFrame {
     /**
      * Creates new form AddMonster
      */
+	private CardControls cardControls;
+	
     public AddMonster() {
         initComponents();
+        cardControls = new CardControls();
         setLocationRelativeTo(null);
        
     }
@@ -382,7 +385,8 @@ public class AddMonster extends javax.swing.JFrame {
             MonsterCard monsterCard = new MonsterCard(cardName, rarity, edition, set, language, type,
             								 summMethod, atribute, level, atk, def);
            try {
-			if (CardControls.addCard(monsterCard)) {
+        	   boolean test = cardControls.addCard(monsterCard);
+			if (test) {
 				   JOptionPane.showMessageDialog(null, "Card saved");
 			   } else {
 				   JOptionPane.showMessageDialog(null, "Card was not saved");

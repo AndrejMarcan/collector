@@ -21,12 +21,14 @@ import javax.swing.JOptionPane;
  */
 public class MonsterDetails extends javax.swing.JFrame {
 	private String cardId;
+	private CardControls cardControls;
     /**
      * Creates new form AddMonster
      */
     public MonsterDetails() {
         this.initComponents();
         this.setLocationRelativeTo(null);
+        cardControls = new CardControls();
         this.load();
         int row = Album.jTableAlbum.getSelectedRow();
         this.cardId = Album.jTableAlbum.getModel().getValueAt(row,0).toString();
@@ -395,10 +397,10 @@ public class MonsterDetails extends javax.swing.JFrame {
                                                 type,summMethod, attribute, level,
                                                 atk, def);
             try {
-				if (CardControls.editCard(monsterCard, cardId) && CardControls.addNotes(cardId, text)) {
-					JOptionPane.showMessageDialog(null, "Card edited succesfully");
+				if (cardControls.editCard(monsterCard, cardId) && cardControls.addNotes(cardId, text)) {
+					JOptionPane.showMessageDialog(null, "Card edited successfuly");
 				} else {
-					JOptionPane.showMessageDialog(null, "Card edited succesfully");
+					JOptionPane.showMessageDialog(null, "Card edited UNSUCCESSFULY");
 				}
 			} catch (SQLException e) {
 				JOptionPane.showMessageDialog(null, "SQLException");
@@ -420,7 +422,7 @@ public class MonsterDetails extends javax.swing.JFrame {
         
         ArrayList<String> details;
 		try {
-			details = CardControls.loadCardDetails(cell);
+			details = cardControls.loadCardDetails(cell);
 			jTextFieldMDName.setText(details.get(1));
 	        jTextFieldMDEdition.setText(details.get(3));
 	        jTextFieldMDRarity.setText(details.get(6));
@@ -432,7 +434,7 @@ public class MonsterDetails extends javax.swing.JFrame {
 	      	jTextFieldMDLevel.setText(details.get(10));
 	    	jTextFieldMDATK.setText(details.get(11));
 	        jTextFieldMDDEF.setText(details.get(12));     
-	        jTextArea1MNNotes.setText(CardControls.loadNotes(cell));
+	        jTextArea1MNNotes.setText(cardControls.loadNotes(cell));
 			
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());

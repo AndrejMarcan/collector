@@ -22,12 +22,14 @@ import javax.swing.JOptionPane;
  * @author 		Andrej Marcan
  */
 public class AddTrap extends javax.swing.JFrame {
-
+	private CardControls cardControls;
+	
     /**
      * Creates new form AddTrap
      */
     public AddTrap() {
         initComponents();
+        cardControls = new CardControls();
         this.setLocationRelativeTo(null);
     }
 
@@ -270,7 +272,7 @@ public class AddTrap extends javax.swing.JFrame {
         } else {
             Card trapCard = new TrapCard(cardName, rarity, edition, set, language, type);
             try {
-				if (CardControls.addCard(trapCard)) {
+				if (cardControls.addCard(trapCard)) {
 				   JOptionPane.showMessageDialog(null, "Card saved");
 				} else {
 				   JOptionPane.showMessageDialog(null, "Card was not saved");
