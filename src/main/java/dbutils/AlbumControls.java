@@ -84,36 +84,6 @@ public class AlbumControls {
         return output;
     }
     
-    /* Method loadAlbum fetches data from database for every card and displays them in gui table */
-    public boolean loadAlbum() throws SQLException { //TODO need some editing remove parts with jTable
-        String query = "SELECT * FROM album";
-        boolean output = false;
-        try (Connection connection = MyConnection.getConnection();
-        	 PreparedStatement preparedStatement = connection.prepareStatement(query);
-             ResultSet resultSet = preparedStatement.executeQuery(); ) {
-        	connection.setAutoCommit(false);
-        	
-        	try {
-                Album.jTableAlbum.setModel(DbUtils.resultSetToTableModel(resultSet)); 
-                while(resultSet.next()) {
-                	Album.jTableAlbum.setModel(DbUtils.resultSetToTableModel(resultSet));
-                }
-                output = true;		
-        	} catch (SQLException ex) {
-        		ex.printStackTrace();
-        		throw new SQLException("SELECT unsuccessful !");
-        	} finally {
-        		dbCommit(connection, output);                	
-        	}
-        	connection.setAutoCommit(true);
-        	
-        } catch (SQLException ex) {
-        	ex.printStackTrace();
-        	throw new SQLException("Abum SELECT unsuccessful !");
-        } 
-        return output;
-    }    
-    
     private void dbCommit(Connection connection, Boolean output) throws SQLException {
 		if(connection != null) {
     		if(output) {

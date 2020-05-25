@@ -10,7 +10,7 @@ plugins {
     id 'java-library'
 }
 	sourceSets.main.java.srcDirs = ['src']
-	mainClassName = 'card.manager.Main'
+	mainClassName = 'main.java.Main'
 	
 repositories {
     jcenter() 

@@ -11,12 +11,17 @@ import main.java.dal.SpellCard;
 import main.java.dal.TrapCard;
 import main.java.dbutils.AlbumControls;
 import main.java.dbutils.CardControls;
+import main.java.dbutils.DbUtils;
+import main.java.dbutils.MyConnection;
 import main.java.guiutils.CardCommands;
 import main.java.guiutils.EnumPickers;
 import main.java.guiutils.WebViewControl;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,7 +49,7 @@ public class Album extends javax.swing.JFrame {
         cardControls = new CardControls();
         this.setLocationRelativeTo(null);
         try {
-			albumControls.loadAlbum();
+			loadAlbum();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -214,7 +219,7 @@ public class Album extends javax.swing.JFrame {
     /* Method jButtonUpadateTableActionPerformed sets button to update date in table */
     private void jButtonUpadateTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_UpadateTableActionPerformed
         try {
-			albumControls.loadAlbum();
+			loadAlbum();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -303,7 +308,45 @@ public class Album extends javax.swing.JFrame {
 
     /**
      * @param args the command line arguments
+     * @throws SQLException 
      */
+    
+    /* Method loadAlbum fetches data from database for every card and displays them in gui table */
+    public boolean loadAlbum() throws SQLException { //TODO need some editing remove parts with jTable
+        String query = "SELECT * FROM album";
+        boolean output = false;
+
+        try (Connection connection = MyConnection.getConnection();
+        	 PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery(); ) {
+        	connection.setAutoCommit(false);
+        	
+        	try {
+                Album.jTableAlbum.setModel(DbUtils.resultSetToTableModel(resultSet)); 
+                while(resultSet.next()) {
+                	Album.jTableAlbum.setModel(DbUtils.resultSetToTableModel(resultSet));
+                }
+                output = true;		
+        	} catch (SQLException ex) {
+        		ex.printStackTrace();
+        		throw new SQLException("SELECT unsuccessful !");
+        	} finally {
+        		if(connection != null) {
+            		if(output) {
+                		connection.commit();    
+                	} else {
+                		connection.rollback();    
+                	}  
+        		}
+        	}
+        	connection.setAutoCommit(true);
+        	
+        } catch (SQLException ex) {
+        	ex.printStackTrace();
+        	throw new SQLException("Abum SELECT unsuccessful !");
+        } 
+        return output;
+    }    
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
