@@ -1,7 +1,7 @@
 package controls;
 
-import card.Editions;
-import card.Rarities;
+import main.java.dal.Editions;
+import main.java.dal.Rarities;
 
 public class EnumPickers {
 	public static Rarities rarityPicker(String rarityShort) {

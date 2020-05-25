@@ -3,11 +3,11 @@
  */
 package gui;
 
-import card.Editions;
-import card.MonsterCard;
-import card.Rarities;
 import controls.EnumPickers;
 import controls.db.CardControls;
+import main.java.dal.Editions;
+import main.java.dal.MonsterCard;
+import main.java.dal.Rarities;
 
 import java.awt.HeadlessException;
 import java.sql.SQLException;

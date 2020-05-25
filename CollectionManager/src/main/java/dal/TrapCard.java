@@ -1,7 +1,7 @@
 /*
  * Copyright (c) ...
  */
-package card;
+package main.java.dal;
 
 /**
  * The TrapCard class provides methods for adding a new trap card to database, edit data for trap card

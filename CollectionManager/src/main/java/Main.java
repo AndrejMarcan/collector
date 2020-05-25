@@ -1,7 +1,7 @@
 /*
  * Copyright (c) ...
  */
-package card.manager;
+package main.java;
 
 import controls.db.DbControls;
 import gui.CardCollector;

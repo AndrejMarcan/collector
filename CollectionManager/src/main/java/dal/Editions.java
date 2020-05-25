@@ -1,4 +1,4 @@
-package card;
+package main.java.dal;
 
 public enum Editions {
 	FE("First Edition", "gold"),

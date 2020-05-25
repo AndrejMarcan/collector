@@ -3,7 +3,7 @@
  */
 package controls;
 
-import card.Card;
+import main.java.dal.Card;
 
 /**
  * The CardCommands is generic class and provides method to edit card data in database

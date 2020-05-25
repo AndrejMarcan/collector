@@ -3,16 +3,16 @@
  */
 package gui;
 
-import card.Card;
-import card.Editions;
-import card.MonsterCard;
-import card.Rarities;
-import card.SpellCard;
-import card.TrapCard;
 import controls.CardCommands;
 import controls.EnumPickers;
 import controls.WebViewControl;
 import controls.db.CardControls;
+import main.java.dal.Card;
+import main.java.dal.Editions;
+import main.java.dal.MonsterCard;
+import main.java.dal.Rarities;
+import main.java.dal.SpellCard;
+import main.java.dal.TrapCard;
 
 import java.io.IOException;
 import java.net.URISyntaxException;

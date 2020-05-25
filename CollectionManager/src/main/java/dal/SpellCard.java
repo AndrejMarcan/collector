@@ -1,7 +1,7 @@
 /*
  * Copyright (c) ...
  */
-package card;
+package main.java.dal;
 
 /**
  * The SpellCard class provides methods for adding a new spell card to database, edit data for spell card

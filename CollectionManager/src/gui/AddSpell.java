@@ -3,12 +3,12 @@
  */
 package gui;
 
-import card.Card;
-import card.Editions;
-import card.Rarities;
-import card.SpellCard;
 import controls.EnumPickers;
 import controls.db.CardControls;
+import main.java.dal.Card;
+import main.java.dal.Editions;
+import main.java.dal.Rarities;
+import main.java.dal.SpellCard;
 
 import java.awt.HeadlessException;
 import java.sql.SQLException;

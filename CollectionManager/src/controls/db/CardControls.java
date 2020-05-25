@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import card.Card;
-import card.MonsterCard;
+import main.java.dal.Card;
+import main.java.dal.MonsterCard;
 
 public class CardControls {
 	public static boolean addMonsterCard(MonsterCard monsterCard) throws SQLException {
