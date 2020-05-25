@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import javax.swing.JFrame;
 
 import main.java.dbutils.AlbumControls;
+import main.java.dbutils.CardControls;
 
 /**
  * The AddSpell class connects user interface to back end functions and classes for spell card.
@@ -20,9 +21,12 @@ public class CardCollectorLogin extends javax.swing.JFrame {
     /**
      * Creates new form CardCollectorLogin
      */
+	private AlbumControls albumControls;
+	
     public CardCollectorLogin() {
         initComponents();
         this.setLocationRelativeTo(null);
+        albumControls = new AlbumControls();
     }
 
     /**
@@ -222,7 +226,7 @@ public class CardCollectorLogin extends javax.swing.JFrame {
         String username = jTextLoginUsername.getText();
         String password = String.valueOf(jPasswordField1.getPassword());        
         try {
-			AlbumControls.login(username, password);
+			albumControls.login(username, password);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

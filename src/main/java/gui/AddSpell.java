@@ -22,12 +22,14 @@ import javax.swing.JOptionPane;
  * @author 		Andrej Marcan
  */
 public class AddSpell extends javax.swing.JFrame {
-
+	private CardControls cardControls;
+	
     /**
      * Creates new form SpellCard
      */
     public AddSpell() {
         initComponents();
+        cardControls = new CardControls();
         this.setLocationRelativeTo(null);
     }
 
@@ -267,7 +269,7 @@ public class AddSpell extends javax.swing.JFrame {
         } else {
         	Card spellCard = new SpellCard(cardName, rarity, edition, set, language, type);
         	try {
-				if (CardControls.addCard(spellCard)) {
+				if (cardControls.addCard(spellCard)) {
 				   JOptionPane.showMessageDialog(null, "Card saved");
 				 } 
 			} catch (HeadlessException e) {

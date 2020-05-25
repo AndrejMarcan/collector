@@ -9,6 +9,7 @@ import main.java.dal.MonsterCard;
 import main.java.dal.Rarities;
 import main.java.dal.SpellCard;
 import main.java.dal.TrapCard;
+import main.java.dbutils.AlbumControls;
 import main.java.dbutils.CardControls;
 import main.java.guiutils.CardCommands;
 import main.java.guiutils.EnumPickers;
@@ -31,15 +32,19 @@ import javax.swing.JOptionPane;
  * @author 		Andrej Marcan
  */
 public class Album extends javax.swing.JFrame {
-
+	private AlbumControls albumControls;
+	private CardControls cardControls;
+	
     /**
      * Creates new form WholeCollection
      */
     public Album() {
         this.initComponents();
+        albumControls = new AlbumControls();
+        cardControls = new CardControls();
         this.setLocationRelativeTo(null);
         try {
-			main.java.dbutils.AlbumControls.loadAlbum();
+			albumControls.loadAlbum();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -199,7 +204,7 @@ public class Album extends javax.swing.JFrame {
         String cell = jTableAlbum.getModel().getValueAt(row,0).toString();
         
         try {
-			main.java.dbutils.CardControls.deleteCard(cell);
+			cardControls.deleteCard(cell);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -209,7 +214,7 @@ public class Album extends javax.swing.JFrame {
     /* Method jButtonUpadateTableActionPerformed sets button to update date in table */
     private void jButtonUpadateTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_UpadateTableActionPerformed
         try {
-			main.java.dbutils.AlbumControls.loadAlbum();
+			albumControls.loadAlbum();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -238,7 +243,7 @@ public class Album extends javax.swing.JFrame {
                 
                 Card spellCard = new SpellCard(name, rarity, edition, set, language, type);
                 try {
-    				CardControls.editCard(spellCard, cell);
+    				cardControls.editCard(spellCard, cell);
     			} catch (SQLException e) {
     				JOptionPane.showMessageDialog(null, e.getMessage());
     				e.printStackTrace();
@@ -262,7 +267,7 @@ public class Album extends javax.swing.JFrame {
 	            
 	            Card trapCard = new TrapCard(name, rarity, edition, set, language, type);        
 	            try {
-					CardControls.editCard(trapCard, cell);
+					cardControls.editCard(trapCard, cell);
 				} catch (SQLException e) {
 					JOptionPane.showMessageDialog(null, e.getMessage());
 					e.printStackTrace();
