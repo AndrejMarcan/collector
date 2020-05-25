@@ -16,6 +16,7 @@ import java.net.URISyntaxException;
  */
 public class WebViewControl {
 	/* base part of URL */
+
     private static final String URL_BASE = "https://www.sdrftyuiolmcardmarket.com/en/YuGiOh/Products/Singles/";
     
     /* Method prepareCardName prepares part of URL from provided string. */
@@ -26,7 +27,7 @@ public class WebViewControl {
     
     /* Method prepareEditionName prepares part of URL from provided string. */
     private static String prepareEditionName(String edition) {
-        String editionName = FileControl.getFullEditionName(edition);
+        String editionName = FileControls.getFullEditionName(edition);
         editionName=editionName.replace(' ', '-');
         return editionName;
     }
