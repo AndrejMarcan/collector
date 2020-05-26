@@ -9,11 +9,11 @@ import main.java.dal.MonsterCard;
 import main.java.dal.Rarities;
 import main.java.dal.SpellCard;
 import main.java.dal.TrapCard;
-import main.java.dbutils.AlbumControls;
-import main.java.dbutils.CardControls;
-import main.java.dbutils.DbUtils;
-import main.java.dbutils.MyConnection;
+import main.java.db.AlbumControls;
+import main.java.db.CardControls;
+import main.java.db.MyConnection;
 import main.java.guiutils.CardCommands;
+import main.java.guiutils.AlbumUtils;
 import main.java.guiutils.EnumPickers;
 import main.java.guiutils.WebViewControl;
 
@@ -322,9 +322,9 @@ public class Album extends javax.swing.JFrame {
         	connection.setAutoCommit(false);
         	
         	try {
-                Album.jTableAlbum.setModel(DbUtils.resultSetToTableModel(resultSet)); 
+                Album.jTableAlbum.setModel(AlbumUtils.resultSetToTableModel(resultSet)); 
                 while(resultSet.next()) {
-                	Album.jTableAlbum.setModel(DbUtils.resultSetToTableModel(resultSet));
+                	Album.jTableAlbum.setModel(AlbumUtils.resultSetToTableModel(resultSet));
                 }
                 output = true;		
         	} catch (SQLException ex) {

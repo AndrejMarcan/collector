@@ -1,10 +1,10 @@
-package main.java.dbutils;
+package main.java.db;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class DbControl {
+public class TableControls implements DbControls{
 	public void createTableAlbum() throws Exception {
 		String query = "CREATE TABLE IF NOT EXISTS public.album "
 				+ "(id bigint NOT NULL GENERATED ALWAYS AS IDENTITY "
@@ -109,7 +109,8 @@ public class DbControl {
 		}
 	}
 	
-	private void dbCommit(Connection connection, Boolean output) throws SQLException {
+	@Override
+	public void dbCommit(Connection connection, boolean output) throws SQLException {
 		if(connection != null) {
     		if(output) {
         		connection.commit();    

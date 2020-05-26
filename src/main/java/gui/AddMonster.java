@@ -6,7 +6,7 @@ package main.java.gui;
 import main.java.dal.Editions;
 import main.java.dal.MonsterCard;
 import main.java.dal.Rarities;
-import main.java.dbutils.CardControls;
+import main.java.db.CardControls;
 import main.java.guiutils.EnumPickers;
 
 import java.awt.HeadlessException;

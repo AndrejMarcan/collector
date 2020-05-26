@@ -1,4 +1,4 @@
-package main.java.dbutils;
+package main.java.db;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,8 +10,6 @@ import main.java.dal.Card;
 import main.java.dal.MonsterCard;
 
 public class CardControls  implements DbControls {
-	
-	@Override
 	public boolean addCard(MonsterCard monsterCard) throws SQLException {
         String query = "INSERT INTO album(name, set, edition, language,"
                 + "card_type, rarity, type) VALUES (?,?,?,?,?,?,?)";
@@ -64,7 +62,6 @@ public class CardControls  implements DbControls {
       return output;
     }
 	
-	@Override
     public boolean editCard(MonsterCard monsterCard, String cell) throws SQLException {
         String query = "UPDATE album SET name = ?, rarity = ?, edition = ?, set = ?, language = ?,"
         				+ " type = ? WHERE id = " + cell;
@@ -108,7 +105,6 @@ public class CardControls  implements DbControls {
         return output;
     }
     
-	@Override
     public boolean addCard(Card card) throws SQLException{
         String query = "INSERT INTO album(name, rarity, edition, set,"
                     + " language, type, card_type) VALUES (?,?,?,?,?,?,?)";
@@ -143,7 +139,6 @@ public class CardControls  implements DbControls {
         return output;
     }
     
-	@Override
     public boolean editCard(Card card, String cell) throws SQLException{
         String query = "UPDATE album SET name = ?, rarity = ?, edition = ?, set = ?, language = ?,"
         		+ " type = ? WHERE id = " + cell;
@@ -178,7 +173,6 @@ public class CardControls  implements DbControls {
     }
     
     /* Method deleteCard will delete data for selected card by ID of the card */
-	@Override
     public boolean deleteCard(String cell) throws SQLException {
         String query = "DELETE FROM album WHERE id = " + cell; // cell represents table block where card ID is found
         boolean output = false;
@@ -206,7 +200,6 @@ public class CardControls  implements DbControls {
     }
     
     /* method loadCardDetails collects data from database by card ID and returns ArrayList<String> */
-	@Override
     public ArrayList<String> loadCardDetails(String cell) throws SQLException {
         ArrayList<String> details = new ArrayList<String>();		//creating new ArrayList of Strings
         String query = "SELECT * FROM album WHERE id = " + cell; 	//cell is table block where card ID is found
@@ -258,7 +251,6 @@ public class CardControls  implements DbControls {
     }
     
     /* Method addNotes is used for inserting notes for specific card by card ID */
-	@Override
     public boolean addNotes(String cell, String text) throws SQLException {
         String query = "UPDATE notes SET note = ? WHERE id_card = " + cell;
         boolean output = false;
@@ -286,7 +278,6 @@ public class CardControls  implements DbControls {
     }
     
     /* Method loadNotes fetches notes for specific card based on card ID */
-	@Override
     public String loadNotes(String cell) throws SQLException {
         String query = "SELECT note FROM notes WHERE id_card = " + cell;
         String notes = "";
@@ -318,7 +309,8 @@ public class CardControls  implements DbControls {
         }
     }
     
-    private void dbCommit(Connection connection, Boolean output) throws SQLException {
+    @Override
+	public void dbCommit(Connection connection, boolean output) throws SQLException {
 		if(connection != null) {
     		if(output) {
         		connection.commit();    

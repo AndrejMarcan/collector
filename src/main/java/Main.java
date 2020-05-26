@@ -3,7 +3,7 @@
  */
 package main.java;
 
-import main.java.dbutils.DbControl;
+import main.java.db.TableControls;
 import main.java.gui.CardCollector;
 
 /**
@@ -15,7 +15,7 @@ import main.java.gui.CardCollector;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-    	DbControl dbControls = new DbControl();
+    	TableControls dbControls = new TableControls();
     	try {
     		dbControls.createTableAlbum();
     		dbControls.createTableMonsterDetail();

@@ -1,4 +1,4 @@
-package main.java.dbutils;
+package main.java.guiutils;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -6,7 +6,7 @@ import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-public class DbUtils {
+public class AlbumUtils {
 	public static TableModel resultSetToTableModel(ResultSet resultSet) {
         try {
             ResultSetMetaData metaData = resultSet.getMetaData();
