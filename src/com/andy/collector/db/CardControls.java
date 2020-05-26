@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.andy.collector.dal.Card;
-import com.andy.collector.dal.MonsterCard;
+import com.andy.collector.dao.Card;
+import com.andy.collector.dao.MonsterCard;
 
 public class CardControls  implements DbControls {
 	public boolean addCard(MonsterCard monsterCard) throws SQLException {

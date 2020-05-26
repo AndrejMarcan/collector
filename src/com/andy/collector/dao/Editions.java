@@ -1,4 +1,4 @@
-package com.andy.collector.dal;
+package com.andy.collector.dao;
 
 public enum Editions {
 	FE("First Edition", "gold"),

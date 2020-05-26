@@ -1,4 +1,4 @@
-package com.andy.collector.dal;
+package com.andy.collector.dao;
 
 /**
  * The Rarities enum serves as the list of all possible rarities of the cards.
