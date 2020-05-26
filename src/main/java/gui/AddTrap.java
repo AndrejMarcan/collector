@@ -7,7 +7,7 @@ import main.java.dal.Card;
 import main.java.dal.Editions;
 import main.java.dal.Rarities;
 import main.java.dal.TrapCard;
-import main.java.dbutils.CardControls;
+import main.java.db.CardControls;
 import main.java.guiutils.EnumPickers;
 
 import java.awt.HeadlessException;

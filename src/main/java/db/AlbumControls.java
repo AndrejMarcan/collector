@@ -1,7 +1,7 @@
 /*
  * Copyright (c) ...
  */
-package main.java.dbutils;
+package main.java.db;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,7 +18,7 @@ import java.sql.ResultSet;
  * @version		0.1 14. May 2020
  * @author 		Andrej Marcan
  */
-public class AlbumControls {
+public class AlbumControls implements DbControls{
     
 	/* Method addUser is used for new user registration */
     public boolean addUser(String name, String password) throws SQLException {        
@@ -84,7 +84,8 @@ public class AlbumControls {
         return output;
     }
     
-    private void dbCommit(Connection connection, Boolean output) throws SQLException {
+    @Override
+	public void dbCommit(Connection connection, boolean output) throws SQLException {
 		if(connection != null) {
     		if(output) {
         		connection.commit();    

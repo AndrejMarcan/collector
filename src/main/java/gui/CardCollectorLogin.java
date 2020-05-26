@@ -7,8 +7,8 @@ import java.sql.SQLException;
 
 import javax.swing.JFrame;
 
-import main.java.dbutils.AlbumControls;
-import main.java.dbutils.CardControls;
+import main.java.db.AlbumControls;
+import main.java.db.CardControls;
 
 /**
  * The AddSpell class connects user interface to back end functions and classes for spell card.

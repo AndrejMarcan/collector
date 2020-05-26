@@ -1,7 +1,7 @@
 /*
  * Copyright (c) ...
  */
-package main.java.dbutils;
+package main.java.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
