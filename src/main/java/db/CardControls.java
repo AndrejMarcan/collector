@@ -11,11 +11,11 @@ import main.java.dal.MonsterCard;
 
 public class CardControls  implements DbControls {
 	public boolean addCard(MonsterCard monsterCard) throws SQLException {
-        String query = "INSERT INTO album(name, set, edition, language,"
+        String query = "INSERT INTO " + album + "(name, set, edition, language,"
                 + "card_type, rarity, type) VALUES (?,?,?,?,?,?,?)";
-        String queryDetails = "INSERT INTO monster_details(id_monster, summ_method, attribute, level,"
-                + " atk, def ) VALUES ((select max(id) from album),?,?,?,?,?)";
-        String queryNotes = "INSERT INTO notes(id_card, note) VALUES ((select max(id) from album), ?)";
+        String queryDetails = "INSERT INTO " + monsterDetails + "(id_monster, summ_method, attribute, level,"
+                + " atk, def ) VALUES ((select max(id) from " + album + "),?,?,?,?,?)";
+        String queryNotes = "INSERT INTO " + notes + "(id_card, note) VALUES ((select max(id) from " + album + "), ?)";
         boolean output = false;
         
             try(Connection connection  = MyConnection.getConnection();
@@ -63,9 +63,9 @@ public class CardControls  implements DbControls {
     }
 	
     public boolean editCard(MonsterCard monsterCard, String cell) throws SQLException {
-        String query = "UPDATE album SET name = ?, rarity = ?, edition = ?, set = ?, language = ?,"
+        String query = "UPDATE " + album + " SET name = ?, rarity = ?, edition = ?, set = ?, language = ?,"
         				+ " type = ? WHERE id = " + cell;
-        String queryDetails = "UPDATE monster_details SET summ_method = ?, attribute = ?, level = ?,"
+        String queryDetails = "UPDATE " + monsterDetails + " SET summ_method = ?, attribute = ?, level = ?,"
         		+ " atk = ?, def = ? WHERE id_monster = " + cell;
         boolean output = false;
         
@@ -106,7 +106,7 @@ public class CardControls  implements DbControls {
     }
     
     public boolean addCard(Card card) throws SQLException{
-        String query = "INSERT INTO album(name, rarity, edition, set,"
+        String query = "INSERT INTO " + album + "(name, rarity, edition, set,"
                     + " language, type, card_type) VALUES (?,?,?,?,?,?,?)";
         boolean output = false;
 
@@ -140,7 +140,7 @@ public class CardControls  implements DbControls {
     }
     
     public boolean editCard(Card card, String cell) throws SQLException{
-        String query = "UPDATE album SET name = ?, rarity = ?, edition = ?, set = ?, language = ?,"
+        String query = "UPDATE " + album + " SET name = ?, rarity = ?, edition = ?, set = ?, language = ?,"
         		+ " type = ? WHERE id = " + cell;
         boolean output = false;
         
@@ -174,7 +174,7 @@ public class CardControls  implements DbControls {
     
     /* Method deleteCard will delete data for selected card by ID of the card */
     public boolean deleteCard(String cell) throws SQLException {
-        String query = "DELETE FROM album WHERE id = " + cell; // cell represents table block where card ID is found
+        String query = "DELETE FROM " + album + " WHERE id = " + cell; // cell represents table block where card ID is found
         boolean output = false;
         
         try (Connection connection  = MyConnection.getConnection();
@@ -202,8 +202,8 @@ public class CardControls  implements DbControls {
     /* method loadCardDetails collects data from database by card ID and returns ArrayList<String> */
     public ArrayList<String> loadCardDetails(String cell) throws SQLException {
         ArrayList<String> details = new ArrayList<String>();		//creating new ArrayList of Strings
-        String query = "SELECT * FROM album WHERE id = " + cell; 	//cell is table block where card ID is found
-        String queryDetails = "SELECT * FROM monster_details WHERE id_monster = " + cell; 
+        String query = "SELECT * FROM " + album + " WHERE id = " + cell; 	//cell is table block where card ID is found
+        String queryDetails = "SELECT * FROM " + monsterDetails + " WHERE id_monster = " + cell; 
         boolean output = false;
         
         try(Connection connection  = MyConnection.getConnection();
@@ -252,7 +252,7 @@ public class CardControls  implements DbControls {
     
     /* Method addNotes is used for inserting notes for specific card by card ID */
     public boolean addNotes(String cell, String text) throws SQLException {
-        String query = "UPDATE notes SET note = ? WHERE id_card = " + cell;
+        String query = "UPDATE " + notes + " SET note = ? WHERE id_card = " + cell;
         boolean output = false;
         try(Connection connection  = MyConnection.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);) {
@@ -279,7 +279,7 @@ public class CardControls  implements DbControls {
     
     /* Method loadNotes fetches notes for specific card based on card ID */
     public String loadNotes(String cell) throws SQLException {
-        String query = "SELECT note FROM notes WHERE id_card = " + cell;
+        String query = "SELECT " + notes + " FROM notes WHERE id_card = " + cell;
         String notes = "";
         boolean output = false;
         

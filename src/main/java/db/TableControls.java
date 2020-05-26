@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class TableControls implements DbControls{
 	public void createTableAlbum() throws Exception {
-		String query = "CREATE TABLE IF NOT EXISTS public.album "
+		String query = "CREATE TABLE IF NOT EXISTS public." + album 
 				+ "(id bigint NOT NULL GENERATED ALWAYS AS IDENTITY "
 				+ "( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 987654321 ),"
 				+ " name text NOT NULL,"
@@ -17,7 +17,7 @@ public class TableControls implements DbControls{
 				+ " rarity text NOT NULL,"
 				+ " type text NOT NULL,"
 				+ " PRIMARY KEY (id) ); "
-				+ "ALTER TABLE public.album OWNER to postgres;";
+				+ "ALTER TABLE public." + album + " OWNER to postgres;";
 
 		try (Connection conn = MyConnection.getConnection();
 				PreparedStatement ps = conn.prepareCall(query); ) {
@@ -42,7 +42,7 @@ public class TableControls implements DbControls{
 	}
 
 	public void createTableMonsterDetail() throws Exception {
-		String query = "CREATE TABLE IF NOT EXISTS public.monster_details" +
+		String query = "CREATE TABLE IF NOT EXISTS public." + monsterDetails + 
 					"( id_monster bigint NOT NULL,"
 					+ "	summ_method text NOT NULL,"
 					+ " attribute text NOT NULL,"
@@ -54,7 +54,7 @@ public class TableControls implements DbControls{
 					+ " ON UPDATE CASCADE"
 					+ " ON DELETE CASCADE"
 					+ " NOT VALID );"
-					+ " ALTER TABLE public.monster_details OWNER to postgres;";
+					+ " ALTER TABLE public." + monsterDetails + " OWNER to postgres;";
 	
 		try (Connection conn = MyConnection.getConnection();
 				PreparedStatement ps = conn.prepareCall(query); ) {
@@ -78,7 +78,7 @@ public class TableControls implements DbControls{
 	}
 	
 	public void createTableNotes() throws Exception {
-		String query = "CREATE TABLE IF NOT EXISTS public.notes" +
+		String query = "CREATE TABLE IF NOT EXISTS public." + notes + 
 					"( id_card bigint NOT NULL,"
 					+ "	note text NOT NULL,"
 					+ " CONSTRAINT id_card FOREIGN KEY (id_card)"
@@ -86,7 +86,7 @@ public class TableControls implements DbControls{
 					+ " ON UPDATE CASCADE"
 					+ " ON DELETE CASCADE"
 					+ " NOT VALID );"
-					+ " ALTER TABLE public.notes OWNER to postgres;";
+					+ " ALTER TABLE public." + notes + " OWNER to postgres;";
 	
 		try (Connection conn = MyConnection.getConnection();
 				PreparedStatement ps = conn.prepareCall(query); ) {

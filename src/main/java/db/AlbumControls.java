@@ -22,7 +22,7 @@ public class AlbumControls implements DbControls{
     
 	/* Method addUser is used for new user registration */
     public boolean addUser(String name, String password) throws SQLException {        
-        String query = "INSERT INTO users(userName, userPassword) VALUES (?,?)";
+        String query = "INSERT INTO users (userName, userPassword) VALUES (?,?)";
         boolean output = false;
 
         try (Connection connection = MyConnection.getConnection();
@@ -51,7 +51,6 @@ public class AlbumControls implements DbControls{
     
     /* Method login checks if user name and password are right */
     public boolean login(String name, String pass) throws SQLException {
-    	
         String username = name; //variable of user name
         String password = pass;	//variable for password
         String query = "SELECT * FROM users WHERE userName = ? AND userPassword = ?";
