@@ -1,7 +1,7 @@
 /*
  * Copyright (c) ...
  */
-package com.andy.collector.dal;
+package com.andy.collector.dao;
 
 /**
  * The MonsterCard class provides methods for adding a new monster card to database,

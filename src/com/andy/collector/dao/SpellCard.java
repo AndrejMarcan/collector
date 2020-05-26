@@ -1,7 +1,7 @@
 /*
  * Copyright (c) ...
  */
-package com.andy.collector.dal;
+package com.andy.collector.dao;
 
 /**
  * The SpellCard class provides methods for adding a new spell card to database, edit data for spell card

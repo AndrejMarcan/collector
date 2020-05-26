@@ -1,7 +1,7 @@
 /*
  * Copyright (c) ...
  */
-package com.andy.collector.dal;
+package com.andy.collector.dao;
 
 /**
  * The TrapCard class provides methods for adding a new trap card to database, edit data for trap card

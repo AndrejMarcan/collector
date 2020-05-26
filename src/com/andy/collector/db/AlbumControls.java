@@ -7,8 +7,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import com.andy.collector.gui.Album;
-
 import java.sql.ResultSet;
 
 /**
