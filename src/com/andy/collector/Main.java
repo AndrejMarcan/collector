@@ -3,7 +3,12 @@
  */
 package com.andy.collector;
 
-import com.andy.collector.db.TableControls;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+
+//import com.andy.collector.db.TableControls;
 
 /**
  * Main class of the application. Creates new object of CardCollector class and turns it visible.
@@ -11,18 +16,23 @@ import com.andy.collector.db.TableControls;
  * @version		0.1 14. May 2020
  * @author 		Andrej Marcan
  */
+@SpringBootApplication
+@ComponentScan(basePackages = "com.andy.collector.*")
 public class Main {
 
     public static void main(String[] args) throws Exception {
-    	TableControls dbControls = new TableControls();
-    	try {
-    		dbControls.createTableAlbum();
-    		dbControls.createTableMonsterDetail();
-        	dbControls.createTableNotes();
-    	} catch (Exception ex) {
-    		ex.printStackTrace();
-    		throw new Exception("Table creation failed.");
-    	}
+       	SpringApplication app = new SpringApplication(Main.class);
+        app.run();
+    	
+//    	TableControls dbControls = new TableControls();
+//    	try {
+//    		dbControls.createTableAlbum();
+//    		dbControls.createTableMonsterDetail();
+//        	dbControls.createTableNotes();
+//    	} catch (Exception ex) {
+//    		ex.printStackTrace();
+//    		throw new Exception("Table creation failed.");
+//    	}
     }
     
 }

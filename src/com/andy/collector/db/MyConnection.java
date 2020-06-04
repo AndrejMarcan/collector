@@ -6,12 +6,15 @@ package com.andy.collector.db;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+import org.springframework.stereotype.Service;
+
 /**
  * The MyConnection class provides method to connect application to database.
  * 
  * @version		0.1 14. May 2020
  * @author 		Andrej Marcan
  */
+@Service
 public class MyConnection {
     
 	/* Method getConnection provides connection to database */

@@ -3,6 +3,10 @@
  */
 package com.andy.collector.dao;
 
+import org.springframework.stereotype.Component;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
  * The SpellCard class provides methods for adding a new spell card to database, edit data for spell card
  * in database and to get data for spell card from the database.
@@ -10,9 +14,18 @@ package com.andy.collector.dao;
  * @version		0.1 14. May 2020
  * @author 		Andrej Marcan
  */
+@Component
+@Schema(
+		type = "object",
+		title = "SpellCard"
+		)
 public class SpellCard extends Card{
+	
+	@Schema(required = true)
     private String type;	//card type
     private final String CARD_TYPE = "spell card";
+    
+    public SpellCard() {}
     
     /* Constructor for SpellCard class */
     public SpellCard (String name, Rarities rarity, Editions edition,String set,
