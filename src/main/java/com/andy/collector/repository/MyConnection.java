@@ -1,7 +1,7 @@
 /*
  * Copyright (c) ...
  */
-package com.andy.collector.db;
+package main.java.com.andy.collector.repository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

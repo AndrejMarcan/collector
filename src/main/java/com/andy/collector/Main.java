@@ -1,7 +1,7 @@
 /*
  * Copyright (c) ...
  */
-package com.andy.collector;
+package main.java.com.andy.collector;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,7 +17,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @author 		Andrej Marcan
  */
 @SpringBootApplication
-@ComponentScan(basePackages = "com.andy.collector.*")
+@ComponentScan(basePackages = "main.java.com.andy.collector.*")
 public class Main {
 
     public static void main(String[] args) throws Exception {

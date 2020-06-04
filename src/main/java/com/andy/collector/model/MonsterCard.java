@@ -1,11 +1,13 @@
 /*
  * Copyright (c) ...
  */
-package com.andy.collector.dao;
+package main.java.com.andy.collector.model;
 
 import org.springframework.stereotype.Component;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import main.java.com.andy.collector.enums.Editions;
+import main.java.com.andy.collector.enums.Rarities;
 
 /**
  * The MonsterCard class provides methods for adding a new monster card to database,

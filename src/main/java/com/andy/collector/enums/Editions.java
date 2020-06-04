@@ -1,4 +1,4 @@
-package com.andy.collector.dao;
+package main.java.com.andy.collector.enums;
 
 public enum Editions {
 	FE("First Edition", "gold"),
@@ -13,11 +13,11 @@ public enum Editions {
 		this.color = color;
 	}
 	
-	String getEdition() {
+	public String getEdition() {
 		return edition;
 	}
 	
-	String getColor() {
+	public String getColor() {
 		return color;
 	}
 }

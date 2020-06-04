@@ -1,4 +1,4 @@
-package com.andy.collector.dao;
+package main.java.com.andy.collector.enums;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
