@@ -6,10 +6,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.andy.collector.dao.Card;
-import com.andy.collector.dao.MonsterCard;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.andy.collector.dao.Card;
+import com.andy.collector.dao.Editions;
+import com.andy.collector.dao.EnumPickers;
+import com.andy.collector.dao.MonsterCard;
+import com.andy.collector.dao.Rarities;
+import com.andy.collector.dao.SpellCard;
+import com.andy.collector.dao.TrapCard;
+
+@Service
 public class CardControls  implements DbControls {
+	
 	public boolean addCard(MonsterCard monsterCard) throws SQLException {
         String query = "INSERT INTO " + album + "(name, set, edition, language,"
                 + "card_type, rarity, type) VALUES (?,?,?,?,?,?,?)";
@@ -248,6 +259,62 @@ public class CardControls  implements DbControls {
             ex.printStackTrace();
             throw new SQLException("Card details SELECT unsuccessful !");
         }
+    }
+    
+    public ArrayList<Card> showAllCards() throws SQLException {
+    	String query = "SELECT * FROM album";
+        boolean output = false;
+        ArrayList<Card> list = new ArrayList<>();
+        EnumPickers picker = new EnumPickers();
+        Rarities rarity;
+        Editions edition;
+
+        try (Connection connection = MyConnection.getConnection();
+        	 PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery(); ) {
+        	connection.setAutoCommit(false);
+        	
+        	try {               
+                while(resultSet.next()) {
+                	if(resultSet.getString("card_type").equals("spell card")) {                	
+                	rarity = picker.rarityPickerLonger(resultSet.getString("rarity"));              	
+                	edition  = picker.editionPickerLonger(resultSet.getString("edition"));              	
+                	SpellCard card = new SpellCard (resultSet.getString("name"), rarity
+                			, edition, resultSet.getString("set")
+                			, resultSet.getString("language"), resultSet.getString("type"));
+                	list.add(card);
+                	}
+                	if(resultSet.getString("card_type").equals("trap card")) {                	
+                    	rarity = picker.rarityPickerLonger(resultSet.getString("rarity"));              	
+                    	edition  = picker.editionPickerLonger(resultSet.getString("edition"));              	
+                    	Card card = new TrapCard (resultSet.getString("name"), rarity
+                    			, edition, resultSet.getString("set")
+                    			, resultSet.getString("language"), resultSet.getString("type"));
+                    	list.add(card);
+                    	}
+                	if(resultSet.getString("card_type").equals("monster card")) {                	
+                    	rarity = picker.rarityPickerLonger(resultSet.getString("rarity"));              	
+                    	edition  = picker.editionPickerLonger(resultSet.getString("edition"));              	
+                    	Card card = new TrapCard (resultSet.getString("name"), rarity
+                    			, edition, resultSet.getString("set")
+                    			, resultSet.getString("language"), resultSet.getString("type"));
+                    	list.add(card);
+                    	}
+                }
+                output = true;		
+        	} catch (SQLException ex) {
+        		ex.printStackTrace();
+        		throw new SQLException("SELECT unsuccessful !");
+        	} finally {
+        		dbCommit(connection, output);                	
+        	}
+        	connection.setAutoCommit(true);
+        	
+        } catch (SQLException ex) {
+        	ex.printStackTrace();
+        	throw new SQLException("Abum SELECT unsuccessful !");
+        } 
+        return list;
     }
     
     /* Method addNotes is used for inserting notes for specific card by card ID */

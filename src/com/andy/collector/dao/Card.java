@@ -3,6 +3,11 @@
  */
 package com.andy.collector.dao;
 
+import org.springframework.stereotype.Component;
+
+import io.swagger.v3.oas.annotations.media.DiscriminatorMapping;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
  * The TrapCard class provides methods for adding a new trap card to database, edit data for trap card
  * in database and to get data for trap card from the database.
@@ -10,14 +15,35 @@ package com.andy.collector.dao;
  * @version		0.1 14. May 2020
  * @author 		Andrej Marcan
  */
+@Component
+@Schema(
+		type = "object",
+		title = "Card",
+		anyOf = { MonsterCard.class, SpellCard.class, TrapCard.class }
+)
 public abstract class Card {
+	
+	@Schema(required = true)
     private String name;		//card name
-    private Rarities rarity;		//card rarity
-    private Editions edition;		//card edition
-    private String set;			//card set
-    private String language;	//card language
-    private String type;		//card type
     
+	@Schema(required = true)
+	private Rarities rarity;		//card rarity
+	
+	@Schema(required = true)
+	private Editions edition;		//card edition
+	
+	@Schema(required = true)
+	private String set;			//card set
+	
+	@Schema(required = true)
+	private String language;	//card language
+	
+	@Schema(required = true)
+	private String type;		//card type
+    
+	
+	public Card() {};
+	
     /* Constructor for Card class */
     public Card (String name, Rarities rarity, Editions edition, String set, String language, String type) { 
         this.name = name;
@@ -79,7 +105,6 @@ public abstract class Card {
     public void setType(String type) {
     	this.type = type;
     }
-    
 }
 
 

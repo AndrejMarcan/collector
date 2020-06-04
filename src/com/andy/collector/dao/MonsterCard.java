@@ -3,6 +3,10 @@
  */
 package com.andy.collector.dao;
 
+import org.springframework.stereotype.Component;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /**
  * The MonsterCard class provides methods for adding a new monster card to database,
  * edit data for monster card in database and to get data for monster card from the database.
@@ -10,21 +14,38 @@ package com.andy.collector.dao;
  * @version		0.1 14. May 2020
  * @author 		Andrej Marcan
  */
+@Component
+@Schema(
+		type = "object",
+		title = "MonsterCard"
+		)
 public class MonsterCard extends Card {
+	
+	@Schema(required = true)
     private String summMethod;	//summoning method
-    private String attribute;	//monster attribute
-    private String atk;			//attack points
-    private String def;			//defense points
-    private String level;		//monster level
+    
+	@Schema(required = true)
+	private String attribute;	//monster attribute
+	
+	@Schema(required = true)
+	private String atk;			//attack points
+    
+	@Schema(required = true)
+	private String def;			//defense points
+    
+	@Schema(required = true)
+	private String level;		//monster level
     private final String CARD_TYPE = "monster card";
+    
+    public MonsterCard() {};
     
     /* Constructor for MonsterCard class */
     public MonsterCard (String name, Rarities rarity, Editions edition, String set, String language,
-    					String type, String summMethod, String atribute, String level,
+    					String type, String summMethod, String attribute, String level,
     					String atk, String def) {
         super(name, rarity, edition, set, language, type);
         this.summMethod = summMethod;
-        this.attribute = atribute;
+        this.attribute = attribute;
         this.level = level;
         this.atk = atk;
         this.def = def;   

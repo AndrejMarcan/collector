@@ -10,7 +10,7 @@ plugins {
     id 'java-library'
 }
 	sourceSets.main.java.srcDirs = ['src']
-	mainClassName = 'main.java.Main'
+	mainClassName = 'com.andy.collector.Main'
 	
 repositories {
     jcenter() 
@@ -25,6 +25,13 @@ dependencies {
 	
 	// https://mvnrepository.com/artifact/org.postgresql/postgresql
 	compile group: 'org.postgresql', name: 'postgresql', version: '42.1.4'
+	
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.3.0.RELEASE'
+	
+	// https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui
+	compile group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.4.0'
+	
 
 
     testImplementation 'junit:junit:4.12' 
