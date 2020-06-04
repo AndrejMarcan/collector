@@ -1,4 +1,4 @@
-package main.java.com.andy.collector.repository;
+package com.andy.collector.repository;
 
 import java.sql.Connection;
 import java.sql.SQLException;

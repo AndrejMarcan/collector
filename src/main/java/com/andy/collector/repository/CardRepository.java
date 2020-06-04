@@ -1,4 +1,4 @@
-package main.java.com.andy.collector.repository;
+package com.andy.collector.repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,20 +7,24 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
 
-import main.java.com.andy.collector.enums.Editions;
-import main.java.com.andy.collector.enums.EnumPickers;
-import main.java.com.andy.collector.enums.Rarities;
-import main.java.com.andy.collector.model.Card;
-import main.java.com.andy.collector.model.MonsterCard;
-import main.java.com.andy.collector.model.SpellCard;
-import main.java.com.andy.collector.model.TrapCard;
+import com.andy.collector.enums.Editions;
+import com.andy.collector.enums.EnumPickers;
+import com.andy.collector.enums.Rarities;
+import com.andy.collector.model.Card;
+import com.andy.collector.model.MonsterCard;
+import com.andy.collector.model.SpellCard;
+import com.andy.collector.model.TrapCard;
 
-@Service
+
+@Repository
 public class CardRepository  extends DbRepository {
 	
+	@Autowired
+	MyConnection myConnection;
 	public boolean addCard(MonsterCard monsterCard) throws SQLException {
         String query = "INSERT INTO " + album + "(name, set, edition, language,"
                 + "card_type, rarity, type) VALUES (?,?,?,?,?,?,?)";
@@ -29,7 +33,7 @@ public class CardRepository  extends DbRepository {
         String queryNotes = "INSERT INTO " + notes + "(id_card, note) VALUES ((select max(id) from " + album + "), ?)";
         boolean output = false;
         
-            try(Connection connection  = MyConnection.getConnection();
+            try(Connection connection  = myConnection.getConnection();
             	PreparedStatement preparedStatement = connection.prepareStatement(query);
             	PreparedStatement preparedStatementDetails = connection.prepareStatement(queryDetails);
             	PreparedStatement preparedStatementNotes = connection.prepareStatement(queryNotes);) {
@@ -80,7 +84,7 @@ public class CardRepository  extends DbRepository {
         		+ " atk = ?, def = ? WHERE id_monster = " + cell;
         boolean output = false;
         
-        try (Connection connection  = MyConnection.getConnection();
+        try (Connection connection  = myConnection.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
         	PreparedStatement preparedStatementDetails = connection.prepareStatement(queryDetails)) {        	
         	connection.setAutoCommit(false);
@@ -121,7 +125,7 @@ public class CardRepository  extends DbRepository {
                     + " language, type, card_type) VALUES (?,?,?,?,?,?,?)";
         boolean output = false;
 
-        try (Connection connection  = MyConnection.getConnection();
+        try (Connection connection  = myConnection.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query); ) {        	
         	connection.setAutoCommit(false);
         	
@@ -155,7 +159,7 @@ public class CardRepository  extends DbRepository {
         		+ " type = ? WHERE id = " + cell;
         boolean output = false;
         
-        try (Connection connection  = MyConnection.getConnection();
+        try (Connection connection  = myConnection.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);) {
         	connection.setAutoCommit(false);
         	
@@ -188,7 +192,7 @@ public class CardRepository  extends DbRepository {
         String query = "DELETE FROM " + album + " WHERE id = " + cell; // cell represents table block where card ID is found
         boolean output = false;
         
-        try (Connection connection  = MyConnection.getConnection();
+        try (Connection connection  = myConnection.getConnection();
         	PreparedStatement preparedStatement = connection.prepareStatement(query); ) {
         	connection.setAutoCommit(false);
         	
@@ -217,7 +221,7 @@ public class CardRepository  extends DbRepository {
         String queryDetails = "SELECT * FROM " + monsterDetails + " WHERE id_monster = " + cell; 
         boolean output = false;
         
-        try(Connection connection  = MyConnection.getConnection();
+        try(Connection connection  = myConnection.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();) {
         	connection.setAutoCommit(false);
@@ -269,7 +273,7 @@ public class CardRepository  extends DbRepository {
         Rarities rarity;
         Editions edition;
 
-        try (Connection connection = MyConnection.getConnection();
+        try (Connection connection = myConnection.getConnection();
         	 PreparedStatement preparedStatement = connection.prepareStatement(query);
              ResultSet resultSet = preparedStatement.executeQuery(); ) {
         	connection.setAutoCommit(false);
@@ -321,7 +325,7 @@ public class CardRepository  extends DbRepository {
     public boolean addNotes(String cell, String text) throws SQLException {
         String query = "UPDATE " + notes + " SET note = ? WHERE id_card = " + cell;
         boolean output = false;
-        try(Connection connection  = MyConnection.getConnection();
+        try(Connection connection  = myConnection.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);) {
         	connection.setAutoCommit(false);
         	
@@ -350,7 +354,7 @@ public class CardRepository  extends DbRepository {
         String notes = "";
         boolean output = false;
         
-        try(Connection connection  = MyConnection.getConnection();
+        try(Connection connection  = myConnection.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
         	ResultSet resultSet = preparedStatement.executeQuery();) {
         	connection.setAutoCommit(false);

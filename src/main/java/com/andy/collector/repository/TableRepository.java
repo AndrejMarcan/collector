@@ -1,13 +1,17 @@
-package main.java.com.andy.collector.repository;
+package com.andy.collector.repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class TableRepository extends DbRepository{
+	
+	@Autowired
+	MyConnection myConnection;
 	public void createTableAlbum() throws Exception {
 		String query = "CREATE TABLE IF NOT EXISTS public." + album 
 				+ "(id bigint NOT NULL GENERATED ALWAYS AS IDENTITY "
@@ -22,7 +26,7 @@ public class TableRepository extends DbRepository{
 				+ " PRIMARY KEY (id) ); "
 				+ "ALTER TABLE public." + album + " OWNER to postgres;";
 
-		try (Connection conn = MyConnection.getConnection();
+		try (Connection conn = myConnection.getConnection();
 				PreparedStatement ps = conn.prepareCall(query); ) {
 			boolean output = false;	
 			conn.setAutoCommit(false);
@@ -59,7 +63,7 @@ public class TableRepository extends DbRepository{
 					+ " NOT VALID );"
 					+ " ALTER TABLE public." + monsterDetails + " OWNER to postgres;";
 	
-		try (Connection conn = MyConnection.getConnection();
+		try (Connection conn = myConnection.getConnection();
 				PreparedStatement ps = conn.prepareCall(query); ) {
 			boolean output = false;
 			conn.setAutoCommit(false);
@@ -91,7 +95,7 @@ public class TableRepository extends DbRepository{
 					+ " NOT VALID );"
 					+ " ALTER TABLE public." + notes + " OWNER to postgres;";
 	
-		try (Connection conn = MyConnection.getConnection();
+		try (Connection conn = myConnection.getConnection();
 				PreparedStatement ps = conn.prepareCall(query); ) {
 			boolean output = false;
 			conn.setAutoCommit(false);

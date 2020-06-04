@@ -1,4 +1,4 @@
-package main.java.com.andy.collector.controller;
+package com.andy.collector.controller;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,15 +18,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.andy.collector.model.Card;
+import com.andy.collector.model.MonsterCard;
+import com.andy.collector.model.SpellCard;
+import com.andy.collector.model.TrapCard;
+import com.andy.collector.repository.CardRepository;
+
 import io.swagger.v3.oas.annotations.Hidden;
-import main.java.com.andy.collector.enums.Editions;
-import main.java.com.andy.collector.enums.EnumPickers;
-import main.java.com.andy.collector.enums.Rarities;
-import main.java.com.andy.collector.model.Card;
-import main.java.com.andy.collector.model.MonsterCard;
-import main.java.com.andy.collector.model.SpellCard;
-import main.java.com.andy.collector.model.TrapCard;
-import main.java.com.andy.collector.repository.CardRepository;
+
 
 @RestController
 @RequestMapping("/collector")
