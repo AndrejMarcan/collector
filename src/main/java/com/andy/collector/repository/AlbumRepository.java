@@ -1,11 +1,14 @@
 /*
  * Copyright (c) ...
  */
-package main.java.com.andy.collector.repository;
+package com.andy.collector.repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 
@@ -16,14 +19,17 @@ import java.sql.ResultSet;
  * @version		0.1 14. May 2020
  * @author 		Andrej Marcan
  */
+@Repository
 public class AlbumRepository extends DbRepository{
     
+	@Autowired
+	MyConnection myConnection;
 	/* Method addUser is used for new user registration */
     public boolean addUser(String name, String password) throws SQLException {        
         String query = "INSERT INTO users (userName, userPassword) VALUES (?,?)";
         boolean output = false;
 
-        try (Connection connection = MyConnection.getConnection();
+        try (Connection connection = myConnection.getConnection();
         	 PreparedStatement preparedStatement = connection.prepareStatement(query); ) {
         	connection.setAutoCommit(false);
         	
@@ -54,7 +60,7 @@ public class AlbumRepository extends DbRepository{
         String query = "SELECT * FROM users WHERE userName = ? AND userPassword = ?";
         boolean output = false;
         
-        try (Connection connection = MyConnection.getConnection();
+        try (Connection connection = myConnection.getConnection();
         	 PreparedStatement preparedStatement = connection.prepareStatement(query);
              ResultSet resultSet = preparedStatement.executeQuery(); ) {
         	connection.setAutoCommit(false);

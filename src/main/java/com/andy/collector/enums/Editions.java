@@ -1,4 +1,4 @@
-package main.java.com.andy.collector.enums;
+package com.andy.collector.enums;
 
 public enum Editions {
 	FE("First Edition", "gold"),

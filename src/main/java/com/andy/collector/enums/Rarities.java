@@ -1,4 +1,4 @@
-package main.java.com.andy.collector.enums;
+package com.andy.collector.enums;
 
 /**
  * The Rarities enum serves as the list of all possible rarities of the cards.

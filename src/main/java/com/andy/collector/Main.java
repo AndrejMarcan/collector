@@ -1,12 +1,14 @@
 /*
  * Copyright (c) ...
  */
-package main.java.com.andy.collector;
+package com.andy.collector;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.PropertySource;
 
 //import com.andy.collector.db.TableControls;
 
@@ -17,7 +19,8 @@ import org.springframework.context.annotation.ComponentScan;
  * @author 		Andrej Marcan
  */
 @SpringBootApplication
-@ComponentScan(basePackages = "main.java.com.andy.collector.*")
+@ComponentScan(basePackages = "com.andy.collector.*")
+@ConfigurationPropertiesScan(basePackages = "main.*")
 public class Main {
 
     public static void main(String[] args) throws Exception {

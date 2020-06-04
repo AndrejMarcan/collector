@@ -1,14 +1,16 @@
 /*
  * Copyright (c) ...
  */
-package main.java.com.andy.collector.model;
+package com.andy.collector.model;
 
 import org.springframework.stereotype.Component;
 
+import com.andy.collector.enums.Editions;
+import com.andy.collector.enums.Rarities;
+
 import io.swagger.v3.oas.annotations.media.DiscriminatorMapping;
 import io.swagger.v3.oas.annotations.media.Schema;
-import main.java.com.andy.collector.enums.Editions;
-import main.java.com.andy.collector.enums.Rarities;
+
 
 /**
  * The TrapCard class provides methods for adding a new trap card to database, edit data for trap card

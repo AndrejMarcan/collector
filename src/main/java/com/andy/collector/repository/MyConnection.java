@@ -1,11 +1,18 @@
 /*
  * Copyright (c) ...
  */
-package main.java.com.andy.collector.repository;
+package com.andy.collector.repository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,14 +21,25 @@ import org.springframework.stereotype.Service;
  * @version		0.1 14. May 2020
  * @author 		Andrej Marcan
  */
-@Service
+@Component
+@ConfigurationProperties("connection")
+@PropertySource(value = "classpath:application.properties")
 public class MyConnection {
-    
+	
+	@Value("${spring.database.url}")
+	private String url;
+	
+	@Value("${connection.user}")
+	private String user;
+	
+	@Value("${connection.password}")
+	private String password;
+	
 	/* Method getConnection provides connection to database */
-    public static Connection getConnection() {
-    	final String url= "jdbc:postgresql://localhost:5432/card_collector";
-    	final String user = "postgres";
-    	final String password = "root";
+    public Connection getConnection() {
+//   	final String url= "jdbc:postgresql://localhost:5432/card_collector";
+//    	final String user = "postgres";
+//    	final String password = "root";
         Connection connection = null;	
         try {
         	Class.forName("org.postgresql.Driver");
