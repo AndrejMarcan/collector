@@ -1,4 +1,4 @@
-package com.andy.collector.db;
+package main.java.com.andy.collector.controller;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,25 +18,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.andy.collector.dao.Card;
-import com.andy.collector.dao.Editions;
-import com.andy.collector.dao.EnumPickers;
-import com.andy.collector.dao.MonsterCard;
-import com.andy.collector.dao.Rarities;
-import com.andy.collector.dao.SpellCard;
-import com.andy.collector.dao.TrapCard;
-
 import io.swagger.v3.oas.annotations.Hidden;
+import main.java.com.andy.collector.enums.Editions;
+import main.java.com.andy.collector.enums.EnumPickers;
+import main.java.com.andy.collector.enums.Rarities;
+import main.java.com.andy.collector.model.Card;
+import main.java.com.andy.collector.model.MonsterCard;
+import main.java.com.andy.collector.model.SpellCard;
+import main.java.com.andy.collector.model.TrapCard;
+import main.java.com.andy.collector.repository.CardRepository;
 
 @RestController
 @RequestMapping("/collector")
 public class CollectorController {
 	
 	@Autowired
-	CardControls cardControls;
+	CardRepository cardControls;
 	
-	@Autowired
-	EnumPickers enumPickers;
 	
 	@PostMapping(value = "/addMonster", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<MonsterCard> addCard(@RequestBody MonsterCard monsterCard) throws SQLException {
@@ -65,10 +63,6 @@ public class CollectorController {
 	@Hidden
 	@PostMapping(value = "/addSpellCard", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Card> addSpellCard(@RequestBody SpellCard spellCard) throws SQLException {
-//		Editions edition = enumPickers.editionPicker(list.get(2));
-//		Rarities rarity = enumPickers.rarityPicker(list.get(1));
-//	
-//		SpellCard card = new SpellCard(list.get(0), rarity, edition,list.get(3),list.get(4),list.get(5));
 		boolean cardNew = cardControls.addCard(spellCard);
 		
 		if(cardNew) {

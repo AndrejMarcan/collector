@@ -10,7 +10,7 @@ plugins {
     id 'java-library'
 }
 	sourceSets.main.java.srcDirs = ['src']
-	mainClassName = 'com.andy.collector.Main'
+	mainClassName = 'main.java.com.andy.collector.Main'
 	
 repositories {
     jcenter() 

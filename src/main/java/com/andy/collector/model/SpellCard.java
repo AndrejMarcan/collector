@@ -1,16 +1,17 @@
 /*
  * Copyright (c) ...
  */
-package com.andy.collector.dao;
+package main.java.com.andy.collector.model;
 
 import org.springframework.stereotype.Component;
 
-import io.swagger.v3.oas.annotations.media.DiscriminatorMapping;
 import io.swagger.v3.oas.annotations.media.Schema;
+import main.java.com.andy.collector.enums.Editions;
+import main.java.com.andy.collector.enums.Rarities;
 
 /**
- * The TrapCard class provides methods for adding a new trap card to database, edit data for trap card
- * in database and to get data for trap card from the database.
+ * The SpellCard class provides methods for adding a new spell card to database, edit data for spell card
+ * in database and to get data for spell card from the database.
  * 
  * @version		0.1 14. May 2020
  * @author 		Andrej Marcan
@@ -18,23 +19,23 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Component
 @Schema(
 		type = "object",
-		title = "TrapCard"
+		title = "SpellCard"
 		)
-public class TrapCard extends Card{
+public class SpellCard extends Card{
 	
 	@Schema(required = true)
-    private String type; //card type
-    private final String CARD_TYPE = "trap card";
-       
-    public TrapCard() {};
+    private String type;	//card type
+    private final String CARD_TYPE = "spell card";
     
-    /* Constructor for TrapCard class */
-    public TrapCard (String name, Rarities rarity, Editions edition, String set,String language,
-    				 String type) {
+    public SpellCard() {}
+    
+    /* Constructor for SpellCard class */
+    public SpellCard (String name, Rarities rarity, Editions edition,String set,
+    				  String language, String type) {
         super(name, rarity, edition, set, language, type);
     }
     
-    /* Method shows informations about trap card in console */
+    /* Method shows informations about spell card in console */
     @Override
     public void getInfo() {
         System.out.println(super.getName());
@@ -48,8 +49,9 @@ public class TrapCard extends Card{
     @Override
     public String getCardType() {
     	return CARD_TYPE;
-    }
+    } 
 }
+
 
 
 

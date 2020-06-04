@@ -1,4 +1,4 @@
-package com.andy.collector.db;
+package main.java.com.andy.collector.repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,16 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.andy.collector.dao.Card;
-import com.andy.collector.dao.Editions;
-import com.andy.collector.dao.EnumPickers;
-import com.andy.collector.dao.MonsterCard;
-import com.andy.collector.dao.Rarities;
-import com.andy.collector.dao.SpellCard;
-import com.andy.collector.dao.TrapCard;
+import main.java.com.andy.collector.enums.Editions;
+import main.java.com.andy.collector.enums.EnumPickers;
+import main.java.com.andy.collector.enums.Rarities;
+import main.java.com.andy.collector.model.Card;
+import main.java.com.andy.collector.model.MonsterCard;
+import main.java.com.andy.collector.model.SpellCard;
+import main.java.com.andy.collector.model.TrapCard;
 
 @Service
-public class CardControls  implements DbControls {
+public class CardRepository  extends DbRepository {
 	
 	public boolean addCard(MonsterCard monsterCard) throws SQLException {
         String query = "INSERT INTO " + album + "(name, set, edition, language,"
@@ -375,15 +375,4 @@ public class CardControls  implements DbControls {
             throw new SQLException("Note text SELECT unsuccessful !");
         }
     }
-    
-    @Override
-	public void dbCommit(Connection connection, boolean output) throws SQLException {
-		if(connection != null) {
-    		if(output) {
-        		connection.commit();    
-        	} else {
-        		connection.rollback();    
-        	}
-    	}
-	}
 }

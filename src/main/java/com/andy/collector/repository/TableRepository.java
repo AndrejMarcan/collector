@@ -1,10 +1,13 @@
-package com.andy.collector.db;
+package main.java.com.andy.collector.repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class TableControls implements DbControls{
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class TableRepository extends DbRepository{
 	public void createTableAlbum() throws Exception {
 		String query = "CREATE TABLE IF NOT EXISTS public." + album 
 				+ "(id bigint NOT NULL GENERATED ALWAYS AS IDENTITY "
@@ -107,16 +110,5 @@ public class TableControls implements DbControls{
 			ex.printStackTrace();
 			throw new Exception("CREATE TABLE notes unsuccessful");
 		}
-	}
-	
-	@Override
-	public void dbCommit(Connection connection, boolean output) throws SQLException {
-		if(connection != null) {
-    		if(output) {
-        		connection.commit();    
-        	} else {
-        		connection.rollback();    
-        	}
-    	}
 	}
 }

@@ -1,7 +1,7 @@
 /*
  * Copyright (c) ...
  */
-package com.andy.collector.db;
+package main.java.com.andy.collector.repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,7 +16,7 @@ import java.sql.ResultSet;
  * @version		0.1 14. May 2020
  * @author 		Andrej Marcan
  */
-public class AlbumControls implements DbControls{
+public class AlbumRepository extends DbRepository{
     
 	/* Method addUser is used for new user registration */
     public boolean addUser(String name, String password) throws SQLException {        
@@ -80,95 +80,4 @@ public class AlbumControls implements DbControls{
         } 
         return output;
     }
-    
-    @Override
-	public void dbCommit(Connection connection, boolean output) throws SQLException {
-		if(connection != null) {
-    		if(output) {
-        		connection.commit();    
-        	} else {
-        		connection.rollback();    
-        	}
-    	}
-	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
