@@ -23,7 +23,6 @@ import org.springframework.stereotype.Service;
  */
 @Component
 @ConfigurationProperties("connection")
-@PropertySource(value = "classpath:application.properties")
 public class MyConnection {
 	
 	@Value("${spring.database.url}")
@@ -37,12 +36,9 @@ public class MyConnection {
 	
 	/* Method getConnection provides connection to database */
     public Connection getConnection() {
-//   	final String url= "jdbc:postgresql://localhost:5432/card_collector";
-//    	final String user = "postgres";
-//    	final String password = "root";
         Connection connection = null;	
         try {
-        	Class.forName("org.postgresql.Driver");
+        	//Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(url, user, password);
             return connection;            
         } catch (Exception ex) {

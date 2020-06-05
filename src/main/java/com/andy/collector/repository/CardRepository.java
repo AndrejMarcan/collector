@@ -25,6 +25,7 @@ public class CardRepository  extends DbRepository {
 	
 	@Autowired
 	MyConnection myConnection;
+	
 	public boolean addCard(MonsterCard monsterCard) throws SQLException {
         String query = "INSERT INTO " + album + "(name, set, edition, language,"
                 + "card_type, rarity, type) VALUES (?,?,?,?,?,?,?)";
@@ -215,7 +216,7 @@ public class CardRepository  extends DbRepository {
     }
     
     /* method loadCardDetails collects data from database by card ID and returns ArrayList<String> */
-    public ArrayList<String> loadCardDetails(String cell) throws SQLException {
+    public MonsterCard loadMonsterCardDetails(String cell) throws SQLException {
         ArrayList<String> details = new ArrayList<String>();		//creating new ArrayList of Strings
         String query = "SELECT * FROM " + album + " WHERE id = " + cell; 	//cell is table block where card ID is found
         String queryDetails = "SELECT * FROM " + monsterDetails + " WHERE id_monster = " + cell; 
@@ -244,8 +245,7 @@ public class CardRepository  extends DbRepository {
     	                	details.add(resultSetDetails.getString("attribute"));
     	                	details.add(resultSetDetails.getString("level"));
     	                	details.add(resultSetDetails.getString("atk"));
-    	                	details.add(resultSetDetails.getString("def")); 	
-    	                    
+    	                	details.add(resultSetDetails.getString("def")); 	  	                    
                     	}
                     }
                 }
@@ -257,7 +257,14 @@ public class CardRepository  extends DbRepository {
         		dbCommit(connection, output);                	
         	}
         	connection.setAutoCommit(true);
-            return details;
+        	EnumPickers picker = new EnumPickers();
+        	Rarities rarity = picker.rarityPickerLonger(resultSet.getString("rarity"));              	
+        	Editions edition  = picker.editionPickerLonger(resultSet.getString("edition"));       
+        	MonsterCard monsterCard = new MonsterCard(details.get(1), rarity, edition, details.get(2),
+        									details.get(4), details.get(7), details.get(8), details.get(9),
+        									details.get(10), details.get(11), details.get(12));
+        	
+            return monsterCard;
             
         } catch (SQLException ex){
             ex.printStackTrace();
@@ -297,11 +304,7 @@ public class CardRepository  extends DbRepository {
                     	list.add(card);
                     	}
                 	if(resultSet.getString("card_type").equals("monster card")) {                	
-                    	rarity = picker.rarityPickerLonger(resultSet.getString("rarity"));              	
-                    	edition  = picker.editionPickerLonger(resultSet.getString("edition"));              	
-                    	Card card = new TrapCard (resultSet.getString("name"), rarity
-                    			, edition, resultSet.getString("set")
-                    			, resultSet.getString("language"), resultSet.getString("type"));
+                    	Card card = loadMonsterCardDetails(resultSet.getString("id"));
                     	list.add(card);
                     	}
                 }

@@ -26,16 +26,6 @@ public class Main {
     public static void main(String[] args) throws Exception {
        	SpringApplication app = new SpringApplication(Main.class);
         app.run();
-    	
-//    	TableControls dbControls = new TableControls();
-//    	try {
-//    		dbControls.createTableAlbum();
-//    		dbControls.createTableMonsterDetail();
-//        	dbControls.createTableNotes();
-//    	} catch (Exception ex) {
-//    		ex.printStackTrace();
-//    		throw new Exception("Table creation failed.");
-//    	}
     }
     
 }
