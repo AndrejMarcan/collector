@@ -24,6 +24,7 @@ public class AlbumRepository extends DbRepository{
     
 	@Autowired
 	MyConnection myConnection;
+	
 	/* Method addUser is used for new user registration */
     public boolean addUser(String name, String password) throws SQLException {        
         String query = "INSERT INTO users (userName, userPassword) VALUES (?,?)";
