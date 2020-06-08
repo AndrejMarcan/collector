@@ -1,37 +1,16 @@
 package com.andy.collector.enums;
 
-/**
- * The Rarities enum serves as the list of all possible rarities of the cards.
- * 
- * @version		0.1 15. May 2020
- * @author 		Andrej Marcan
- */
-public enum Rarities {
-	COM("Common"),
-	RARE("Rare"),
-	SUR("Super Rare"),
-	UR("Ultra Rare"),
-	SR("Secret Rare"),
-	ULT("Ultimate Rare"),
-	GHOST("Ghost Rare"),
-	SP("Special");
-<<<<<<< HEAD
-	
-	private String rarity;
-=======
-	// TODO add private modifier
-	String rarity;
->>>>>>> refs/heads/master
-	
-	Rarities(String rarity){
-		this.rarity = rarity;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
+
+@Component
+public class EnumPickers {
+	public EnumPickers(){
+		System.out.println("EnumPickers created");
 	}
-	
-	public String getRarity() {
-		return rarity;
-	}
-	
-	public static Rarities rarityPicker(String rarityShort) {
+	// TODO move to rarities class
+	public Rarities rarityPicker(String rarityShort) {
 		Rarities rarity = null;
 		
 		switch(rarityShort) {
@@ -63,7 +42,7 @@ public enum Rarities {
 		return rarity;
 	}
 	
-	public static Rarities rarityPickerLonger(String rarityLong) {
+	public Rarities rarityPickerLonger(String rarityLong) {
 		Rarities rarity = null;
 		
 		switch(rarityLong) {
@@ -93,5 +72,40 @@ public enum Rarities {
         	break;
         }
 		return rarity;
+	}
+	
+	// TODO move to editions class
+	public Editions editionPicker(String edition) {
+		Editions editions = null;
+		
+		switch(edition) {
+        case "FE":
+        	editions = Editions.FE;
+        	break;
+        case "UE":
+        	editions = Editions.UE;
+        	break;
+        case "LE":
+        	editions = Editions.LE;
+        	break;
+        }
+		return editions;
+	}
+	
+	public Editions editionPickerLonger(String editionLong) {
+		Editions editions = null;
+		
+		switch(editionLong) {
+        case "First Edition":
+        	editions = Editions.FE;
+        	break;
+        case "Unlimited Edition":
+        	editions = Editions.UE;
+        	break;
+        case "Limited Edition":
+        	editions = Editions.LE;
+        	break;
+        }
+		return editions;
 	}
 }

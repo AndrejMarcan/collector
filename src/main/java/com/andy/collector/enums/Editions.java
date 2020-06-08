@@ -5,8 +5,14 @@ public enum Editions {
 	LE("Limited Edition", "silver"),
 	UE("Unlimited Edition", "silver");
 	
+<<<<<<< HEAD
 	private String edition;
 	private String color;
+=======
+	//TODO add private modifier
+	String edition;
+	String color;
+>>>>>>> refs/heads/master
 	
 	Editions(String edition, String color){
 		this.edition = edition;
