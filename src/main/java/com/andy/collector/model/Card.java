@@ -46,7 +46,7 @@ public abstract class Card {
 	private String type;		//card type
     
 	
-	public Card() {};
+	public Card() {}
 	
     /* Constructor for Card class */
     public Card (String name, Rarities rarity, Editions edition, String set, String language, String type) { 

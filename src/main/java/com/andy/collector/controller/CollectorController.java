@@ -20,8 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.andy.collector.model.Card;
 import com.andy.collector.model.MonsterCard;
+import com.andy.collector.model.Note;
 import com.andy.collector.model.SpellCard;
 import com.andy.collector.model.TrapCard;
+import com.andy.collector.model.User;
+import com.andy.collector.repository.UserRepository;
 import com.andy.collector.repository.CardRepository;
 
 import io.swagger.v3.oas.annotations.Hidden;
@@ -33,6 +36,9 @@ public class CollectorController {
 	
 	@Autowired
 	CardRepository cardControls;
+	
+	@Autowired
+	UserRepository userRepository;
 	
 	
 	@PostMapping(value = "/add-monster", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -84,6 +90,18 @@ public class CollectorController {
 		
 	}
 	
+	@PostMapping(value = "/add-user", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<User> addTrapCard(@RequestBody User user) throws SQLException {
+		User userNew = userRepository.addUser(user);
+		
+		if(userNew != null) {
+			return new ResponseEntity<User>(userNew, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<User>(HttpStatus.CONFLICT);
+		}
+		
+	}
+	
 	@PutMapping(value = "/edit-card/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Card> updateCard(@PathVariable("id") String id, @RequestBody Card card) throws SQLException {
 
@@ -120,13 +138,13 @@ public class CollectorController {
 	}
 	
 	@PutMapping(value = "/add-note/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> addCardNote(@RequestBody String note, @PathVariable("id") String id) throws SQLException {
-		boolean notes = cardControls.addNotes(note, id);
+	public ResponseEntity<Boolean> addCardNote(@RequestBody Note note, @PathVariable("id") String id) throws SQLException {
+		boolean notes = cardControls.addNotes(id, note);
 		
 		if(notes) {
-			return new ResponseEntity<String>("note saved", HttpStatus.OK);
+			return new ResponseEntity<Boolean>(HttpStatus.OK);
 		} else {
-			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Boolean>(HttpStatus.NOT_FOUND);
 		}
 		
 	}
@@ -144,14 +162,16 @@ public class CollectorController {
 	}
 	
 	@GetMapping(value = "/show-all-cards", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ArrayList<Card>> loadAllCards() throws SQLException {
-		ArrayList<Card> cards = cardControls.showAllCards();
+	public ResponseEntity<List<Card>> loadAllCards() throws SQLException {
+		List<Card> cards = cardControls.showAllCards();
 		
 		if(cards != null) {
-			return new ResponseEntity<ArrayList<Card>> (cards, HttpStatus.OK);
+			return new ResponseEntity<List<Card>> (cards, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<ArrayList<Card>> (HttpStatus.NOT_FOUND);
+			return new ResponseEntity<List<Card>> (HttpStatus.NOT_FOUND);
 		}
 		
 	}
+	
+	
 }
