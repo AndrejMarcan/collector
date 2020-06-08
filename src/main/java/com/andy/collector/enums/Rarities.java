@@ -15,13 +15,8 @@ public enum Rarities {
 	ULT("Ultimate Rare"),
 	GHOST("Ghost Rare"),
 	SP("Special");
-<<<<<<< HEAD
 	
 	private String rarity;
-=======
-	// TODO add private modifier
-	String rarity;
->>>>>>> refs/heads/master
 	
 	Rarities(String rarity){
 		this.rarity = rarity;

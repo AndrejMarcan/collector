@@ -43,11 +43,11 @@ public class CardRepository  extends DbRepository {
 	
 	//@Transactional
 	public boolean addCard(MonsterCard monsterCard) throws SQLException {
-        String QUERY = "INSERT INTO " + album + "(name, set, edition, language,"
+        final String QUERY = "INSERT INTO " + album + "(name, set, edition, language,"
                 + " card_type, rarity, type) VALUES (?,?,?,?,?,?,?)";
-        String QUERY_DETAILS = "INSERT INTO " + monsterDetails + "(id_monster, summ_method, attribute, level,"
+        final String QUERY_DETAILS = "INSERT INTO " + monsterDetails + "(id_monster, summ_method, attribute, level,"
                 + " atk, def ) VALUES ((select max(id) from " + album + "),?,?,?,?,?)";
-        String QUERY_NOTES = "INSERT INTO " + notes + "(id_card, note) VALUES ((select max(id) from " + album + "), ?)";
+        final String QUERY_NOTES = "INSERT INTO " + notes + "(id_card, note) VALUES ((select max(id) from " + album + "), ?)";
 
         jdbcTemplate.update(QUERY, monsterCard.getName(), monsterCard.getSet(), monsterCard.getEdition(), monsterCard.getLanguage(),
         						monsterCard.getCardType(), monsterCard.getRarity(), monsterCard.getType());
@@ -105,9 +105,9 @@ public class CardRepository  extends DbRepository {
     }
 	
     public boolean editCard(MonsterCard monsterCard, String cell) throws SQLException {
-        String QUERY = "UPDATE " + album + " SET name = ?, rarity = ?, edition = ?, set = ?, language = ?,"
+    	final String QUERY = "UPDATE " + album + " SET name = ?, rarity = ?, edition = ?, set = ?, language = ?,"
         				+ " type = ? WHERE id = " + cell;
-        String QUERY_DETAILS = "UPDATE " + monsterDetails + " SET summ_method = ?, attribute = ?, level = ?,"
+    	final String QUERY_DETAILS = "UPDATE " + monsterDetails + " SET summ_method = ?, attribute = ?, level = ?,"
         		+ " atk = ?, def = ? WHERE id_monster = " + cell;
         
         jdbcTemplate.update(QUERY, monsterCard.getName(), monsterCard.getRarity(), monsterCard.getEdition(), monsterCard.getSet(),
@@ -195,7 +195,7 @@ public class CardRepository  extends DbRepository {
     }
     
     public boolean editCard(Card card, String cell) throws SQLException{
-        String QUERY = "UPDATE " + album + " SET name = ?, rarity = ?, edition = ?, set = ?, language = ?,"
+    	final String QUERY = "UPDATE " + album + " SET name = ?, rarity = ?, edition = ?, set = ?, language = ?,"
         		+ " type = ? WHERE id = " + cell;
         
         return jdbcTemplate.update(QUERY, card.getName(), card.getRarity(), card.getEdition(), card.getSet(),
@@ -233,7 +233,7 @@ public class CardRepository  extends DbRepository {
     
     /* Method deleteCard will delete data for selected card by ID of the card */
     public boolean deleteCard(String cell) throws SQLException {
-        String QUERY = "DELETE FROM " + album + " WHERE id = " + cell; // cell represents table block where card ID is found
+    	final String QUERY = "DELETE FROM " + album + " WHERE id = " + cell; // cell represents table block where card ID is found
         
         return jdbcTemplate.update(QUERY) > 0;
         
@@ -264,8 +264,8 @@ public class CardRepository  extends DbRepository {
     /* method loadCardDetails collects data from database by card ID and returns ArrayList<String> */
     public MonsterCard loadMonsterCardDetails(String cell) throws SQLException {
         //ArrayList<String> details = new ArrayList<String>();		//creating new ArrayList of Strings
-        String QUERY = "SELECT * FROM " + album + " WHERE id = " + cell; 	//cell is table block where card ID is found
-        String QUERY_DETAILS = "SELECT * FROM " + monsterDetails + " WHERE id_monster = " + cell; 
+    	final String QUERY = "SELECT * FROM " + album + " WHERE id = " + cell; 	//cell is table block where card ID is found
+    	final String QUERY_DETAILS = "SELECT * FROM " + monsterDetails + " WHERE id_monster = " + cell; 
         
     	MonsterCard card = new MonsterCard();
     	
@@ -424,7 +424,7 @@ public class CardRepository  extends DbRepository {
     
     /* Method addNotes is used for inserting notes for specific card by card ID */
     public boolean addNotes(String cell, Note note) throws SQLException {
-        String QUERY = "UPDATE " + notes + " SET note = '?' WHERE id_card = " + cell;  
+    	final String QUERY = "UPDATE " + notes + " SET note = '?' WHERE id_card = " + cell;  
         
         return jdbcTemplate.update(QUERY, note.getNote())>0;
         
@@ -454,7 +454,7 @@ public class CardRepository  extends DbRepository {
     
     /* Method loadNotes fetches notes for specific card based on card ID */
     public String loadNotes(String cell) throws SQLException {
-        String QUERY = "SELECT * FROM notes WHERE id_card = " + cell;
+    	final String QUERY = "SELECT * FROM notes WHERE id_card = " + cell;
         Note note = new Note();
         List<Map<String, Object>> rows = jdbcTemplate.queryForList(QUERY);
         for(Map<String, Object> row:rows) {
