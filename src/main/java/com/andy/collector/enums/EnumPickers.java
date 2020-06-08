@@ -9,7 +9,7 @@ public class EnumPickers {
 	public EnumPickers(){
 		System.out.println("EnumPickers created");
 	}
-	
+	// TODO move to rarities class
 	public Rarities rarityPicker(String rarityShort) {
 		Rarities rarity = null;
 		
@@ -74,6 +74,7 @@ public class EnumPickers {
 		return rarity;
 	}
 	
+	// TODO move to editions class
 	public Editions editionPicker(String edition) {
 		Editions editions = null;
 		

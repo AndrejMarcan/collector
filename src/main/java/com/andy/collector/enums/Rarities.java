@@ -15,7 +15,7 @@ public enum Rarities {
 	ULT("Ultimate Rare"),
 	GHOST("Ghost Rare"),
 	SP("Special");
-	
+	// TODO add private modifier
 	String rarity;
 	
 	Rarities(String rarity){

@@ -5,6 +5,7 @@ public enum Editions {
 	LE("Limited Edition", "silver"),
 	UE("Unlimited Edition", "silver");
 	
+	//TODO add private modifier
 	String edition;
 	String color;
 	
