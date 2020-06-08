@@ -22,16 +22,15 @@ import org.springframework.stereotype.Service;
  * @author 		Andrej Marcan
  */
 @Component
-@ConfigurationProperties("connection")
 public class MyConnection {
 	
-	@Value("${spring.database.url}")
+	@Value("${spring.datasource.url}")
 	private String url;
 	
-	@Value("${connection.user}")
+	@Value("${spring.datasource.username}")
 	private String user;
 	
-	@Value("${connection.password}")
+	@Value("${spring.datasource.password}")
 	private String password;
 	
 	/* Method getConnection provides connection to database */
