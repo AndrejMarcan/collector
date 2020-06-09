@@ -104,6 +104,7 @@ public class CardRepository  extends DbRepository {
 //      return output;
     }
 	
+	@Transactional
     public boolean editCard(MonsterCard monsterCard, String cell) throws SQLException {
     	final String QUERY = "UPDATE " + album + " SET name = ?, rarity = ?, edition = ?, set = ?, language = ?,"
         				+ " type = ? WHERE id = " + cell;
