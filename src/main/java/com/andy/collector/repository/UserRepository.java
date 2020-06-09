@@ -71,12 +71,12 @@ public class UserRepository extends DbRepository{
    }
     
     /* Method login checks if user name and password are right */
-//    public boolean login(String name, String pass) throws SQLException {
-//        String username = name; //variable of user name
-//        String password = pass;	//variable for password
-//        String query = "SELECT * FROM users WHERE userName = ? AND userPassword = ?";
-//        boolean output = false;
-//        
+    public User login(String name, String pass) throws SQLException {
+        final String QUERY = "SELECT * FROM users WHERE nickname = "+ name +" AND password = "+ pass +"";       
+        
+        User user = jdbcTemplate.queryForObject(QUERY, (rs, rowNum) -> new User(rs.getString("nickname"),rs.getString("password")));
+        
+        return user;
 //        try (Connection connection = myConnection.getConnection();
 //        	 PreparedStatement preparedStatement = connection.prepareStatement(query);
 //             ResultSet resultSet = preparedStatement.executeQuery(); ) {
@@ -102,5 +102,5 @@ public class UserRepository extends DbRepository{
 //        	throw new SQLException("Login SELECT unsuccessful !");
 //        } 
 //        return output;
-//    }
+    }
 }

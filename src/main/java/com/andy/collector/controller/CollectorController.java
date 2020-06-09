@@ -91,7 +91,7 @@ public class CollectorController {
 	}
 	
 	@PostMapping(value = "/add-user", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<User> addTrapCard(@RequestBody User user) throws SQLException {
+	public ResponseEntity<User> addUser(@RequestBody User user) throws SQLException {
 		User userNew = userRepository.addUser(user);
 		
 		if(userNew != null) {
@@ -100,6 +100,18 @@ public class CollectorController {
 			return new ResponseEntity<User>(HttpStatus.CONFLICT);
 		}
 		
+	}
+	
+	@GetMapping(value = "/show-user/{name},{pass}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<User> showUser(@PathVariable ("name") String name, @PathVariable ("pass") String pass) throws SQLException{
+		User user = null;
+		user = userRepository.login(name, pass);
+		
+		if(user != null) {
+			return new ResponseEntity<User>(user, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	@PutMapping(value = "/edit-card/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
