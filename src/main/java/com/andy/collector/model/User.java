@@ -1,8 +1,5 @@
 package com.andy.collector.model;
 
-import org.springframework.stereotype.Component;
-
-//@Component
 public class User {
 	private String nickname;
 	private String password;

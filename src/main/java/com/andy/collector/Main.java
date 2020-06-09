@@ -27,15 +27,10 @@ import com.andy.collector.repository.UserRepository;
 @ConfigurationPropertiesScan(basePackages = "main.*")
 public class Main {
 	
-	@Autowired
-	static ApplicationContext context;
-	
     public static void main(String[] args) throws Exception {
-//    	SpringApplication app = new SpringApplication(Main.class);
-//     	app.run();
-        ApplicationContext context = SpringApplication.run(Main.class, args);
-     	UserRepository userRep = context.getBean(UserRepository.class);
-     	userRep.createTableUsers();
+    	SpringApplication app = new SpringApplication(Main.class);
+     	app.run();
+     	
      	
     }
     
