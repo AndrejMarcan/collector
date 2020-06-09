@@ -31,13 +31,15 @@ import java.sql.ResultSet;
 public class UserRepository extends BCryptPasswordEncoder{
     
 	@Autowired
-	private JdbcTemplate jdbcTemplate;
+	private JdbcTemplate jdbcTemplate;	
 	
+	//when i used encoder bellow encoding takes longer in addUser method as well as matching in method login
+	private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(BCryptPasswordEncoder.BCryptVersion.$2A,15);
 	
 	/* Method addUser is used for new user registration */
     public User addUser(User user) throws SQLException {
     	final String QUERY = "INSERT INTO users (nickname, password) VALUES (?,?)";
-    	jdbcTemplate.update(QUERY, user.getNickname(), encode(user.getPassword()));
+    	jdbcTemplate.update(QUERY, user.getNickname(), encoder.encode(user.getPassword()));
 		return user;
     }
     
