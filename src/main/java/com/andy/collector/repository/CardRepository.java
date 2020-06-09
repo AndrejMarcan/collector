@@ -41,7 +41,7 @@ public class CardRepository  extends DbRepository {
 
 	//How to make these two methods do queries in transaction???
 	
-	//@Transactional
+	@Transactional
 	public boolean addCard(MonsterCard monsterCard) throws SQLException {
         final String QUERY = "INSERT INTO " + album + "(name, set, edition, language,"
                 + " card_type, rarity, type) VALUES (?,?,?,?,?,?,?)";
