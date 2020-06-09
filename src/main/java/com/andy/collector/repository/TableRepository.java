@@ -1,25 +1,17 @@
 package com.andy.collector.repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class TableRepository extends DbRepository{
+public class TableRepository{
 	
 	@Autowired
-	MyConnection myConnection;
-	
-	@Autowired
-	JdbcTemplate jdbcTemplate;
-	
+	private JdbcTemplate jdbcTemplate;
 	
 	public void createTableAlbum() throws Exception {
-		final String QUERY = "CREATE TABLE IF NOT EXISTS public." + album 
+		final String query = "CREATE TABLE IF NOT EXISTS public.album"
 				+ "(id bigint NOT NULL GENERATED ALWAYS AS IDENTITY "
 				+ "( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 987654321 ),"
 				+ " name text NOT NULL,"
@@ -30,35 +22,14 @@ public class TableRepository extends DbRepository{
 				+ " rarity text NOT NULL,"
 				+ " type text NOT NULL,"
 				+ " PRIMARY KEY (id) ); "
-				+ "ALTER TABLE public." + album + " OWNER to postgres;";
+				+ "ALTER TABLE public.album OWNER to postgres;";
 		
-		jdbcTemplate.execute(QUERY);
-//
-//		try (Connection conn = myConnection.getConnection();
-//				PreparedStatement ps = conn.prepareCall(query); ) {
-//			boolean output = false;	
-//			conn.setAutoCommit(false);
-//
-//			try {
-//				ps.execute();
-//				output = true;
-//			} catch(SQLException ex) {
-//				ex.printStackTrace();
-//				throw new SQLException("CREATE TABLE album SQL unsuccessful");
-//			} finally {
-//	    		dbCommit(conn, output);                	
-//	    	}
-//			conn.setAutoCommit(true);
-//			
-//		} catch (Exception ex) {
-//			ex.printStackTrace();
-//			throw new Exception("CREATE TABLE album unsuccessful");
-//		}
+		jdbcTemplate.execute(query);
 	}
 
 	public void createTableMonsterDetail() throws Exception {
-		final String QUERY = "CREATE TABLE IF NOT EXISTS public." + monsterDetails + 
-					"( id_monster bigint NOT NULL,"
+		final String query = "CREATE TABLE IF NOT EXISTS public.monster_details" 
+					+"( id_monster bigint NOT NULL,"
 					+ "	summ_method text NOT NULL,"
 					+ " attribute text NOT NULL,"
 					+ " level text NOT NULL, "
@@ -69,62 +40,32 @@ public class TableRepository extends DbRepository{
 					+ " ON UPDATE CASCADE"
 					+ " ON DELETE CASCADE"
 					+ " NOT VALID );"
-					+ " ALTER TABLE public." + monsterDetails + " OWNER to postgres;";
+					+ " ALTER TABLE public.monster_details OWNER to postgres;";
 		
-		jdbcTemplate.execute(QUERY);
-	
-//		try (Connection conn = myConnection.getConnection();
-//				PreparedStatement ps = conn.prepareCall(query); ) {
-//			boolean output = false;
-//			conn.setAutoCommit(false);
-//
-//			try {
-//				ps.execute();
-//				output = true;
-//			} catch(SQLException ex) {
-//				ex.printStackTrace();
-//				throw new SQLException("CREATE TABLE monster details SQL unsuccessful");
-//			} finally {
-//	    		dbCommit(conn, output);                	
-//	    	}
-//			conn.setAutoCommit(true);
-//		} catch (Exception ex) {
-//			ex.printStackTrace();
-//			throw new Exception("CREATE TABLE monster_details unsuccessful");
-//		} 
+		jdbcTemplate.execute(query);
 	}
 	
 	public void createTableNotes() throws Exception {
-		final String QUERY = "CREATE TABLE IF NOT EXISTS public." + notes + 
-					"( id_card bigint NOT NULL,"
+		final String query = "CREATE TABLE IF NOT EXISTS public.notes" 
+					+"( id_card bigint NOT NULL,"
 					+ "	note text NOT NULL,"
 					+ " CONSTRAINT id_card FOREIGN KEY (id_card)"
 					+ " REFERENCES public.album (id) MATCH SIMPLE"
 					+ " ON UPDATE CASCADE"
 					+ " ON DELETE CASCADE"
 					+ " NOT VALID );"
-					+ " ALTER TABLE public." + notes + " OWNER to postgres;";
+					+ " ALTER TABLE public.notes OWNER to postgres;";
 		
-		jdbcTemplate.execute(QUERY);
-	
-//		try (Connection conn = myConnection.getConnection();
-//				PreparedStatement ps = conn.prepareCall(query); ) {
-//			boolean output = false;
-//			conn.setAutoCommit(false);
-//
-//			try {
-//				ps.execute();
-//				output = true;
-//			} catch(SQLException ex) {
-//				ex.printStackTrace();
-//				throw new SQLException("CREATE TABLE notes SQL unsuccessful");
-//			} finally {
-//	    		dbCommit(conn, output);                	
-//	    	}
-//			conn.setAutoCommit(true);
-//		}catch (Exception ex) {
-//			ex.printStackTrace();
-//			throw new Exception("CREATE TABLE notes unsuccessful");
-//		}
+		jdbcTemplate.execute(query);
 	}
+	
+	public void createTableUsers() {
+		final String query = "CREATE TABLE IF NOT EXISTS public.users (id_user bigint NOT NULL GENERATED ALWAYS AS IDENTITY "
+				+ "( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 987654321 ),"
+				+ " nickname text NOT NULL, password text NOT NULL,"
+				+ " PRIMARY KEY (id_user) );"
+				+ "ALTER TABLE public.album OWNER to postgres;";
+		jdbcTemplate.execute(query);
+	}
+	
 }

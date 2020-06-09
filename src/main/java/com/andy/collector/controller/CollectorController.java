@@ -33,17 +33,15 @@ import io.swagger.v3.oas.annotations.Hidden;
 @RestController
 @RequestMapping("/collector")
 public class CollectorController {
-	
-	@Autowired
-	CardRepository cardControls;
-	
-	@Autowired
-	UserRepository userRepository;
-	
+		private final CardRepository cardRepository;
+		
+	CollectorController(@Autowired CardRepository cardRepository){
+		this.cardRepository = cardRepository;
+	}
 	
 	@PostMapping(value = "/add-monster", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<MonsterCard> addCard(@RequestBody MonsterCard monsterCard) throws SQLException {
-		boolean cardNew = cardControls.addCard(monsterCard);
+		boolean cardNew = cardRepository.addCard(monsterCard);
 		
 		if(cardNew) {
 			return new ResponseEntity<MonsterCard>(monsterCard, HttpStatus.OK);
@@ -56,7 +54,7 @@ public class CollectorController {
 	@PutMapping(value = "/edit-monster/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<MonsterCard> updateCard(@PathVariable("id") String id, @RequestBody MonsterCard monsterCard) throws SQLException {
 
-		boolean cardNew = cardControls.editCard(monsterCard, id);
+		boolean cardNew = cardRepository.editCard(monsterCard, id);
 		
 		if(cardNew) {
 			return new ResponseEntity<MonsterCard>(monsterCard, HttpStatus.OK);
@@ -68,7 +66,7 @@ public class CollectorController {
 	@Hidden
 	@PostMapping(value = "/add-spell", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Card> addSpellCard(@RequestBody SpellCard spellCard) throws SQLException {
-		boolean cardNew = cardControls.addCard(spellCard);
+		boolean cardNew = cardRepository.addCard(spellCard);
 		
 		if(cardNew) {
 			return new ResponseEntity<Card>(spellCard, HttpStatus.OK);
@@ -80,7 +78,7 @@ public class CollectorController {
 	
 	@PostMapping(value = "/add-trap", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Card> addTrapCard(@RequestBody TrapCard trapCard) throws SQLException {
-		boolean cardNew = cardControls.addCard(trapCard);
+		boolean cardNew = cardRepository.addCard(trapCard);
 		
 		if(cardNew) {
 			return new ResponseEntity<Card>(trapCard, HttpStatus.OK);
@@ -90,34 +88,10 @@ public class CollectorController {
 		
 	}
 	
-	@PostMapping(value = "/add-user", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<User> addUser(@RequestBody User user) throws SQLException {
-		User userNew = userRepository.addUser(user);
-		
-		if(userNew != null) {
-			return new ResponseEntity<User>(userNew, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<User>(HttpStatus.CONFLICT);
-		}
-		
-	}
-	
-	@GetMapping(value = "/show-user/{name},{pass}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<User> showUser(@PathVariable ("name") String name, @PathVariable ("pass") String pass) throws SQLException{
-		User user = null;
-		user = userRepository.login(name, pass);
-		
-		if(user != null) {
-			return new ResponseEntity<User>(user, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
-		}
-	}
-	
 	@PutMapping(value = "/edit-card/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Card> updateCard(@PathVariable("id") String id, @RequestBody Card card) throws SQLException {
 
-		boolean cardNew = cardControls.editCard(card, id);
+		boolean cardNew = cardRepository.editCard(card, id);
 		
 		if(cardNew) {
 			return new ResponseEntity<Card>(card, HttpStatus.OK);
@@ -131,7 +105,7 @@ public class CollectorController {
 		MonsterCard monsterCard = null;
 				
 		try {
-			monsterCard = cardControls.loadMonsterCardDetails(id);
+			monsterCard = cardRepository.loadMonsterCardDetails(id);
 			return new ResponseEntity<MonsterCard>(monsterCard, HttpStatus.OK);
 			
 		} catch (SQLException ex) {
@@ -142,7 +116,7 @@ public class CollectorController {
 	@DeleteMapping(value = "/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> deleteCard(@PathVariable("id") String id){
 		try {
-			cardControls.deleteCard(id);
+			cardRepository.deleteCard(id);
 			return new ResponseEntity<String>("Card deleted.",HttpStatus.OK);
 		} catch (SQLException ex) {
 			return new ResponseEntity<String>("Card not found", HttpStatus.NOT_FOUND);
@@ -151,7 +125,7 @@ public class CollectorController {
 	
 	@PutMapping(value = "/add-note/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> addCardNote(@RequestBody Note note, @PathVariable("id") String id) throws SQLException {
-		boolean notes = cardControls.addNotes(id, note);
+		boolean notes = cardRepository.addNotes(id, note);
 		
 		if(notes) {
 			return new ResponseEntity<Boolean>(HttpStatus.OK);
@@ -163,7 +137,7 @@ public class CollectorController {
 	
 	@GetMapping(value = "/load-note/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> loadCardNote(@PathVariable("id") String id) throws SQLException {
-		String notes = cardControls.loadNotes(id);
+		String notes = cardRepository.loadNotes(id);
 		
 		if(notes != null) {
 			return new ResponseEntity<String>(notes,HttpStatus.OK);
@@ -175,7 +149,7 @@ public class CollectorController {
 	
 	@GetMapping(value = "/show-all-cards", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Card>> loadAllCards() throws SQLException {
-		List<Card> cards = cardControls.showAllCards();
+		List<Card> cards = cardRepository.showAllCards();
 		
 		if(cards != null) {
 			return new ResponseEntity<List<Card>> (cards, HttpStatus.OK);

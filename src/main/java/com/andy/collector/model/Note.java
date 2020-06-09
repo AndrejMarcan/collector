@@ -1,16 +1,13 @@
 package com.andy.collector.model;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class Note {
-	private String id_card;
+	private String idCard;
 	private String note;
 	
 	public Note() {}
 	
 	public Note(String id_card, String note) {
-		this.id_card = id_card;
+		this.idCard = id_card;
 		this.note = note;
 	}
 
@@ -22,12 +19,12 @@ public class Note {
 		this.note = note;
 	}
 
-	public String getId_card() {
-		return id_card;
+	public String getIdCard() {
+		return idCard;
 	}
 
-	public void setIdCard(String id_card) {
-		this.id_card = id_card;
+	public void setIdCard(String idCard) {
+		this.idCard = idCard;
 	}
 	
 	

@@ -17,7 +17,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * @version		0.1 14. May 2020
  * @author 		Andrej Marcan
  */
-@Component
+
 @Schema(
 		type = "object",
 		title = "TrapCard"

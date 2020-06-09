@@ -6,11 +6,16 @@ package com.andy.collector.repository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+import com.andy.collector.model.Note;
 import com.andy.collector.model.User;
 
 import java.sql.ResultSet;
@@ -23,84 +28,34 @@ import java.sql.ResultSet;
  * @author 		Andrej Marcan
  */
 @Repository
-public class UserRepository extends DbRepository{
+public class UserRepository extends BCryptPasswordEncoder{
     
 	@Autowired
-	JdbcTemplate jdbcTemplate;
+	private JdbcTemplate jdbcTemplate;
 	
-	public void createTableUsers() {
-		final String QUERY = "CREATE TABLE IF NOT EXISTS public.users (id_user bigint NOT NULL GENERATED ALWAYS AS IDENTITY "
-				+ "( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 987654321 ),"
-				+ " nickname text NOT NULL, password text NOT NULL,"
-				+ " PRIMARY KEY (id_user) );"
-				+ "ALTER TABLE public.album OWNER to postgres;";
-		jdbcTemplate.execute(QUERY);
-	}
 	
 	/* Method addUser is used for new user registration */
     public User addUser(User user) throws SQLException {
     	final String QUERY = "INSERT INTO users (nickname, password) VALUES (?,?)";
-    	jdbcTemplate.update(QUERY, user.getNickname(), user.getPassword());
+    	jdbcTemplate.update(QUERY, user.getNickname(), encode(user.getPassword()));
 		return user;
-		
-//        String query = "INSERT INTO users (userName, userPassword) VALUES (?,?)";
-//        boolean output = false;
-//
-//        try (Connection connection = myConnection.getConnection();
-//        	 PreparedStatement preparedStatement = connection.prepareStatement(query); ) {
-//        	connection.setAutoCommit(false);
-//        	
-//        	try {
-//        		preparedStatement.setString(1, name);
-//                preparedStatement.setString(2, password);
-//                preparedStatement.executeUpdate();
-//                output = true;
-//        	} catch (SQLException ex) {
-//        		ex.printStackTrace();
-//        		throw new SQLException("INSERT user unsuccessful !");
-//        	} finally {
-//        		dbCommit(connection, output);                	
-//        	}
-//        	connection.setAutoCommit(true);
-//            
-//        } catch (SQLException ex) {
-//        	ex.printStackTrace();
-//        	throw new SQLException("User INSERT unsuccessful !");
-//        } 
-//        return output;
-   }
+    }
+    
+    /* Method deleteCard will delete data for selected card by ID of the card */
+    public boolean deleteUser(String cell) throws SQLException {
+    	final String query = "DELETE FROM users WHERE id_user = " + cell; // cell represents table block where card ID is found
+        
+        return jdbcTemplate.update(query) > 0;
+    }
     
     /* Method login checks if user name and password are right */
-    public User login(String name, String pass) throws SQLException {
-        final String QUERY = "SELECT * FROM users WHERE nickname = "+ name +" AND password = "+ pass +"";       
+    public boolean login(User user, String id) throws SQLException {
+        final String query = "SELECT password FROM users WHERE id_user = " + id;
         
-        User user = jdbcTemplate.queryForObject(QUERY, (rs, rowNum) -> new User(rs.getString("nickname"),rs.getString("password")));
+        String rawPass = user.getPassword();        
+        String hashedPass = jdbcTemplate.queryForObject(query, String.class);
         
-        return user;
-//        try (Connection connection = myConnection.getConnection();
-//        	 PreparedStatement preparedStatement = connection.prepareStatement(query);
-//             ResultSet resultSet = preparedStatement.executeQuery(); ) {
-//        	connection.setAutoCommit(false);
-//        	
-//        	try {
-//        		preparedStatement.setString(1, username);
-//                preparedStatement.setString(2, password);
-//
-//                if (resultSet.next()) {
-//                	output = true;
-//                }          
-//        	} catch (SQLException ex) {
-//        		ex.printStackTrace();
-//        		throw new SQLException("SELECT user unsuccessful !");
-//        	} finally {
-//        		dbCommit(connection, output);                	
-//        	}
-//        	connection.setAutoCommit(true);
-//            
-//        } catch (SQLException ex) {
-//        	ex.printStackTrace();
-//        	throw new SQLException("Login SELECT unsuccessful !");
-//        } 
-//        return output;
+        return matches(rawPass, hashedPass);
     }
+    
 }
