@@ -3,8 +3,6 @@
  */
 package com.andy.collector.model;
 
-import org.springframework.stereotype.Component;
-
 import com.andy.collector.enums.Editions;
 import com.andy.collector.enums.Rarities;
 

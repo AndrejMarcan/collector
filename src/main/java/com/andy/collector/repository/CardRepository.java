@@ -14,7 +14,6 @@ import com.andy.collector.enums.Editions;
 import com.andy.collector.enums.Rarities;
 import com.andy.collector.model.Card;
 import com.andy.collector.model.MonsterCard;
-import com.andy.collector.model.Note;
 import com.andy.collector.model.SpellCard;
 import com.andy.collector.model.TrapCard;
 
@@ -31,14 +30,15 @@ public class CardRepository {
         final String query = "INSERT INTO album(name, set, edition, language,"
                 + " card_type, rarity, type) VALUES (?,?,?,?,?,?,?)";
         final String queryDetails = "INSERT INTO monster_details(id_monster, summ_method, attribute, level,"
-                + " atk, def ) VALUES ((select max(id) from album),?,?,?,?,?)";
-        final String queryNotes = "INSERT INTO notes(id_card, note) VALUES ((select max(id) from album), ?)";
-
-        return jdbcTemplate.update(query+";"+queryDetails+";"+queryNotes, monsterCard.getName(), monsterCard.getSet(),
-        							monsterCard.getEdition(), monsterCard.getLanguage(), monsterCard.getCardType(),
-        							monsterCard.getRarity(), monsterCard.getType(), monsterCard.getSummMethod(),
-        							monsterCard.getAttribute(), monsterCard.getLevel(), monsterCard.getAtk(),
-        							monsterCard.getDef(), "note")>0;
+                + " atk, def ) VALUES ((select max(id) from album),?,?,?,?,?)"; 
+        
+        jdbcTemplate.update(query, monsterCard.getName(), monsterCard.getSet(),
+				monsterCard.getEdition(), monsterCard.getLanguage(), monsterCard.getCardType(),
+				monsterCard.getRarity(), monsterCard.getType());
+        
+        return jdbcTemplate.update(queryDetails, monsterCard.getSummMethod(),
+				monsterCard.getAttribute(), monsterCard.getLevel(), monsterCard.getAtk(),
+				monsterCard.getDef()) > 0;
     }
 	
 	@Transactional(rollbackFor = Throwable.class)
@@ -48,10 +48,12 @@ public class CardRepository {
     	final String query_details = "UPDATE monster_details SET summ_method = ?, attribute = ?, level = ?,"
         		+ " atk = ?, def = ? WHERE id_monster = " + cell;
         
-        return jdbcTemplate.update(query+";"+query_details, monsterCard.getName(), monsterCard.getRarity(),
-        							monsterCard.getEdition(), monsterCard.getSet(), monsterCard.getLanguage(),
-        							monsterCard.getType(), monsterCard.getSummMethod(), monsterCard.getAttribute(),
-        							monsterCard.getLevel(), monsterCard.getAtk(), monsterCard.getDef()) > 0;
+    	jdbcTemplate.update(query, monsterCard.getName(), monsterCard.getSet(),
+				monsterCard.getEdition(), monsterCard.getLanguage(), monsterCard.getCardType(),
+				monsterCard.getRarity(), monsterCard.getType());
+    	
+        return jdbcTemplate.update(query_details, monsterCard.getSummMethod(), monsterCard.getAttribute(),
+        							monsterCard.getLevel(), monsterCard.getAtk(), monsterCard.getDef())> 0;
     }
     
     public boolean addCard(Card card) throws SQLException{
@@ -147,23 +149,5 @@ public class CardRepository {
 	    }
 	    
 	    return result;
-    }
-    
-    /* Method addNotes is used for inserting notes for specific card by card ID */
-    public boolean addNotes(String cell, Note note) throws SQLException {
-    	final String query = "UPDATE notes SET note = '?' WHERE id_card = " + cell;  
-        
-        return jdbcTemplate.update(query, note.getNote())>0;
-    }
-    
-    /* Method loadNotes fetches notes for specific card based on card ID */
-    public String loadNotes(String cell) throws SQLException {
-    	final String query = "SELECT * FROM notes WHERE id_card = " + cell;
-        Note note = new Note();
-        List<Map<String, Object>> rows = jdbcTemplate.queryForList(query);
-        for(Map<String, Object> row:rows) {
-	  	    note.setNote((String) row.get("note"));    
-	  	}
-        return note.getNote();
     }
 }

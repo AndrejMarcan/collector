@@ -3,22 +3,14 @@
  */
 package com.andy.collector.repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
-import com.andy.collector.model.Note;
 import com.andy.collector.model.User;
 
-import java.sql.ResultSet;
 
 /**
  * The AlbumCommands provides methods for new user registration, login, loading data from database and
@@ -28,7 +20,7 @@ import java.sql.ResultSet;
  * @author 		Andrej Marcan
  */
 @Repository
-public class UserRepository extends BCryptPasswordEncoder{
+public class UserRepository{
     
 	@Autowired
 	private JdbcTemplate jdbcTemplate;	
@@ -38,8 +30,8 @@ public class UserRepository extends BCryptPasswordEncoder{
 	
 	/* Method addUser is used for new user registration */
     public User addUser(User user) throws SQLException {
-    	final String QUERY = "INSERT INTO users (nickname, password) VALUES (?,?)";
-    	jdbcTemplate.update(QUERY, user.getNickname(), encoder.encode(user.getPassword()));
+    	final String query = "INSERT INTO users (nickname, password) VALUES (?,?)";
+    	jdbcTemplate.update(query, user.getNickname(), encoder.encode(user.getPassword()));
 		return user;
     }
     
@@ -57,7 +49,7 @@ public class UserRepository extends BCryptPasswordEncoder{
         String rawPass = user.getPassword();        
         String hashedPass = jdbcTemplate.queryForObject(query, String.class);
         
-        return matches(rawPass, hashedPass);
+        return encoder.matches(rawPass, hashedPass);
     }
     
 }

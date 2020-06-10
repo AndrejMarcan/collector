@@ -1,8 +1,6 @@
 package com.andy.collector.controller;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.andy.collector.model.Card;
 import com.andy.collector.model.MonsterCard;
-import com.andy.collector.model.Note;
 import com.andy.collector.model.SpellCard;
 import com.andy.collector.model.TrapCard;
-import com.andy.collector.model.User;
-import com.andy.collector.repository.UserRepository;
 import com.andy.collector.repository.CardRepository;
 
 import io.swagger.v3.oas.annotations.Hidden;
@@ -32,10 +27,10 @@ import io.swagger.v3.oas.annotations.Hidden;
 
 @RestController
 @RequestMapping("/collector")
-public class CollectorController {
+public class CardController {
 		private final CardRepository cardRepository;
 		
-	CollectorController(@Autowired CardRepository cardRepository){
+	CardController(@Autowired CardRepository cardRepository){
 		this.cardRepository = cardRepository;
 	}
 	
@@ -123,29 +118,7 @@ public class CollectorController {
 		}
 	}
 	
-	@PutMapping(value = "/add-note/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Boolean> addCardNote(@RequestBody Note note, @PathVariable("id") String id) throws SQLException {
-		boolean notes = cardRepository.addNotes(id, note);
-		
-		if(notes) {
-			return new ResponseEntity<Boolean>(HttpStatus.OK);
-		} else {
-			return new ResponseEntity<Boolean>(HttpStatus.NOT_FOUND);
-		}
-		
-	}
 	
-	@GetMapping(value = "/load-note/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> loadCardNote(@PathVariable("id") String id) throws SQLException {
-		String notes = cardRepository.loadNotes(id);
-		
-		if(notes != null) {
-			return new ResponseEntity<String>(notes,HttpStatus.OK);
-		} else {
-			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
-		}
-		
-	}
 	
 	@GetMapping(value = "/show-all-cards", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Card>> loadAllCards() throws SQLException {
