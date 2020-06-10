@@ -3,22 +3,14 @@
  */
 package com.andy.collector.repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
-import com.andy.collector.model.Note;
 import com.andy.collector.model.User;
 
-import java.sql.ResultSet;
 
 /**
  * The AlbumCommands provides methods for new user registration, login, loading data from database and
