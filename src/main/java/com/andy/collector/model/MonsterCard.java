@@ -3,6 +3,11 @@
  */
 package com.andy.collector.model;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
+
 import com.andy.collector.enums.Editions;
 import com.andy.collector.enums.Rarities;
 
@@ -15,99 +20,117 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * @author 		Andrej Marcan
  */
 
-@Schema(
-		type = "object",
-		title = "MonsterCard"
-		)
+@Entity
 public class MonsterCard extends Card {
 	
-	@Schema(required = true)
-    private String summMethod;	//summoning method
-    
-	@Schema(required = true)
-	private String attribute;	//monster attribute
-	
-	@Schema(required = true)
-	private String atk;			//attack points
-    
-	@Schema(required = true)
-	private String def;			//defense points
-    
-	@Schema(required = true)
-	private String level;		//monster level
+
     private final String CARD_TYPE = "monster card";
     
-    public MonsterCard() {};
+    @OneToOne(cascade = CascadeType.ALL)
+    private MonsterDetails monsterDetails;
     
-    /* Constructor for MonsterCard class */
-    public MonsterCard (String name, Rarities rarity, Editions edition, String set, String language,
-    					String type, String summMethod, String attribute, String level,
-    					String atk, String def) {
-        super(name, rarity, edition, set, language, type);
-        this.summMethod = summMethod;
-        this.attribute = attribute;
-        this.level = level;
-        this.atk = atk;
-        this.def = def;   
-    }
-    
-    /* Method shows informations about monster card in console */
-    @Override
-    public void getInfo() {
-        System.out.println(super.getName());
-        System.out.println(super.getRarity());
-        System.out.println(super.getEdition());
-        System.out.println(super.getSet());
-        System.out.println(super.getLanguage());
-        System.out.println(attribute);
-        System.out.println(level);
-        System.out.println(atk);
-        System.out.println(def);    
-    }
+    public MonsterDetails getMonsterDetails() {
+		return monsterDetails;
+	}
+
+	public void setMonsterDetails(MonsterDetails monsterDetails) {
+		this.monsterDetails = monsterDetails;
+	}
+
+	public String getCARD_TYPE() {
+		return CARD_TYPE;
+	}
+
+	public MonsterCard() {};
+	
     @Override
     public String getCardType() {
     	return CARD_TYPE;
     }
     
-    public void setLevel(String level) {
-        this.level = level;
-    }
     
-    public void setAttribute(String atribute) {
-        this.attribute = atribute;
-    }
+//    
+	
+//	@Schema(required = true)
+//  private String summMethod;	//summoning method
+//  
+//	@Schema(required = true)
+//	private String attribute;	//monster attribute
+//	
+//	@Schema(required = true)
+//	private String atk;			//attack points
+//  
+//	@Schema(required = true)
+//	private String def;			//defense points
+//  
+//	@Schema(required = true)
+//	private String level;		//monster level
     
-    public void setAtk(String atk) {
-        this.atk = atk;
-    }
-    
-    public void setDef(String def) {
-        this.def = def;
-    }
-    
-    public void setSummMethod(String summMethod) {
-        this.summMethod = summMethod;
-    }
-    
-    public String getAttribute() {
-        return attribute;
-    }
-    
-    public String getLevel() {
-        return level;
-    }
-    
-    public String getAtk() {
-        return atk;
-    }
-    
-    public String getDef() {
-        return def;
-    }
-    
-    public String getSummMethod() {
-        return summMethod;
-    }
+//    /* Constructor for MonsterCard class */
+//    public MonsterCard (String name, Rarities rarity, Editions edition, String set, String language,
+//    					String type, String summMethod, String attribute, String level,
+//    					String atk, String def) {
+//        super(name, rarity, edition, set, language, type);
+//        this.summMethod = summMethod;
+//        this.attribute = attribute;
+//        this.level = level;
+//        this.atk = atk;
+//        this.def = def;   
+//    }
+//    
+//    /* Method shows informations about monster card in console */
+//    @Override
+//    public void getInfo() {
+//        System.out.println(super.getName());
+//        System.out.println(super.getRarity());
+//        System.out.println(super.getEdition());
+//        System.out.println(super.getSet());
+//        System.out.println(super.getLanguage());
+//        System.out.println(attribute);
+//        System.out.println(level);
+//        System.out.println(atk);
+//        System.out.println(def);    
+//    }
+
+//    public void setLevel(String level) {
+//        this.level = level;
+//    }
+//    
+//    public void setAttribute(String atribute) {
+//        this.attribute = atribute;
+//    }
+//    
+//    public void setAtk(String atk) {
+//        this.atk = atk;
+//    }
+//    
+//    public void setDef(String def) {
+//        this.def = def;
+//    }
+//    
+//    public void setSummMethod(String summMethod) {
+//        this.summMethod = summMethod;
+//    }
+//    
+//    public String getAttribute() {
+//        return attribute;
+//    }
+//    
+//    public String getLevel() {
+//        return level;
+//    }
+//    
+//    public String getAtk() {
+//        return atk;
+//    }
+//    
+//    public String getDef() {
+//        return def;
+//    }
+//    
+//    public String getSummMethod() {
+//        return summMethod;
+//    }
     
     
     
