@@ -16,59 +16,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.andy.collector.model.Note;
-import com.andy.collector.repository.NoteRepository;
+import com.andy.collector.service.NoteService;
 
 @RestController
 @RequestMapping(value = "/note")
 public class NoteController {
-	private final NoteRepository noteRepository;
-	
-	NoteController(@Autowired NoteRepository noteRepository){
-		this.noteRepository = noteRepository;
-	}
-	
-	@PostMapping(value = "/add-note/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Boolean> addCardNote(@RequestBody Note note, @PathVariable("id") String id) throws SQLException {
-		boolean notes = noteRepository.addNote(note);
-		
-		if(notes) {
-			return new ResponseEntity<Boolean>(notes,HttpStatus.OK);
-		} else {
-			return new ResponseEntity<Boolean>(notes,HttpStatus.NOT_FOUND);
-		}		
-	}
-	
-	@GetMapping(value = "/load-note/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> loadCardNote(@PathVariable("id") String id) throws SQLException {
-		String notes = noteRepository.loadNotes(id);
-		
-		if(notes != null) {
-			return new ResponseEntity<String>(notes,HttpStatus.OK);
-		} else {
-			return new ResponseEntity<String>(notes,HttpStatus.NOT_FOUND);
-		}
-		
-	}
+
+	@Autowired
+	NoteService noteService;
 	
 	@PutMapping(value = "/update-note/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Boolean> updateCardNote(@RequestBody Note note, @PathVariable("id") String id) throws SQLException {
-		boolean notes = noteRepository.updateNote(id, note);
-		
-		if(notes) {
-			return new ResponseEntity<Boolean>(notes,HttpStatus.OK);
-		} else {
-			return new ResponseEntity<Boolean>(notes,HttpStatus.NOT_FOUND);
-		}		
+	public void updateCardNote(@RequestBody Note note, @PathVariable("id") String id) throws SQLException {
+		noteService.editNoteByIdCard(note, Integer.valueOf(id));	
 	}
 	
 	@DeleteMapping(value = "/delete-note/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Boolean> deleteCardNote(@PathVariable("id") String id) throws SQLException {
-		boolean notes = noteRepository.deleteNote(id);
-		
-		if(notes) {
-			return new ResponseEntity<Boolean>(notes,HttpStatus.OK);
-		} else {
-			return new ResponseEntity<Boolean>(notes,HttpStatus.NOT_FOUND);
-		}		
+	public void deleteCardNote(@PathVariable("id") String id) throws SQLException {
+		noteService.deleteNoteByIdCard(Integer.valueOf(id));
 	}
+
 }

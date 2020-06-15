@@ -21,6 +21,7 @@ import com.andy.collector.model.MonsterCard;
 import com.andy.collector.model.SpellCard;
 import com.andy.collector.model.TrapCard;
 import com.andy.collector.repository.CardRepository;
+import com.andy.collector.service.CardService;
 
 import io.swagger.v3.oas.annotations.Hidden;
 
@@ -28,101 +29,61 @@ import io.swagger.v3.oas.annotations.Hidden;
 @RestController
 @RequestMapping("/collector")
 public class CardController {
-		private final CardRepository cardRepository;
+		private final CardService cardService;
 		
-	CardController(@Autowired CardRepository cardRepository){
-		this.cardRepository = cardRepository;
+	CardController( @Autowired CardService cardService){
+		this.cardService = cardService;
 	}
 	
-	@PostMapping(value = "/add-monster", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<MonsterCard> addCard(@RequestBody MonsterCard monsterCard) throws SQLException {
-		boolean cardNew = cardRepository.addCard(monsterCard);
+	@PostMapping(value = "/spell-add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public void addCard(@RequestBody SpellCard spellCard) throws SQLException {
+		cardService.saveCard(spellCard);
 		
-		if(cardNew) {
-			return new ResponseEntity<MonsterCard>(monsterCard, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<MonsterCard>(HttpStatus.CONFLICT);
-		}
+	}
+	
+	@PostMapping(value = "/trap-add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public void addCard(@RequestBody TrapCard trapCard) throws SQLException {
+		cardService.saveCard(trapCard);
 		
+	}
+	
+	@PostMapping(value = "/monster-add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public void addCard(@RequestBody MonsterCard monsterCard) throws SQLException {
+		cardService.saveCard(monsterCard);
 	}
 	
 	@PutMapping(value = "/edit-monster/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<MonsterCard> updateCard(@PathVariable("id") String id, @RequestBody MonsterCard monsterCard) throws SQLException {
+	public void updateMonsterCard(@PathVariable("id") String id, @RequestBody MonsterCard card) throws SQLException {
 
-		boolean cardNew = cardRepository.editCard(monsterCard, id);
-		
-		if(cardNew) {
-			return new ResponseEntity<MonsterCard>(monsterCard, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<MonsterCard>(HttpStatus.NOT_FOUND);
-		}
+		cardService.editMonsterCard(card, Integer.valueOf(id));
 	}
 	
-	@Hidden
-	@PostMapping(value = "/add-spell", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Card> addSpellCard(@RequestBody SpellCard spellCard) throws SQLException {
-		boolean cardNew = cardRepository.addCard(spellCard);
-		
-		if(cardNew) {
-			return new ResponseEntity<Card>(spellCard, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<Card>(HttpStatus.CONFLICT);
-		}
-		
-	}
-	
-	@PostMapping(value = "/add-trap", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Card> addTrapCard(@RequestBody TrapCard trapCard) throws SQLException {
-		boolean cardNew = cardRepository.addCard(trapCard);
-		
-		if(cardNew) {
-			return new ResponseEntity<Card>(trapCard, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<Card>(HttpStatus.CONFLICT);
-		}
-		
-	}
-	
-	@PutMapping(value = "/edit-card/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Card> updateCard(@PathVariable("id") String id, @RequestBody Card card) throws SQLException {
+	@PutMapping(value = "/edit-trap-card/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public void updateCard(@PathVariable("id") String id, @RequestBody TrapCard card) throws SQLException {
 
-		boolean cardNew = cardRepository.editCard(card, id);
-		
-		if(cardNew) {
-			return new ResponseEntity<Card>(card, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<Card>(HttpStatus.NOT_FOUND);
-		}
+		cardService.editCard(card, Integer.valueOf(id));
 	}
 	
-	@GetMapping(value = "/card-monster-details/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<MonsterCard> loadMonsterCardDetails(@PathVariable("id") String id) {
-		MonsterCard monsterCard = null;
-				
-		try {
-			monsterCard = cardRepository.loadMonsterCardDetails(id);
-			return new ResponseEntity<MonsterCard>(monsterCard, HttpStatus.OK);
-			
-		} catch (SQLException ex) {
-			return new ResponseEntity<MonsterCard>(HttpStatus.NOT_FOUND);
-		}
+	@PutMapping(value = "/edit-spell-card/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public void updateCard(@PathVariable("id") String id, @RequestBody SpellCard card) throws SQLException {
+
+		cardService.editCard(card, Integer.valueOf(id));
 	}
 	
 	@DeleteMapping(value = "/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> deleteCard(@PathVariable("id") String id){
-		try {
-			cardRepository.deleteCard(id);
-			return new ResponseEntity<String>("Card deleted.",HttpStatus.OK);
-		} catch (SQLException ex) {
-			return new ResponseEntity<String>("Card not found", HttpStatus.NOT_FOUND);
-		}
+	public void deleteCard(@PathVariable("id") String id){
+		cardService.deleteCardById(Integer.valueOf(id));
 	}
 	
-	
+	@Hidden
+	@DeleteMapping(value = "/delete/ALL", produces = MediaType.APPLICATION_JSON_VALUE)
+	public void deleteAllCard(){
+		cardService.deleteAll();
+	}
 	
 	@GetMapping(value = "/show-all-cards", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Card>> loadAllCards() throws SQLException {
-		List<Card> cards = cardRepository.showAllCards();
+		List<Card> cards = cardService.getAllCards();
 		
 		if(cards != null) {
 			return new ResponseEntity<List<Card>> (cards, HttpStatus.OK);
@@ -131,6 +92,4 @@ public class CardController {
 		}
 		
 	}
-	
-	
 }
