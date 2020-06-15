@@ -28,20 +28,37 @@ public class UserController {
 	UserService userService;
 	
 	@PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public void addUser(@RequestBody User user) throws SQLException {
-		userService.addNewUser(user);
+	public ResponseEntity<String> addUser(@RequestBody User user) {
+		try {
+			userService.addNewUser(user);
+			return new ResponseEntity<String>("user saved",HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<String>("user saved",HttpStatus.CONFLICT);
+		}
 		
 	}
 	
 	@PutMapping(value = "/edit/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public void editUser(@RequestBody User user, @PathVariable("id") String id) throws SQLException {
-		userService.updateUserbyId(user, Integer.valueOf(id));
+	public ResponseEntity<String> editUser(@RequestBody User user, @PathVariable("id") String id) throws SQLException {
+		
+		try {
+			userService.updateUserbyId(user, Integer.valueOf(id));
+			return new ResponseEntity<String>("user saved",HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<String>("user saved",HttpStatus.CONFLICT);
+		}
 		
 	}
 	
 	@DeleteMapping(value = "/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public void deleteUser(@PathVariable("id") String id){
-		userService.deleteUser(Integer.valueOf(id));
+	public ResponseEntity<String> deleteUser(@PathVariable("id") String id){
+		
+		try {
+			userService.deleteUser(Integer.valueOf(id));
+			return new ResponseEntity<String>("user saved",HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<String>("user saved",HttpStatus.CONFLICT);
+		}
 	}
 	
 	@GetMapping(value = "/show/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
