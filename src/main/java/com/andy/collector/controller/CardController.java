@@ -36,49 +36,92 @@ public class CardController {
 	}
 	
 	@PostMapping(value = "/spell-add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public void addCard(@RequestBody SpellCard spellCard) throws SQLException {
-		cardService.saveCard(spellCard);
+	public ResponseEntity<String> addCard(@RequestBody SpellCard spellCard) throws SQLException {
 		
+		try {
+			cardService.saveCard(spellCard);
+			return new ResponseEntity<String>("spell saved",HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<String>(HttpStatus.CONFLICT);
+		}
 	}
 	
 	@PostMapping(value = "/trap-add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public void addCard(@RequestBody TrapCard trapCard) throws SQLException {
-		cardService.saveCard(trapCard);
+	public ResponseEntity<String> addCard(@RequestBody TrapCard trapCard) throws SQLException {
+		
+		try {
+			cardService.saveCard(trapCard);
+			return new ResponseEntity<String>("trap saved",HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<String>(HttpStatus.CONFLICT);
+		}
 		
 	}
 	
 	@PostMapping(value = "/monster-add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public void addCard(@RequestBody MonsterCard monsterCard) throws SQLException {
-		cardService.saveCard(monsterCard);
+	public ResponseEntity<String> addCard(@RequestBody MonsterCard monsterCard) throws SQLException {
+		
+		try {
+			cardService.saveCard(monsterCard);
+			return new ResponseEntity<String>("monster saved",HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<String>(HttpStatus.CONFLICT);
+		}
 	}
 	
 	@PutMapping(value = "/edit-monster/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public void updateMonsterCard(@PathVariable("id") String id, @RequestBody MonsterCard card) throws SQLException {
+	public ResponseEntity<String> updateMonsterCard(@PathVariable("id") String id, @RequestBody MonsterCard card) throws SQLException {
 
-		cardService.editMonsterCard(card, Integer.valueOf(id));
+		try {
+			cardService.editMonsterCard(card, Integer.valueOf(id));
+			return new ResponseEntity<String>("monster edited",HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<String>("card not found",HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	@PutMapping(value = "/edit-trap-card/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public void updateCard(@PathVariable("id") String id, @RequestBody TrapCard card) throws SQLException {
+	public ResponseEntity<String> updateCard(@PathVariable("id") String id, @RequestBody TrapCard card) throws SQLException {
 
-		cardService.editCard(card, Integer.valueOf(id));
+		try {
+			cardService.editCard(card, Integer.valueOf(id));
+			return new ResponseEntity<String>("trap edited",HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<String>("card not found",HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	@PutMapping(value = "/edit-spell-card/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public void updateCard(@PathVariable("id") String id, @RequestBody SpellCard card) throws SQLException {
+	public ResponseEntity<String> updateCard(@PathVariable("id") String id, @RequestBody SpellCard card) throws SQLException {
 
-		cardService.editCard(card, Integer.valueOf(id));
+		try {
+			cardService.editCard(card, Integer.valueOf(id));
+			return new ResponseEntity<String>("spell edited",HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<String>("card not found",HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	@DeleteMapping(value = "/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public void deleteCard(@PathVariable("id") String id){
-		cardService.deleteCardById(Integer.valueOf(id));
+	public ResponseEntity<String> deleteCard(@PathVariable("id") String id){
+		
+		try {
+			cardService.deleteCardById(Integer.valueOf(id));
+			return new ResponseEntity<String>("delete succesful",HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<String>("card not found",HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	@Hidden
 	@DeleteMapping(value = "/delete/ALL", produces = MediaType.APPLICATION_JSON_VALUE)
-	public void deleteAllCard(){
-		cardService.deleteAll();
+	public ResponseEntity<String> deleteAllCard(){
+		try {
+			cardService.deleteAll();
+			return new ResponseEntity<String>("ALL CARDS WERE DELETED",HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<String>("user saved",HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	@GetMapping(value = "/show-all-cards", produces = MediaType.APPLICATION_JSON_VALUE)
