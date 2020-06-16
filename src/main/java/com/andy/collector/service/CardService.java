@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.andy.collector.model.Card;
 import com.andy.collector.model.MonsterCard;
-import com.andy.collector.model.MonsterDetails;
 import com.andy.collector.model.Note;
 import com.andy.collector.repository.CardRepository;
 
@@ -27,10 +26,6 @@ public class CardService {
 		Note oldNote = card.getNote();
 		oldNote.setIdNote(id+1);
 		card.setNote(oldNote);
-		
-		MonsterDetails md = card.getMonsterDetails();
-		md.setId(id+2);
-		card.setMonsterDetails(md);
 		
 		cardRepository.save(card);
 	}

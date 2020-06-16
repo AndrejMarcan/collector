@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.andy.collector.model.User;
-import com.andy.collector.repository.UserRepository;
 import com.andy.collector.service.UserService;
 
 @RestController
@@ -74,6 +73,7 @@ public class UserController {
 	
 	@GetMapping(value = "/show/ALL", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<User>> showUser() throws SQLException{
+		
 		List<User> userNew = userService.findAllUsers();
 		
 		if (userNew != null) {

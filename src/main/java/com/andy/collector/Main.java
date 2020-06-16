@@ -7,7 +7,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 //import com.andy.collector.db.TableControls;
 
@@ -18,7 +17,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
  * @author 		Andrej Marcan
  */
 @SpringBootApplication
-@EnableJpaAuditing
 @ComponentScan(basePackages = "com.andy.collector.*")
 @ConfigurationPropertiesScan(basePackages = "main.*")
 public class Main {

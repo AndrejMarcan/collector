@@ -3,22 +3,25 @@
  */
 package com.andy.collector.model;
 
-import javax.annotation.Generated;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.hibernate.annotations.DiscriminatorFormula;
 
 import com.andy.collector.enums.Editions;
 import com.andy.collector.enums.Rarities;
@@ -41,7 +44,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 )
 @Entity
 @Table(name = "album")
-@EntityListeners(AuditingEntityListener.class)
+//@MappedSuperclass
+@Inheritance(strategy = InheritanceType.JOINED)
+//@DiscriminatorColumn(name = "entity_type", discriminatorType = DiscriminatorType.STRING)
+//@DiscriminatorFormula("case when monster_details_id is not null then spellOrtrap else MONSTER end")
 public abstract class Card {
 	
 	@Id
@@ -50,42 +56,36 @@ public abstract class Card {
 	private int id;
 	
 	@Schema(required = true)
+	@Column(name = "name")
     private String name;		//card name
     
 	@Enumerated(EnumType.STRING)
 	@Schema(required = true)
+	@Column(name = "rarity")
 	private Rarities rarity;		//card rarity
 	
 	@Enumerated(EnumType.STRING)
 	@Schema(required = true)
+	@Column(name = "edition")
 	private Editions edition;		//card edition
 	
 	@Schema(required = true)
+	@Column(name = "set")
 	private String set;			//card set
 	
 	@Schema(required = true)
+	@Column(name = "language")
 	private String language;	//card language
 	
 	@Schema(required = true)
+	@Column(name = "type")
 	private String type;		//card type
     
 	@OneToOne(cascade = {CascadeType.ALL})
 	private Note note;
 	
 	public Card() {}
-	
-//    /* Constructor for Card class */
-//    public Card (String name, Rarities rarity, Editions edition, String set, String language, String type) { 
-//        this.name = name;
-//        this.rarity = rarity;
-//        this.edition = edition;
-//        this.set = set;
-//        this.language = language;
-//        this.type = type;
-//    }
-    
-    //public abstract void getInfo();
-    
+
     public abstract String getCardType();
     
     public String getName() {

@@ -1,27 +1,20 @@
 package com.andy.collector.model;
 
-
-import javax.annotation.Generated;
-import javax.persistence.Embedded;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
-
-import com.fasterxml.jackson.core.sym.Name;
-
-import net.bytebuddy.dynamic.loading.ClassReloadingStrategy.Strategy;
 
 @Entity
 public class Note {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "note_id")
 	private int idNote;
 	
+	@Column(name = "note")
 	private String note;
 	
 	public Note() {}
