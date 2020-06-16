@@ -7,8 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import net.bytebuddy.dynamic.loading.InjectionClassLoader.Strategy;
-
 @Entity
 @Table(name = "users")
 public class User {

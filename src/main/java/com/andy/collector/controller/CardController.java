@@ -20,7 +20,6 @@ import com.andy.collector.model.Card;
 import com.andy.collector.model.MonsterCard;
 import com.andy.collector.model.SpellCard;
 import com.andy.collector.model.TrapCard;
-import com.andy.collector.repository.CardRepository;
 import com.andy.collector.service.CardService;
 
 import io.swagger.v3.oas.annotations.Hidden;
