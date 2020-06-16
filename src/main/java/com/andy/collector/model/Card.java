@@ -5,9 +5,6 @@ package com.andy.collector.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -16,12 +13,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.DiscriminatorFormula;
 
 import com.andy.collector.enums.Editions;
 import com.andy.collector.enums.Rarities;
@@ -44,10 +37,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 )
 @Entity
 @Table(name = "album")
-//@MappedSuperclass
 @Inheritance(strategy = InheritanceType.JOINED)
-//@DiscriminatorColumn(name = "entity_type", discriminatorType = DiscriminatorType.STRING)
-//@DiscriminatorFormula("case when monster_details_id is not null then spellOrtrap else MONSTER end")
 public abstract class Card {
 	
 	@Id

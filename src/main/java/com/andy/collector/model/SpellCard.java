@@ -4,7 +4,6 @@
 package com.andy.collector.model;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 /**
  * The SpellCard class provides methods for adding a new spell card to database, edit data for spell card
@@ -15,7 +14,6 @@ import javax.persistence.Entity;
  */
 
 @Entity
-//@DiscriminatorValue("SPELL CARD")
 public class SpellCard extends Card{
 	
 	@Column(name = "type")

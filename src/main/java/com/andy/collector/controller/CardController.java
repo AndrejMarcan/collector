@@ -2,6 +2,7 @@ package com.andy.collector.controller;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,7 +39,7 @@ public class CardController {
 	public ResponseEntity<String> addCard(@RequestBody SpellCard spellCard) throws SQLException {
 		
 		try {
-			cardService.saveCard(spellCard);
+			cardService.addNewCard(spellCard);
 			return new ResponseEntity<String>("spell saved",HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>(HttpStatus.CONFLICT);
@@ -49,7 +50,7 @@ public class CardController {
 	public ResponseEntity<String> addCard(@RequestBody TrapCard trapCard) throws SQLException {
 		
 		try {
-			cardService.saveCard(trapCard);
+			cardService.addNewCard(trapCard);
 			return new ResponseEntity<String>("trap saved",HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>(HttpStatus.CONFLICT);
@@ -61,7 +62,7 @@ public class CardController {
 	public ResponseEntity<String> addCard(@RequestBody MonsterCard monsterCard) throws SQLException {
 		
 		try {
-			cardService.saveCard(monsterCard);
+			cardService.addNewCard(monsterCard);
 			return new ResponseEntity<String>("monster saved",HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>(HttpStatus.CONFLICT);
@@ -131,6 +132,18 @@ public class CardController {
 			return new ResponseEntity<List<Card>> (cards, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<List<Card>> (HttpStatus.NOT_FOUND);
+		}
+		
+	}
+	
+	@GetMapping(value = "/show-card/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Card> showCardById(@PathVariable("id") String id) throws SQLException {
+		Optional<Card> cardOpt = cardService.findCardById(Integer.valueOf(id));
+		
+		if(cardOpt.isPresent()) {
+			return new ResponseEntity<Card> (cardOpt.get(), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<Card> (HttpStatus.NOT_FOUND);
 		}
 		
 	}

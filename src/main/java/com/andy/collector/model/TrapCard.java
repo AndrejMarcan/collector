@@ -4,7 +4,6 @@
 package com.andy.collector.model;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 /**
  * The TrapCard class provides methods for adding a new trap card to database, edit data for trap card
@@ -15,7 +14,6 @@ import javax.persistence.Entity;
  */
 
 @Entity
-//@DiscriminatorValue("TRAP CARD")
 public class TrapCard extends Card{
 	
 	@Column(name = "type")

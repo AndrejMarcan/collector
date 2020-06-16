@@ -11,7 +11,6 @@ public class Note {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "note_id")
 	private int idNote;
 	
 	@Column(name = "note")
@@ -35,6 +34,4 @@ public class Note {
 	public void setIdNote(int idNote) {
 		this.idNote = idNote;
 	}
-	
-	
 }

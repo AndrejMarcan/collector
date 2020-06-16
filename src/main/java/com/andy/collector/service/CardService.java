@@ -1,6 +1,7 @@
 package com.andy.collector.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ public class CardService {
 	@Autowired
 	CardRepository cardRepository;
 	
-	public void saveCard(Card card) {
+	public void addNewCard(Card card) {
 		cardRepository.save(card);
 	}
 	
@@ -50,5 +51,9 @@ public class CardService {
 	
 	public void deleteAll() {
 		cardRepository.deleteAll();
+	}
+	
+	public Optional<Card> findCardById(int id){
+		return cardRepository.findById(id);
 	}
 }
