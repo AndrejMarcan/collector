@@ -3,6 +3,7 @@
  */
 package com.andy.collector.model;
 
+import javax.annotation.Nonnull;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -45,28 +46,34 @@ public abstract class Card {
     @Column(name = "card_id")
 	private int id;
 	
+	@Nonnull
 	@Schema(required = true)
 	@Column(name = "name")
     private String name;		//card name
     
+	@Nonnull
 	@Enumerated(EnumType.STRING)
 	@Schema(required = true)
 	@Column(name = "rarity")
 	private Rarities rarity;		//card rarity
 	
+	@Nonnull
 	@Enumerated(EnumType.STRING)
 	@Schema(required = true)
 	@Column(name = "edition")
 	private Editions edition;		//card edition
 	
+	@Nonnull
 	@Schema(required = true)
 	@Column(name = "set")
 	private String set;			//card set
 	
+	@Nonnull
 	@Schema(required = true)
 	@Column(name = "language")
 	private String language;	//card language
     
+	@Nonnull
 	@OneToOne(cascade = {CascadeType.ALL})
 	private Note note;
 	

@@ -3,6 +3,7 @@
  */
 package com.andy.collector.model;
 
+import javax.annotation.Nonnull;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 /**
@@ -17,6 +18,7 @@ import javax.persistence.Entity;
 public class TrapCard extends Card{
 	
 	@Column(name = "type")
+	@Nonnull
     private String type; //card type
        
     public TrapCard() {};
