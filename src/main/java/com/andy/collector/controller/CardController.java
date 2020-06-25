@@ -25,7 +25,6 @@ import com.andy.collector.service.CardService;
 
 import io.swagger.v3.oas.annotations.Hidden;
 
-
 @RestController
 @RequestMapping("/collector")
 public class CardController {

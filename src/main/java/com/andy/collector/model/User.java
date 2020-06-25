@@ -16,10 +16,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
+	@Column(name = "nickname")
 	private String nickname;
-	private String password;
 	
-	
+	@Column(name = "password")
+	private String password;	
 
 	public String getNickname() {
 		return nickname;

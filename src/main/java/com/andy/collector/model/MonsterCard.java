@@ -15,10 +15,10 @@ import javax.persistence.Entity;
 
 @Entity
 public class MonsterCard extends Card {
-	
-	@Column(name = "card_type")
-    private final String CARD_TYPE = "monster card";
     
+	@Column(name = "type")
+	private String type;
+	
 	@Column(name = "summ_method")
 	private String summMethod;	//summoning method
 	
@@ -34,16 +34,7 @@ public class MonsterCard extends Card {
 	@Column(name = "level")
 	private String level;		//monster level
 
-	public String getCARD_TYPE() {
-		return CARD_TYPE;
-	}
-
 	public MonsterCard() {};
-	
-    @Override
-    public String getCardType() {
-    	return CARD_TYPE;
-    }
     
 	  public void setLevel(String level) {
 	  this.level = level;
@@ -83,6 +74,14 @@ public class MonsterCard extends Card {
 	
 	public String getSummMethod() {
 	  return summMethod;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 }
 

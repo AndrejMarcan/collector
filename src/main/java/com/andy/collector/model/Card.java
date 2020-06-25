@@ -66,17 +66,11 @@ public abstract class Card {
 	@Schema(required = true)
 	@Column(name = "language")
 	private String language;	//card language
-	
-	@Schema(required = true)
-	@Column(name = "type")
-	private String type;		//card type
     
 	@OneToOne(cascade = {CascadeType.ALL})
 	private Note note;
 	
 	public Card() {}
-
-    public abstract String getCardType();
     
     public String getName() {
         return name;
@@ -98,10 +92,6 @@ public abstract class Card {
         return language;
     }
     
-    public String getType() {
-    	return type;
-    }
-    
     public void setName(String name) {
         this.name = name;
     }
@@ -120,10 +110,6 @@ public abstract class Card {
     
     public void setLanguage(String language) {
         this.language=language;
-    }
-
-    public void setType(String type) {
-    	this.type = type;
     }
 
 	public int getId() {
