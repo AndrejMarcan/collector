@@ -28,7 +28,7 @@ public class CardService {
 		card.setId(id);
 		
 		Note oldNote = card.getNote();
-		oldNote.setIdNote(id+1);
+		oldNote.setIdNote(id);
 		card.setNote(oldNote);
 		
 		cardRepository.save(card);
@@ -39,7 +39,7 @@ public class CardService {
 		card.setId(id);
 		
 		Note oldNote = card.getNote();
-		oldNote.setIdNote(id+1);
+		oldNote.setIdNote(id);
 		card.setNote(oldNote);
 		
 		cardRepository.save(card);

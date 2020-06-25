@@ -3,6 +3,7 @@
  */
 package com.andy.collector.model;
 
+import javax.annotation.Nonnull;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 /**
@@ -17,21 +18,27 @@ import javax.persistence.Entity;
 public class MonsterCard extends Card {
     
 	@Column(name = "type")
+	@Nonnull
 	private String type;
 	
 	@Column(name = "summ_method")
+	@Nonnull
 	private String summMethod;	//summoning method
 	
 	@Column(name = "attribute")
+	@Nonnull
 	private String attribute;	//monster attribute	
 	
 	@Column(name = "attack")
+	@Nonnull
 	private String atk;			//attack points
 	
 	@Column(name = "defense")
+	@Nonnull
 	private String def;			//defense points
 	
 	@Column(name = "level")
+	@Nonnull
 	private String level;		//monster level
 
 	public MonsterCard() {};

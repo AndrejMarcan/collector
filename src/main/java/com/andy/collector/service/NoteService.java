@@ -13,14 +13,14 @@ public class NoteService {
 	
 	//edit note by id
 	public void editNoteByIdCard(Note note, int id) {
-		note.setIdNote(id+1);
+		note.setIdNote(id);
 		noteRepository.save(note);
 	}
 	
 	//delete note by id
 	public void deleteNoteByIdCard(int id) {
 		Note note = new Note();
-		note.setIdNote(id+1);
+		note.setIdNote(id);
 		note.setNote("");
 		noteRepository.save(note);
 	}
