@@ -86,7 +86,7 @@ public class UserServiceTest {
 		assertEquals(userEdit.getPassword(), userFromOpt.getPassword());
 	}
 	
-	//test if new user was added to DB by comparing list sizes before and after addNewUser	
+	//test if new user was added to DB by comparing list sizes before and after addNewUser 	
 	@Test
 	public void testAddNewUserMethod() {
 		int sizeBefore = us.findAllUsers().size();

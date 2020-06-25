@@ -1,7 +1,7 @@
 package com.andy.collector.enums;
 
 /**
- * The Rarities enum serves as the list of all possible rarities of the cards.
+ * The Rarities enum serves as the list of all possible rarities of the cards.   
  * 
  * @version		0.1 15. May 2020
  * @author 		Andrej Marcan

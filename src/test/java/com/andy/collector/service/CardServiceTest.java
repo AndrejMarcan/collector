@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -89,14 +91,50 @@ public class CardServiceTest {
 		assertTrue(sizeBefore < sizeAfter);
 		
 		Card cardFromDB = cs.getAllCards().get(sizeAfter-1);
-		
 		assertEquals(monster.getName(), cardFromDB.getName(),"test name and name in DB doesnt match");
 		assertEquals(monster.getEdition(), cardFromDB.getEdition(),"test edition and edition in DB doesnt match");
 		assertEquals(monster.getRarity(), cardFromDB.getRarity(),"test rarity and rarity in DB doesnt match");
 		assertEquals(monster.getSet(), cardFromDB.getSet(),"test set and set in DB doesnt match");
-		assertEquals(monster.getType(), cardFromDB.getType(),"test type and type in DB doesnt match");
 		assertEquals(monster.getLanguage(), cardFromDB.getLanguage(),"test language in DB doesnt match");
 		assertEquals(monster.getNote().getNote(), cardFromDB.getNote().getNote(),"test note text and note text in DB doesnt match");
+	}
+	
+	@Disabled
+	@Test
+	public void testAddNewSpellCardMethod() {
+		int sizeBefore = cs.getAllCards().size();
+		cs.addNewCard(spell);
+		int sizeAfter = cs.getAllCards().size();
+		
+		assertTrue(sizeBefore < sizeAfter);
+		
+		Card cardFromDB = cs.getAllCards().get(sizeAfter-1);
+		
+		assertEquals(spell.getName(), cardFromDB.getName(),"test name and name in DB doesnt match");
+		assertEquals(spell.getEdition(), cardFromDB.getEdition(),"test edition and edition in DB doesnt match");
+		assertEquals(spell.getRarity(), cardFromDB.getRarity(),"test rarity and rarity in DB doesnt match");
+		assertEquals(spell.getSet(), cardFromDB.getSet(),"test set and set in DB doesnt match");
+		assertEquals(spell.getLanguage(), cardFromDB.getLanguage(),"test language in DB doesnt match");
+		assertEquals(spell.getNote().getNote(), cardFromDB.getNote().getNote(),"test note text and note text in DB doesnt match");
+	}
+	
+	@Disabled
+	@Test
+	public void testAddNewTrapCardMethod() {
+		int sizeBefore = cs.getAllCards().size();
+		cs.addNewCard(trap);
+		int sizeAfter = cs.getAllCards().size();
+		
+		assertTrue(sizeBefore < sizeAfter);
+		
+		Card cardFromDB = cs.getAllCards().get(sizeAfter-1);
+		
+		assertEquals(trap.getName(), cardFromDB.getName(),"test name and name in DB doesnt match");
+		assertEquals(trap.getEdition(), cardFromDB.getEdition(),"test edition and edition in DB doesnt match");
+		assertEquals(trap.getRarity(), cardFromDB.getRarity(),"test rarity and rarity in DB doesnt match");
+		assertEquals(trap.getSet(), cardFromDB.getSet(),"test set and set in DB doesnt match");
+		assertEquals(trap.getLanguage(), cardFromDB.getLanguage(),"test language in DB doesnt match");
+		assertEquals(trap.getNote().getNote(), cardFromDB.getNote().getNote(),"test note text and note text in DB doesnt match");
 	}
 	
 	@Test
@@ -119,7 +157,8 @@ public class CardServiceTest {
 		
 	}
 	
-	@Disabled //while testing delete methods this test would need to be updated all the time
+	
+	@Disabled 
 	@Test
 	public void testGetallCardsMethod() {
 		List<Card> list = cs.getAllCards();

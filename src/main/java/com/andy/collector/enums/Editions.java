@@ -5,7 +5,6 @@ public enum Editions {
 	LE("Limited Edition", "silver"),
 	UE("Unlimited Edition", "silver");
 	
-
 	private String edition;
 	private String color;
 

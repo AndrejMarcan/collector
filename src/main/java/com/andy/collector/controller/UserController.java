@@ -38,8 +38,7 @@ public class UserController {
 	}
 	
 	@PutMapping(value = "/edit/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> editUser(@RequestBody User user, @PathVariable("id") String id) throws SQLException {
-		
+	public ResponseEntity<String> editUser(@RequestBody User user, @PathVariable("id") String id) throws SQLException {		
 		try {
 			userService.updateUserbyId(user, Integer.valueOf(id));
 			return new ResponseEntity<String>("user saved",HttpStatus.OK);

@@ -7,5 +7,4 @@ import com.andy.collector.model.Card;
 
 @Repository
 public interface CardRepository extends JpaRepository<Card, Integer>{
-
 }
