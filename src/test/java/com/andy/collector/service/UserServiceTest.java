@@ -70,7 +70,6 @@ public class UserServiceTest {
 		assertEquals(user.getPassword(), userFromOpt.getPassword());
 	}
 	
-	
 	//test updateUserById method 
 	@Test
 	public void testUpdateUserByIdMethod() {
@@ -96,5 +95,10 @@ public class UserServiceTest {
 		int sizeAfter = us.findAllUsers().size();
 		
 		assertEquals(sizeBefore+1, sizeAfter);
+	}
+	
+	@Test
+	public void testComparePassMethod() {
+		assertTrue("should be true", us.comparePass(3, "nieco"));
 	}
 }
