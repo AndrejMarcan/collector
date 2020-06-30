@@ -1,7 +1,7 @@
 /*
  * Copyright (c) ...
  */
-package com.andy.collector.model;
+package com.andy.collector.dto;
 
 import javax.annotation.Nonnull;
 import javax.persistence.Column;
@@ -17,7 +17,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "monsters")
-public class MonsterCard extends Card {
+public class MonsterCardDTO extends CardDTO {
     
 	@Column(name = "type")
 	@Nonnull
@@ -43,7 +43,7 @@ public class MonsterCard extends Card {
 	@Nonnull
 	private String level;		//monster level
 
-	public MonsterCard() {};
+	public MonsterCardDTO() {};
     
 	  public void setLevel(String level) {
 	  this.level = level;

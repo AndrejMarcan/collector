@@ -1,16 +1,18 @@
-package com.andy.collector.model;
+package com.andy.collector.dto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.andy.collector.dto.UserDTO;
+
 public class UserTest {
-	protected User user;
+	protected UserDTO user;
 	
 	@BeforeEach
 	void init() {
-		user = new User();
+		user = new UserDTO();
 		
 		user.setId(1);
 		user.setNickname("John Snow");

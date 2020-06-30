@@ -1,7 +1,6 @@
 package com.andy.collector.controller;
 
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.andy.collector.model.Card;
-import com.andy.collector.model.Note;
+import com.andy.collector.dto.NoteDTO;
 import com.andy.collector.service.NoteService;
 
 @RestController
@@ -31,7 +29,7 @@ public class NoteController {
 	}
 	
 	@PutMapping(value = "/update-note/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> updateCardNote(@RequestBody Note note, @PathVariable("id") String id) throws SQLException {			
+	public ResponseEntity<String> updateCardNote(@RequestBody NoteDTO note, @PathVariable("id") String id) throws SQLException {			
 		try {
 			noteService.editNoteByIdCard(note, Integer.valueOf(id));
 			return new ResponseEntity<String>("note saved",HttpStatus.OK);
@@ -51,7 +49,7 @@ public class NoteController {
 	}
 	
 	@PostMapping(value = "/add/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> addNoteToCard(@PathVariable("id") String id, @RequestBody Note note) throws SQLException {
+	public ResponseEntity<String> addNoteToCard(@PathVariable("id") String id, @RequestBody NoteDTO note) throws SQLException {
 		try {
 			noteService.addNoteToCard(note, Integer.valueOf(id));
 			return new ResponseEntity<String>("note saved",HttpStatus.OK);
@@ -61,12 +59,12 @@ public class NoteController {
 	}
 	
 	@GetMapping(value = "/show/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Note> showNote(@PathVariable("id") String id) throws SQLException {
-		Optional<Note> note = noteService.showNote(Integer.valueOf(id));
+	public ResponseEntity<NoteDTO> showNote(@PathVariable("id") String id) throws SQLException {
+		Optional<NoteDTO> note = noteService.showNote(Integer.valueOf(id));
 		if(note.isPresent()) {
-			return new ResponseEntity<Note> (note.get(), HttpStatus.OK);
+			return new ResponseEntity<NoteDTO> (note.get(), HttpStatus.OK);
 		} else {
-			return new ResponseEntity<Note> (HttpStatus.NOT_FOUND);
+			return new ResponseEntity<NoteDTO> (HttpStatus.NOT_FOUND);
 		}
 	}
 }

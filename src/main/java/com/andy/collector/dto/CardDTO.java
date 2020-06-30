@@ -1,7 +1,7 @@
 /*
  * Copyright (c) ...
  */
-package com.andy.collector.model;
+package com.andy.collector.dto;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,7 +18,6 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -39,12 +38,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(
 		type = "object",
 		title = "Card",
-		anyOf = { MonsterCard.class, SpellCard.class, TrapCard.class }
+		anyOf = { MonsterCardDTO.class, SpellCardDTO.class, TrapCardDTO.class }
 )
 @Entity
 @Table(name = "album")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Card {
+public abstract class CardDTO {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "card_id")
@@ -81,9 +80,9 @@ public abstract class Card {
     
 	@Nonnull
 	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true)
-	private Collection<Note> notes = new ArrayList<>();
+	private Collection<NoteDTO> notes = new ArrayList<>();
 	
-	public Card() {}
+	public CardDTO() {}
     
     public String getName() {
         return name;
@@ -133,11 +132,11 @@ public abstract class Card {
 		this.id = id;
 	}
 
-	public Collection<Note> getNotes() {
+	public Collection<NoteDTO> getNotes() {
 		return notes;
 	}
 
-	public void setNotes(Collection<Note> notes) {
+	public void setNotes(Collection<NoteDTO> notes) {
 		this.notes = notes;
 	}
 

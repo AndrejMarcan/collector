@@ -1,4 +1,4 @@
-package com.andy.collector.model;
+package com.andy.collector.dto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -6,19 +6,21 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.andy.collector.dto.NoteDTO;
+import com.andy.collector.dto.TrapCardDTO;
 import com.andy.collector.enums.Editions;
 import com.andy.collector.enums.Rarities;
 
 public class TrapCardTest {
-	protected static TrapCard trap;
+	protected static TrapCardDTO trap;
 	
 	@BeforeEach
 	void init() {
 		
-		Note note = new Note();
+		NoteDTO note = new NoteDTO();
 		note.setNote("Hello from TrapCardTest");
 		
-		trap = new TrapCard();
+		trap = new TrapCardDTO();
 		trap.setName("TestTrap");
 		trap.setEdition(Editions.FE);
 		trap.setRarity(Rarities.RARE);

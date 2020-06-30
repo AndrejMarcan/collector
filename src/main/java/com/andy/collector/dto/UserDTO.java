@@ -1,4 +1,4 @@
-package com.andy.collector.model;
+package com.andy.collector.dto;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class UserDTO {
 	
 	@Id
 	@Column(name = "user_id")
