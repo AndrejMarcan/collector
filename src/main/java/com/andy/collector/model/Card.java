@@ -3,6 +3,9 @@
  */
 package com.andy.collector.model;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import javax.annotation.Nonnull;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -76,8 +80,8 @@ public abstract class Card {
 	private String language;	//card language
     
 	@Nonnull
-	@OneToOne(cascade = {CascadeType.ALL})
-	private Note note;
+	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true)
+	private Collection<Note> notes = new ArrayList<>();
 	
 	public Card() {}
     
@@ -129,13 +133,16 @@ public abstract class Card {
 		this.id = id;
 	}
 
-	public Note getNote() {
-		return note;
+	public Collection<Note> getNotes() {
+		return notes;
 	}
 
-	public void setNote(Note note) {
-		this.note = note;
+	public void setNotes(Collection<Note> notes) {
+		this.notes = notes;
 	}
+
+
+	
     
     
 }

@@ -23,7 +23,7 @@ public class TrapCardTest {
 		trap.setEdition(Editions.FE);
 		trap.setRarity(Rarities.RARE);
 		trap.setSet("DDS");
-		trap.setNote(note);
+		//trap.setNote(note);
 		trap.setLanguage("English");
 		trap.setType("Counter Trap Card");
 	}

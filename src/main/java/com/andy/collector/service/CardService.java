@@ -1,5 +1,7 @@
 package com.andy.collector.service;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,22 +28,12 @@ public class CardService {
 	//edit monster card details by ID
 	public void editMonsterCard(MonsterCard card, int id) {
 		card.setId(id);
-		
-		Note oldNote = card.getNote();
-		oldNote.setIdNote(id);
-		card.setNote(oldNote);
-		
 		cardRepository.save(card);
 	}
 	
 	//edit spell or trap card details by id
 	public void editCard(Card card, int id) {
-		card.setId(id);
-		
-		Note oldNote = card.getNote();
-		oldNote.setIdNote(id);
-		card.setNote(oldNote);
-		
+		card.setId(id);		
 		cardRepository.save(card);
 	}
 	

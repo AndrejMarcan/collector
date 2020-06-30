@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.andy.collector.model.Card;
 import com.andy.collector.model.MonsterCard;
+import com.andy.collector.model.Note;
 import com.andy.collector.model.SpellCard;
 import com.andy.collector.model.TrapCard;
 import com.andy.collector.service.CardService;
@@ -143,7 +144,8 @@ public class CardController {
 			return new ResponseEntity<Card> (cardOpt.get(), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<Card> (HttpStatus.NOT_FOUND);
-		}
-		
+		}		
 	}
+	
+	
 }
