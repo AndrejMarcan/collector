@@ -19,9 +19,11 @@ import com.andy.collector.service.NoteService;
 @RestController
 @RequestMapping(value = "/note")
 public class NoteController {
-
-	@Autowired
-	NoteService noteService;
+	private NoteService noteService;
+	
+	NoteController(@Autowired NoteService noteService) {
+		this.noteService = noteService;
+	}
 	
 	@PutMapping(value = "/update-note/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> updateCardNote(@RequestBody Note note, @PathVariable("id") String id) throws SQLException {			

@@ -18,13 +18,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.andy.collector.model.User;
+import com.andy.collector.service.CardService;
 import com.andy.collector.service.UserService;
 
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
-	@Autowired
-	UserService userService;
+	private UserService userService;
+	
+	UserController( @Autowired UserService userService){
+		this.userService = userService;
+	}
 	
 	@PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> addUser(@RequestBody User user) {
@@ -32,7 +36,7 @@ public class UserController {
 			userService.addNewUser(user);
 			return new ResponseEntity<String>("user saved",HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<String>("user saved",HttpStatus.CONFLICT);
+			return new ResponseEntity<String>("user not saved",HttpStatus.CONFLICT);
 		}
 		
 	}
@@ -53,9 +57,9 @@ public class UserController {
 		
 		try {
 			userService.deleteUser(Integer.valueOf(id));
-			return new ResponseEntity<String>("user saved",HttpStatus.OK);
+			return new ResponseEntity<String>("user removed",HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<String>("user saved",HttpStatus.CONFLICT);
+			return new ResponseEntity<String>(HttpStatus.CONFLICT);
 		}
 	}
 	
@@ -80,6 +84,5 @@ public class UserController {
 		} else {
 			return new ResponseEntity<List<User>>(HttpStatus.NOT_FOUND);
 		}
-	}
-	
+	}	
 }

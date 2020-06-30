@@ -119,7 +119,7 @@ public class CardController {
 			cardService.deleteAll();
 			return new ResponseEntity<String>("ALL CARDS WERE DELETED",HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<String>("user saved",HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
 		}
 	}
 	

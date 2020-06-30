@@ -7,11 +7,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.List;
 import java.util.Optional;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -31,6 +37,8 @@ import com.andy.collector.model.TrapCard;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
+@TestMethodOrder(OrderAnnotation.class)
+@TestInstance(Lifecycle.PER_CLASS)
 public class CardServiceTest {
 	
 	protected static SpellCard spell;
@@ -42,7 +50,7 @@ public class CardServiceTest {
 	protected CardService cs;
 	
 	@BeforeAll
-	public static void init() {
+	public void init() {
 		note = new Note();		
 		note.setNote("testNote");
 		
@@ -78,109 +86,121 @@ public class CardServiceTest {
 		monster.setDef("XXXX");
 		monster.setLevel("7");
 		
-		SpringApplication app = new SpringApplication(Main.class);
-     	app.run();
+		//SpringApplication app = new SpringApplication(Main.class);
+     	//app.run();
 	}
 	
 	@Test
+	@Order(1)
 	public void testAddNewCardMethod() {
 		int sizeBefore = cs.getAllCards().size();
 		cs.addNewCard(monster);
-		int sizeAfter = cs.getAllCards().size();
-		
+		int sizeAfter = cs.getAllCards().size();		
 		assertTrue(sizeBefore < sizeAfter);
-		
-		Card cardFromDB = cs.getAllCards().get(sizeAfter-1);
-		assertEquals(monster.getName(), cardFromDB.getName(),"test name and name in DB doesnt match");
-		assertEquals(monster.getEdition(), cardFromDB.getEdition(),"test edition and edition in DB doesnt match");
-		assertEquals(monster.getRarity(), cardFromDB.getRarity(),"test rarity and rarity in DB doesnt match");
-		assertEquals(monster.getSet(), cardFromDB.getSet(),"test set and set in DB doesnt match");
-		assertEquals(monster.getLanguage(), cardFromDB.getLanguage(),"test language in DB doesnt match");
-		assertEquals(monster.getNote().getNote(), cardFromDB.getNote().getNote(),"test note text and note text in DB doesnt match");
 	}
 	
-	@Disabled
-	@Test
-	public void testAddNewSpellCardMethod() {
-		int sizeBefore = cs.getAllCards().size();
-		cs.addNewCard(spell);
-		int sizeAfter = cs.getAllCards().size();
-		
-		assertTrue(sizeBefore < sizeAfter);
-		
-		Card cardFromDB = cs.getAllCards().get(sizeAfter-1);
-		
-		assertEquals(spell.getName(), cardFromDB.getName(),"test name and name in DB doesnt match");
-		assertEquals(spell.getEdition(), cardFromDB.getEdition(),"test edition and edition in DB doesnt match");
-		assertEquals(spell.getRarity(), cardFromDB.getRarity(),"test rarity and rarity in DB doesnt match");
-		assertEquals(spell.getSet(), cardFromDB.getSet(),"test set and set in DB doesnt match");
-		assertEquals(spell.getLanguage(), cardFromDB.getLanguage(),"test language in DB doesnt match");
-		assertEquals(spell.getNote().getNote(), cardFromDB.getNote().getNote(),"test note text and note text in DB doesnt match");
-	}
-	
-	@Disabled
-	@Test
-	public void testAddNewTrapCardMethod() {
-		int sizeBefore = cs.getAllCards().size();
-		cs.addNewCard(trap);
-		int sizeAfter = cs.getAllCards().size();
-		
-		assertTrue(sizeBefore < sizeAfter);
-		
-		Card cardFromDB = cs.getAllCards().get(sizeAfter-1);
-		
-		assertEquals(trap.getName(), cardFromDB.getName(),"test name and name in DB doesnt match");
-		assertEquals(trap.getEdition(), cardFromDB.getEdition(),"test edition and edition in DB doesnt match");
-		assertEquals(trap.getRarity(), cardFromDB.getRarity(),"test rarity and rarity in DB doesnt match");
-		assertEquals(trap.getSet(), cardFromDB.getSet(),"test set and set in DB doesnt match");
-		assertEquals(trap.getLanguage(), cardFromDB.getLanguage(),"test language in DB doesnt match");
-		assertEquals(trap.getNote().getNote(), cardFromDB.getNote().getNote(),"test note text and note text in DB doesnt match");
-	}
 	
 	@Test
+	@Order(2)
 	public void testFindCardByIdMethod() {
-		Optional<Card> cardOpt = cs.findCardById(5);		
+		Optional<Card> cardOpt = cs.findCardById(53);		
 		assertTrue(cardOpt.isPresent());		
 		Card card = cardOpt.get();		
-		assertEquals(monster.getName(), card.getName(),"test name and name in DB doesnt match");
+		assertEquals("TestSpell", card.getName(),"test name and name in DB doesnt match");
 	}
 	
-	@Disabled // tested 
 	@Test
+	@Order(3)
 	public void testEditMonsterCardMethod() {
-		cs.editMonsterCard(monster, 5);
-		Optional<Card> cardOpt = cs.findCardById(5);
+		cs.editMonsterCard(monster, 55);
+		Optional<Card> cardOpt = cs.findCardById(55);
 		assertTrue(cardOpt.isPresent());
 		
 		Card card = cardOpt.get();
-		assertEquals(monster.getName(), card.getName(),"test name and name in DB doesnt match");
+		assertEquals("TestMonster", card.getName(),"test name and name in DB doesnt match");
 		
 	}
 	
-	
-	@Disabled 
 	@Test
+	public void testEditCardMethod() {
+		cs.editCard(spell, 53);
+		Optional<Card> cardOpt = cs.findCardById(53);
+		assertTrue(cardOpt.isPresent());
+		
+		Card card = cardOpt.get();
+		assertEquals("TestSpell", card.getName(),"test name and name in DB doesnt match");
+		
+	}
+	
+	@Test
+	@Order(4)
 	public void testGetallCardsMethod() {
 		List<Card> list = cs.getAllCards();
-		
-		assertTrue("List size should be 4",4 == list.size());
-		
-		assertEquals("JDBC spell", list.get(0).getName(),"Card name at this position should be JDBC spell");
-		assertEquals("TestMonster", list.get(1).getName(),"Card name at this position should be TestMonster");
-		assertEquals("newTrap", list.get(2).getName(),"Card name at this position should be newTrap");
-		assertEquals("TestMonster", list.get(3).getName(),"Card name at this position should be TestMonster");
+		assertTrue(list.size()>0);
 	}
 	
-	@Disabled //card with id 7 no longer exists in DB
 	@Test
+	@Order(5)
 	public void testDeleteCardByIdMethod() {
-		Optional<Card> cardOpt = cs.findCardById(7);		
+		Optional<Card> cardOpt = cs.findCardById(752);		
 		assertTrue("card should be found", cardOpt.isPresent());		
 		
-		cs.deleteCardById(7);
+		cs.deleteCardById(752);
 		
-		Optional<Card> cardOpt2 = cs.findCardById(7);		
+		Optional<Card> cardOpt2 = cs.findCardById(752);		
 		assertFalse("card should NOT be found", cardOpt2.isPresent());		
 	}
 	
+	@Disabled
+	@Test
+	@Order(6)
+	public void testDeleteAllCardsMethod() {
+		cs.deleteAll();
+		assertTrue(cs.getAllCards().size()==0);
+	}
+	
+	@AfterAll
+	public void initAfter() {
+		note = new Note();		
+		note.setNote("testNote");
+		
+		spell = new SpellCard();
+		spell.setId(1);
+		spell.setName("TestSpell");
+		spell.setEdition(Editions.UE);
+		spell.setRarity(Rarities.COM);
+		spell.setSet("DDS");
+		spell.setNote(note);
+		spell.setLanguage("English");
+		spell.setType("Field Spell Card");
+		
+		trap = new TrapCard();
+		trap.setId(2);
+		trap.setName("TestTrap");
+		trap.setEdition(Editions.FE);
+		trap.setRarity(Rarities.RARE);
+		trap.setSet("DDS");
+		trap.setNote(note);
+		trap.setLanguage("English");
+		trap.setType("Counter Trap Card");
+		
+		monster = new MonsterCard();
+		monster.setId(3);
+		monster.setName("TestMonster");
+		monster.setEdition(Editions.LE);
+		monster.setRarity(Rarities.GHOST);
+		monster.setSet("DDS");
+		monster.setNote(note);
+		monster.setLanguage("English");
+		monster.setType("Warrior");
+		monster.setSummMethod("Fusion");
+		monster.setAttribute("Water");
+		monster.setAtk("2300");
+		monster.setDef("XXXX");
+		monster.setLevel("7");
+		
+		cs.addNewCard(spell);
+		cs.addNewCard(trap);
+		cs.addNewCard(monster);
+	}
 }
