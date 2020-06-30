@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
@@ -14,14 +15,8 @@ import org.hibernate.annotations.Parameter;
 public class Note {
 	
 	@Id
-	@GeneratedValue(generator = "Note_SequenceStyleGenerator")
-	@GenericGenerator(name = "Note_SequenceStyleGenerator", 
-	strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
-	parameters = {
-		@Parameter(name = "sequence_name", value = "Note_SEQ"),
-		@Parameter(name = "initial_value", value = "1"),
-		@Parameter(name = "increment_size", value = "1") 
-	})
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "note_id")
+	@SequenceGenerator(name = "note_id", sequenceName = "note_id")
 	private int idNote;
 	
 	@Column(name = "note")

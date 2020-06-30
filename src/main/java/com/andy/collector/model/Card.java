@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.andy.collector.enums.Editions;
@@ -42,7 +43,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public abstract class Card {
 	
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "card_id")
+	@SequenceGenerator(name = "card_id", sequenceName = "card_id")
     @Column(name = "card_id")
 	private int id;
 	
