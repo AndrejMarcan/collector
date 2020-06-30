@@ -2,6 +2,7 @@ package com.andy.collector.service;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,23 +26,37 @@ public class NoteService {
 	}
 	
 	//delete note
-	public void deleteNoteById(int id) {
-		noteRepository.deleteById(id);
+	public void deleteNoteById(int id_card, int id_note) {
+		CardDTO card = cardService.findCardById(id_card).get();
+		Collection<NoteDTO> notes = card.getNotes();
+		notes.remove(getNoteById(id_note, notes));
+		card.setNotes(notes);
+		
+		cardService.editCard(card, id_card);		
 	}
 	
 	//add new note to card
 	public void addNoteToCard(NoteDTO note, Integer id) {
 		CardDTO card = cardService.findCardById(id).get();
 		Collection<NoteDTO> notes = card.getNotes();
+		
 		notes.add(note);
 		card.setNotes(notes);
 		card.setId(id);
-		
-		cardService.addNewCard(card);
-		
+
+		cardService.addNewCard(card);	
 	}
 
 	public Optional<NoteDTO> showNote(Integer id) {
 		return noteRepository.findById(id);		
+	}
+	
+	private NoteDTO getNoteById(int id, Collection<NoteDTO> notes) {
+		Predicate<NoteDTO> byId = p -> p.getIdNote()==id;
+		return filterNote(byId, notes);
+	}
+
+	private NoteDTO filterNote(Predicate<NoteDTO> strategy, Collection<NoteDTO> notes) {
+		return notes.stream().filter(strategy).findFirst().orElse(null);
 	}
 }
