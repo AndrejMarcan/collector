@@ -26,13 +26,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.andy.collector.Main;
+import com.andy.collector.dto.CardDTO;
+import com.andy.collector.dto.MonsterCardDTO;
+import com.andy.collector.dto.NoteDTO;
+import com.andy.collector.dto.SpellCardDTO;
+import com.andy.collector.dto.TrapCardDTO;
 import com.andy.collector.enums.Editions;
 import com.andy.collector.enums.Rarities;
-import com.andy.collector.model.Card;
-import com.andy.collector.model.MonsterCard;
-import com.andy.collector.model.Note;
-import com.andy.collector.model.SpellCard;
-import com.andy.collector.model.TrapCard;
 import com.andy.collector.service.CardService;
 
 @ExtendWith(SpringExtension.class)
@@ -41,10 +41,10 @@ import com.andy.collector.service.CardService;
 @TestInstance(Lifecycle.PER_CLASS)
 public class CardControllerTest {
 	protected CardController controller;
-	protected Note note;
-	protected SpellCard spell;
-	protected TrapCard trap;
-	protected MonsterCard monster;
+	protected NoteDTO note;
+	protected SpellCardDTO spell;
+	protected TrapCardDTO trap;
+	protected MonsterCardDTO monster;
 	
 	@Autowired 
 	CardService cardService;
@@ -53,10 +53,10 @@ public class CardControllerTest {
 	void init() {
 		controller = new CardController(cardService);
 		
-		note = new Note();		
+		note = new NoteDTO();		
 		note.setNote("testNote");
 		
-		spell = new SpellCard();
+		spell = new SpellCardDTO();
 		spell.setId(3000);
 		spell.setName("TestSpell");
 		spell.setEdition(Editions.UE);
@@ -66,7 +66,7 @@ public class CardControllerTest {
 		spell.setLanguage("English");
 		spell.setType("Field Spell Card");
 		
-		trap = new TrapCard();
+		trap = new TrapCardDTO();
 		trap.setId(3100);
 		trap.setName("TestTrap");
 		trap.setEdition(Editions.FE);
@@ -76,7 +76,7 @@ public class CardControllerTest {
 		trap.setLanguage("English");
 		trap.setType("Counter Trap Card");
 		
-		monster = new MonsterCard();
+		monster = new MonsterCardDTO();
 		monster.setId(3200);
 		monster.setName("TestMonster");
 		monster.setEdition(Editions.LE);
@@ -141,15 +141,15 @@ public class CardControllerTest {
 	@Test
 	@Order(7)
 	public void testShowCardById() throws SQLException {
-		ResponseEntity<Card> ent = controller.showCardById("55");
-		assertEquals(new ResponseEntity<Card> (ent.getBody(),HttpStatus.OK), ent);			
+		ResponseEntity<CardDTO> ent = controller.showCardById("55");
+		assertEquals(new ResponseEntity<CardDTO> (ent.getBody(),HttpStatus.OK), ent);			
 	}
 	
 	@Test
 	@Order(8)
 	public void testShowAllCards() throws SQLException {
-		ResponseEntity<List<Card>> ent = controller.loadAllCards();
-		assertEquals(new ResponseEntity<List<Card>>(ent.getBody(), HttpStatus.OK), ent);			
+		ResponseEntity<List<CardDTO>> ent = controller.loadAllCards();
+		assertEquals(new ResponseEntity<List<CardDTO>>(ent.getBody(), HttpStatus.OK), ent);			
 	}
 	
 	

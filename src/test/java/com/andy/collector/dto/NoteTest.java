@@ -1,4 +1,4 @@
-package com.andy.collector.model;
+package com.andy.collector.dto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -6,12 +6,14 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.andy.collector.dto.NoteDTO;
+
 public class NoteTest {
-	protected Note note;
+	protected NoteDTO note;
 
 	@BeforeEach
 	void init() {
-		note = new Note();
+		note = new NoteDTO();
 		
 		note.setIdNote(1);
 		note.setNote("something");

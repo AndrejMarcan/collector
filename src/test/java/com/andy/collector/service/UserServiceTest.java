@@ -19,16 +19,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.andy.collector.Main;
-import com.andy.collector.model.User;
+import com.andy.collector.dto.UserDTO;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @TestInstance(Lifecycle.PER_CLASS)
 public class UserServiceTest {
 	
-	protected static  User user;
-	protected static  User userEdit;
-	protected static List<User> list;
+	protected static  UserDTO user;
+	protected static  UserDTO userEdit;
+	protected static List<UserDTO> list;
 	
 	@Autowired
 	protected UserService us;
@@ -36,11 +36,11 @@ public class UserServiceTest {
 	//inicialization of variables for test methods and starting SpringApplication
 	@BeforeAll
 	public void init() {
-		user = new User();
+		user = new UserDTO();
 		user.setNickname("mordos");
 		user.setPassword("nieco");
 		
-		userEdit = new User();
+		userEdit = new UserDTO();
 		userEdit.setNickname("editedUser");
 		userEdit.setPassword("editedPass");
 		
@@ -67,16 +67,16 @@ public class UserServiceTest {
 	//tests sizes of list from text method and list from DB
 	@Test
 	public void testFindAllUsersMethod() {
-		List<User> userListFromDb = us.findAllUsers();
+		List<UserDTO> userListFromDb = us.findAllUsers();
 		assertTrue(0<userListFromDb.size());
 	}
 	
 	//test findUserById method and compares nickname and password of User from test method with user fetched form DB
 	@Test
 	public void testFindUserByIdMethod() {
-		Optional<User> userFromDb = us.findUser(1);		
+		Optional<UserDTO> userFromDb = us.findUser(1);		
 		assertTrue(userFromDb.isPresent());		
-		User userFromOpt = userFromDb.get();		
+		UserDTO userFromOpt = userFromDb.get();		
 		assertEquals("Johny", userFromOpt.getNickname());
 	}
 	
@@ -84,9 +84,9 @@ public class UserServiceTest {
 	@Test
 	public void testUpdateUserByIdMethod() {
 		us.updateUserbyId(userEdit, 2);		
-		Optional<User> userFromDb = us.findUser(2);	
+		Optional<UserDTO> userFromDb = us.findUser(2);	
 		assertTrue(userFromDb.isPresent());		
-		User userFromOpt = userFromDb.get();
+		UserDTO userFromOpt = userFromDb.get();
 		
 		assertEquals(userEdit.getNickname(), userFromOpt.getNickname());
 		assertEquals(userEdit.getPassword(), userFromOpt.getPassword());

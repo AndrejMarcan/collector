@@ -1,22 +1,24 @@
-package com.andy.collector.model;
+package com.andy.collector.dto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.andy.collector.dto.MonsterCardDTO;
+import com.andy.collector.dto.NoteDTO;
 import com.andy.collector.enums.Editions;
 import com.andy.collector.enums.Rarities;
 
 public class MonsterCardTest {
-	protected MonsterCard monster;
+	protected MonsterCardDTO monster;
 	
 	@BeforeEach
 	void init() {
-		Note note = new Note();
+		NoteDTO note = new NoteDTO();
 		note.setNote("some note");
 		
-		monster = new MonsterCard();
+		monster = new MonsterCardDTO();
 		monster.setName("TestMonster");
 		monster.setEdition(Editions.LE);
 		monster.setRarity(Rarities.GHOST);

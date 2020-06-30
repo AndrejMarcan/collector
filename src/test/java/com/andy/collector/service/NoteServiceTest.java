@@ -16,8 +16,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.andy.collector.Main;
-import com.andy.collector.model.Card;
-import com.andy.collector.model.Note;
+import com.andy.collector.dto.CardDTO;
+import com.andy.collector.dto.NoteDTO;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -30,13 +30,13 @@ public class NoteServiceTest {
 	@Autowired
 	CardService cs;
 	
-	protected static Note note1;
-	protected static Note note2;
+	protected static NoteDTO note1;
+	protected static NoteDTO note2;
 	
 	@BeforeAll
 	public void init() {
-		note1 = new Note();
-		note2 = new Note();
+		note1 = new NoteDTO();
+		note2 = new NoteDTO();
 		
 		note1.setNote("Test note 1");
 		note2.setNote("Test note 2");

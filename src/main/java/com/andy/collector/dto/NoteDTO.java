@@ -1,4 +1,4 @@
-package com.andy.collector.model;
+package com.andy.collector.dto;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,13 +8,10 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-
 
 @Entity
 @Table(name = "notes")
-public class Note {
+public class NoteDTO {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "note_id")
@@ -24,7 +21,7 @@ public class Note {
 	@Column(name = "note")
 	private String note;
 	
-	public Note() {}
+	public NoteDTO() {}
 	
 
 	public String getNote() {
