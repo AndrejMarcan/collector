@@ -21,7 +21,7 @@ public class MonsterCardTest {
 		monster.setEdition(Editions.LE);
 		monster.setRarity(Rarities.GHOST);
 		monster.setSet("DDS");
-		monster.setNote(note);
+		//monster.setNote(note);
 		monster.setLanguage("English");
 		monster.setType("Warrior");
 		monster.setSummMethod("Fusion");

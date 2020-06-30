@@ -60,19 +60,19 @@ public class NoteControllerTest {
 		assertEquals(new ResponseEntity<String>(HttpStatus.NOT_FOUND), ent);	
 	}
 	
-	@Test
-	@Order(3)
-	public void testDeleteCardNote() throws SQLException {
-		ResponseEntity<String> ent = controller.deleteCardNote("202");
-		assertEquals(new ResponseEntity<String>("delete succesful",HttpStatus.OK), ent);	
-	}
-	
-	@Test
-	@Order(4)
-	public void testDeleteCardNoteNOT() throws SQLException {
-		ResponseEntity<String> ent = controller.deleteCardNote("202636363632727");
-		assertEquals(new ResponseEntity<String>(HttpStatus.NOT_FOUND), ent);	
-	}
+//	@Test
+//	@Order(3)
+//	public void testDeleteCardNote() throws SQLException {
+//		ResponseEntity<String> ent = controller.deleteCardNote("202");
+//		assertEquals(new ResponseEntity<String>("delete succesful",HttpStatus.OK), ent);	
+//	}
+//	
+//	@Test
+//	@Order(4)
+//	public void testDeleteCardNoteNOT() throws SQLException {
+//		ResponseEntity<String> ent = controller.deleteCardNote("202636363632727");
+//		assertEquals(new ResponseEntity<String>(HttpStatus.NOT_FOUND), ent);	
+//	}
 	
 	
 }

@@ -22,7 +22,7 @@ protected static SpellCard spell;
 		spell.setEdition(Editions.FE);
 		spell.setRarity(Rarities.RARE);
 		spell.setSet("DDS");
-		spell.setNote(note);
+		//spell.setNote(note);
 		spell.setLanguage("English");
 		spell.setType("Field Spell Card");
 	}

@@ -23,7 +23,7 @@ public class CardTest {
 		spell.setEdition(Editions.FE);
 		spell.setRarity(Rarities.RARE);
 		spell.setSet("DDS");
-		spell.setNote(note);
+		//spell.setNote(note);
 		spell.setLanguage("English");
 		spell.setType("Field Spell Card");
 	}
@@ -34,7 +34,7 @@ public class CardTest {
 		assertEquals("First Edition", spell.getEdition(), "First Edition expected!");
 		assertEquals("Rare", spell.getRarity(), "Rare expected!");
 		assertEquals("DDS", spell.getSet(), "DDS set expected!");
-		assertEquals(note.getNote(), spell.getNote().getNote(), "Hello from CardTest expected!");
+		//assertEquals(note.getNote(), spell.getNote().getNote(), "Hello from CardTest expected!");
 		assertEquals("English", spell.getLanguage(), "English language expected!");
 	}
 	
@@ -53,14 +53,14 @@ public class CardTest {
 		spell.setEdition(edition);
 		spell.setRarity(rarity);
 		spell.setSet(set);
-		spell.setNote(note2);
+		//spell.setNote(note2);
 		spell.setLanguage(language);
 		
 		assertEquals(name, spell.getName(), "new name expected!");
 		assertEquals("Unlimited Edition", spell.getEdition(), "Unlimited Edition expected!");
 		assertEquals("Common", spell.getRarity(), "Common expected!");
 		assertEquals(set, spell.getSet(), "BLS set expected!");
-		assertEquals(note2.getNote(), spell.getNote().getNote(), "new note expected!");
+		//assertEquals(note2.getNote(), spell.getNote().getNote(), "new note expected!");
 		assertEquals(language, spell.getLanguage(), "German language expected!");
 	}
 	

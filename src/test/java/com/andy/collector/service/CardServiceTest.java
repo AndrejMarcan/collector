@@ -59,7 +59,7 @@ public class CardServiceTest {
 		spell.setEdition(Editions.UE);
 		spell.setRarity(Rarities.COM);
 		spell.setSet("DDS");
-		spell.setNote(note);
+		//spell.setNote(note);
 		spell.setLanguage("English");
 		spell.setType("Field Spell Card");
 		
@@ -68,7 +68,7 @@ public class CardServiceTest {
 		trap.setEdition(Editions.FE);
 		trap.setRarity(Rarities.RARE);
 		trap.setSet("DDS");
-		trap.setNote(note);
+		//trap.setNote(note);
 		trap.setLanguage("English");
 		trap.setType("Counter Trap Card");
 		
@@ -77,7 +77,7 @@ public class CardServiceTest {
 		monster.setEdition(Editions.LE);
 		monster.setRarity(Rarities.GHOST);
 		monster.setSet("DDS");
-		monster.setNote(note);
+		//monster.setNote(note);
 		monster.setLanguage("English");
 		monster.setType("Warrior");
 		monster.setSummMethod("Fusion");
@@ -170,7 +170,7 @@ public class CardServiceTest {
 		spell.setEdition(Editions.UE);
 		spell.setRarity(Rarities.COM);
 		spell.setSet("DDS");
-		spell.setNote(note);
+		//spell.setNote(note);
 		spell.setLanguage("English");
 		spell.setType("Field Spell Card");
 		
@@ -180,7 +180,7 @@ public class CardServiceTest {
 		trap.setEdition(Editions.FE);
 		trap.setRarity(Rarities.RARE);
 		trap.setSet("DDS");
-		trap.setNote(note);
+		//trap.setNote(note);
 		trap.setLanguage("English");
 		trap.setType("Counter Trap Card");
 		
@@ -190,7 +190,7 @@ public class CardServiceTest {
 		monster.setEdition(Editions.LE);
 		monster.setRarity(Rarities.GHOST);
 		monster.setSet("DDS");
-		monster.setNote(note);
+		//monster.setNote(note);
 		monster.setLanguage("English");
 		monster.setType("Warrior");
 		monster.setSummMethod("Fusion");
