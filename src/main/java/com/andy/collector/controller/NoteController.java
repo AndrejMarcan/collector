@@ -38,10 +38,10 @@ public class NoteController {
 		}
 	}
 	
-	@DeleteMapping(value = "/delete-note/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> deleteCardNote(@PathVariable("id") String id) throws SQLException {	
+	@DeleteMapping(value = "/delete-note/{id-card}/{id-note}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> deleteCardNote(@PathVariable("id-card") String idCard, @PathVariable("id-note") String idNote) throws SQLException {	
 		try {
-			noteService.deleteNoteById(Integer.valueOf(id));
+			noteService.deleteNoteById(Integer.valueOf(idCard),Integer.valueOf(idNote));
 			return new ResponseEntity<String>("delete succesful",HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);

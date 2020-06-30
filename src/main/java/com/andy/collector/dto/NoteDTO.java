@@ -1,10 +1,12 @@
 package com.andy.collector.dto;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -23,7 +25,6 @@ public class NoteDTO {
 	
 	public NoteDTO() {}
 	
-
 	public String getNote() {
 		return note;
 	}
