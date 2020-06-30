@@ -6,6 +6,7 @@ package com.andy.collector.model;
 import javax.annotation.Nonnull;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 /**
  * The MonsterCard class provides methods for adding a new monster card to database,
  * edit data for monster card in database and to get data for monster card from the database.
@@ -15,6 +16,7 @@ import javax.persistence.Entity;
  */
 
 @Entity
+@Table(name = "monsters")
 public class MonsterCard extends Card {
     
 	@Column(name = "type")

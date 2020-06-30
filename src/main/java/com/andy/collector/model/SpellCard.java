@@ -6,6 +6,7 @@ package com.andy.collector.model;
 import javax.annotation.Nonnull;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 /**
  * The SpellCard class provides methods for adding a new spell card to database, edit data for spell card
  * in database and to get data for spell card from the database.    
@@ -15,6 +16,7 @@ import javax.persistence.Entity;
  */
 
 @Entity
+@Table(name = "spells")
 public class SpellCard extends Card{
 	
 	@Column(name = "type")

@@ -6,6 +6,7 @@ package com.andy.collector.model;
 import javax.annotation.Nonnull;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 /**
  * The TrapCard class provides methods for adding a new trap card to database, edit data for trap card
  * in database and to get data for trap card from the database.  
@@ -15,6 +16,7 @@ import javax.persistence.Entity;
  */
 
 @Entity
+@Table(name = "traps")
 public class TrapCard extends Card{
 	
 	@Column(name = "type")
