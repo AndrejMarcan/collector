@@ -124,9 +124,20 @@ public class CardController {
 	}
 	
 	@GetMapping(value = "/show-all-cards", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Card>> loadAllCards() throws SQLException {
+	public ResponseEntity<List<Card>> showAllCards() throws SQLException {
 		List<Card> cards = cardService.getAllCards();
 		
+		if(cards != null) {
+			return new ResponseEntity<List<Card>> (cards, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<List<Card>> (HttpStatus.NOT_FOUND);
+		}
+		
+	}
+	
+	@GetMapping(value = "/show-all-cards/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Card>> showAllCardsWithName(@PathVariable("name") String name) throws SQLException {
+		List<Card> cards = cardService.getAllCardsWithName(name);		
 		if(cards != null) {
 			return new ResponseEntity<List<Card>> (cards, HttpStatus.OK);
 		} else {

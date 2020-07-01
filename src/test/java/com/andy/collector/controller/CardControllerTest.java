@@ -148,7 +148,7 @@ public class CardControllerTest {
 	@Test
 	@Order(8)
 	public void testShowAllCards() throws SQLException {
-		ResponseEntity<List<Card>> ent = controller.loadAllCards();
+		ResponseEntity<List<Card>> ent = controller.showAllCards();
 		assertEquals(new ResponseEntity<List<Card>>(ent.getBody(), HttpStatus.OK), ent);			
 	}
 	

@@ -2,6 +2,7 @@ package com.andy.collector.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,4 +53,14 @@ public class CardService {
 	public Optional<Card> findCardById(int id){
 		return cardRepository.findById(id);
 	}
+	
+	//get all cards with name
+	public List<Card> getAllCardsWithName(String name){
+		List<Card> allCards = cardRepository.findAll();
+		List<Card> cards = allCards.stream().filter(p -> p.getName().equals(name))
+                .collect(Collectors.toList());
+		
+		return cards;
+	}
+	
 }
