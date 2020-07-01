@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "notes")
-public class NoteDTO {
+public class Note {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "note_id")
@@ -21,7 +21,7 @@ public class NoteDTO {
 	@Column(name = "note")
 	private String note;
 	
-	public NoteDTO() {}
+	public Note() {}
 	
 	public String getNote() {
 		return note;

@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class UserDTO {
+public class User {
 	
 	@Id
 	@Column(name = "user_id")

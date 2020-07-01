@@ -24,7 +24,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.andy.collector.Main;
-import com.andy.collector.dto.UserDTO;
+import com.andy.collector.dto.User;
 import com.andy.collector.service.UserService;
 
 @ExtendWith(SpringExtension.class)
@@ -32,7 +32,7 @@ import com.andy.collector.service.UserService;
 @TestMethodOrder(OrderAnnotation.class)
 @TestInstance(Lifecycle.PER_CLASS)
 public class UserControllerTest {
-	protected UserDTO user;
+	protected User user;
 	protected UserController controller;
 	
 	@Autowired 
@@ -42,7 +42,7 @@ public class UserControllerTest {
 	void init() {
 		controller = new UserController(userService);
 		
-		user = new UserDTO();
+		user = new User();
 		user.setNickname("mordos");
 		user.setPassword("nieco");
 		
@@ -67,15 +67,15 @@ public class UserControllerTest {
 	@Test
 	@Order(3)
 	public void testShowUser() throws SQLException {
-		ResponseEntity<Optional<UserDTO>> ent = controller.showUser("3");
-		assertEquals(new ResponseEntity<Optional<UserDTO>>(ent.getBody(),HttpStatus.OK), ent);	
+		ResponseEntity<Optional<User>> ent = controller.showUser("3");
+		assertEquals(new ResponseEntity<Optional<User>>(ent.getBody(),HttpStatus.OK), ent);	
 	}
 	
 	@Test
 	@Order(4)
 	public void testShowAll() throws SQLException {
-		ResponseEntity<List<UserDTO>> ent = controller.showUser();
-		assertEquals(new ResponseEntity<List<UserDTO>>(ent.getBody(),HttpStatus.OK), ent);	
+		ResponseEntity<List<User>> ent = controller.showUser();
+		assertEquals(new ResponseEntity<List<User>>(ent.getBody(),HttpStatus.OK), ent);	
 	}
 	
 	@Test

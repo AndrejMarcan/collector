@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.andy.collector.dto.CardDTO;
-import com.andy.collector.dto.MonsterCardDTO;
+import com.andy.collector.dto.Card;
+import com.andy.collector.dto.MonsterCard;
 import com.andy.collector.repository.CardRepository;
 
 @Service
@@ -17,18 +17,18 @@ public class CardService {
 	CardRepository cardRepository;
 	
 	//add new card to DB
-	public void addNewCard(CardDTO card) {
+	public void addNewCard(Card card) {
 		cardRepository.save(card);
 	}
 	
 	//edit monster card details by ID
-	public void editMonsterCard(MonsterCardDTO card, int id) {
+	public void editMonsterCard(MonsterCard card, int id) {
 		card.setId(id);
 		cardRepository.save(card);
 	}
 	
 	//edit spell or trap card details by id
-	public void editCard(CardDTO card, int id) {
+	public void editCard(Card card, int id) {
 		card.setId(id);		
 		cardRepository.save(card);
 	}
@@ -39,7 +39,7 @@ public class CardService {
 	}
 	
 	//get list of all cards
-	public List<CardDTO> getAllCards(){
+	public List<Card> getAllCards(){
 		return cardRepository.findAll();
 	}
 	
@@ -49,7 +49,7 @@ public class CardService {
 	}
 	
 	//get card by id
-	public Optional<CardDTO> findCardById(int id){
+	public Optional<Card> findCardById(int id){
 		return cardRepository.findById(id);
 	}
 }

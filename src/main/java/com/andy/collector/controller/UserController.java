@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.andy.collector.dto.UserDTO;
+import com.andy.collector.dto.User;
 import com.andy.collector.service.UserService;
 
 @RestController
@@ -30,7 +30,7 @@ public class UserController {
 	}
 	
 	@PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> addUser(@RequestBody UserDTO user) {
+	public ResponseEntity<String> addUser(@RequestBody User user) {
 		try {
 			userService.addNewUser(user);
 			return new ResponseEntity<String>("user saved",HttpStatus.OK);
@@ -41,7 +41,7 @@ public class UserController {
 	}
 	
 	@PutMapping(value = "/edit/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> editUser(@RequestBody UserDTO user, @PathVariable("id") String id) throws SQLException {		
+	public ResponseEntity<String> editUser(@RequestBody User user, @PathVariable("id") String id) throws SQLException {		
 		try {
 			userService.updateUserbyId(user, Integer.valueOf(id));
 			return new ResponseEntity<String>("user saved",HttpStatus.OK);
@@ -63,25 +63,25 @@ public class UserController {
 	}
 	
 	@GetMapping(value = "/show/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Optional<UserDTO>> showUser(@PathVariable("id") String id) throws SQLException{
-		Optional<UserDTO> userNew = userService.findUser(Integer.valueOf(id));
+	public ResponseEntity<Optional<User>> showUser(@PathVariable("id") String id) throws SQLException{
+		Optional<User> userNew = userService.findUser(Integer.valueOf(id));
 		
 		if (userNew != null) {
-			return new ResponseEntity<Optional<UserDTO>>(userNew, HttpStatus.OK);
+			return new ResponseEntity<Optional<User>>(userNew, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<Optional<UserDTO>>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Optional<User>>(HttpStatus.NOT_FOUND);
 		}
 	}
 	
 	@GetMapping(value = "/show/ALL", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<UserDTO>> showUser() throws SQLException{
+	public ResponseEntity<List<User>> showUser() throws SQLException{
 		
-		List<UserDTO> userNew = userService.findAllUsers();
+		List<User> userNew = userService.findAllUsers();
 		
 		if (userNew != null) {
-			return new ResponseEntity<List<UserDTO>>(userNew, HttpStatus.OK);
+			return new ResponseEntity<List<User>>(userNew, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<List<UserDTO>>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<List<User>>(HttpStatus.NOT_FOUND);
 		}
 	}	
 }

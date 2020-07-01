@@ -5,21 +5,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.andy.collector.dto.NoteDTO;
-import com.andy.collector.dto.SpellCardDTO;
+import com.andy.collector.dto.Note;
+import com.andy.collector.dto.SpellCard;
 import com.andy.collector.enums.Editions;
 import com.andy.collector.enums.Rarities;
 
 public class SpellCardTest {
-protected static SpellCardDTO spell;
+protected static SpellCard spell;
 	
 	@BeforeEach
 	void init() {
 		
-		NoteDTO note = new NoteDTO();
+		Note note = new Note();
 		note.setNote("Hello from TrapCardTest");
 		
-		spell = new SpellCardDTO();
+		spell = new SpellCard();
 		spell.setName("TestSpell");
 		spell.setEdition(Editions.FE);
 		spell.setRarity(Rarities.RARE);

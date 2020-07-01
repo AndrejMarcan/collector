@@ -5,21 +5,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.andy.collector.dto.NoteDTO;
-import com.andy.collector.dto.SpellCardDTO;
+import com.andy.collector.dto.Note;
+import com.andy.collector.dto.SpellCard;
 import com.andy.collector.enums.Editions;
 import com.andy.collector.enums.Rarities;
 
 public class CardTest {
-	protected SpellCardDTO spell;
-	protected NoteDTO note;
+	protected SpellCard spell;
+	protected Note note;
 	@BeforeEach
 	void init() {
 		
-		note = new NoteDTO();
+		note = new Note();
 		note.setNote("Hello from CardTest");
 		
-		spell = new SpellCardDTO();
+		spell = new SpellCard();
 		spell.setId(1);
 		spell.setName("TestSpell");
 		spell.setEdition(Editions.FE);
@@ -48,7 +48,7 @@ public class CardTest {
 		String set = "BLS";
 		String language = "German";
 		
-		NoteDTO note2 = new NoteDTO();
+		Note note2 = new Note();
 		note2.setNote("new note");
 		
 		spell.setName(name);

@@ -27,11 +27,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.andy.collector.Main;
-import com.andy.collector.dto.CardDTO;
-import com.andy.collector.dto.MonsterCardDTO;
-import com.andy.collector.dto.NoteDTO;
-import com.andy.collector.dto.SpellCardDTO;
-import com.andy.collector.dto.TrapCardDTO;
+import com.andy.collector.dto.Card;
+import com.andy.collector.dto.MonsterCard;
+import com.andy.collector.dto.Note;
+import com.andy.collector.dto.SpellCard;
+import com.andy.collector.dto.TrapCard;
 import com.andy.collector.enums.Editions;
 import com.andy.collector.enums.Rarities;
 
@@ -41,20 +41,20 @@ import com.andy.collector.enums.Rarities;
 @TestInstance(Lifecycle.PER_CLASS)
 public class CardServiceTest {
 	
-	protected static SpellCardDTO spell;
-	protected static TrapCardDTO trap;
-	protected static MonsterCardDTO monster;
-	protected static NoteDTO note;
+	protected static SpellCard spell;
+	protected static TrapCard trap;
+	protected static MonsterCard monster;
+	protected static Note note;
 	
 	@Autowired
 	protected CardService cs;
 	
 	@BeforeAll
 	public void init() {
-		note = new NoteDTO();		
+		note = new Note();		
 		note.setNote("testNote");
 		
-		spell = new SpellCardDTO();
+		spell = new SpellCard();
 		spell.setName("TestSpell");
 		spell.setEdition(Editions.UE);
 		spell.setRarity(Rarities.COM);
@@ -63,7 +63,7 @@ public class CardServiceTest {
 		spell.setLanguage("English");
 		spell.setType("Field Spell Card");
 		
-		trap = new TrapCardDTO();
+		trap = new TrapCard();
 		trap.setName("TestTrap");
 		trap.setEdition(Editions.FE);
 		trap.setRarity(Rarities.RARE);
@@ -72,7 +72,7 @@ public class CardServiceTest {
 		trap.setLanguage("English");
 		trap.setType("Counter Trap Card");
 		
-		monster = new MonsterCardDTO();
+		monster = new MonsterCard();
 		monster.setName("TestMonster");
 		monster.setEdition(Editions.LE);
 		monster.setRarity(Rarities.GHOST);
@@ -103,9 +103,9 @@ public class CardServiceTest {
 	@Test
 	@Order(2)
 	public void testFindCardByIdMethod() {
-		Optional<CardDTO> cardOpt = cs.findCardById(53);		
+		Optional<Card> cardOpt = cs.findCardById(53);		
 		assertTrue(cardOpt.isPresent());		
-		CardDTO card = cardOpt.get();		
+		Card card = cardOpt.get();		
 		assertEquals("TestSpell", card.getName(),"test name and name in DB doesnt match");
 	}
 	
@@ -113,10 +113,10 @@ public class CardServiceTest {
 	@Order(3)
 	public void testEditMonsterCardMethod() {
 		cs.editMonsterCard(monster, 55);
-		Optional<CardDTO> cardOpt = cs.findCardById(55);
+		Optional<Card> cardOpt = cs.findCardById(55);
 		assertTrue(cardOpt.isPresent());
 		
-		CardDTO card = cardOpt.get();
+		Card card = cardOpt.get();
 		assertEquals("TestMonster", card.getName(),"test name and name in DB doesnt match");
 		
 	}
@@ -124,10 +124,10 @@ public class CardServiceTest {
 	@Test
 	public void testEditCardMethod() {
 		cs.editCard(spell, 53);
-		Optional<CardDTO> cardOpt = cs.findCardById(53);
+		Optional<Card> cardOpt = cs.findCardById(53);
 		assertTrue(cardOpt.isPresent());
 		
-		CardDTO card = cardOpt.get();
+		Card card = cardOpt.get();
 		assertEquals("TestSpell", card.getName(),"test name and name in DB doesnt match");
 		
 	}
@@ -135,19 +135,19 @@ public class CardServiceTest {
 	@Test
 	@Order(4)
 	public void testGetallCardsMethod() {
-		List<CardDTO> list = cs.getAllCards();
+		List<Card> list = cs.getAllCards();
 		assertTrue(list.size()>0);
 	}
 	
 	@Test
 	@Order(5)
 	public void testDeleteCardByIdMethod() {
-		Optional<CardDTO> cardOpt = cs.findCardById(752);		
+		Optional<Card> cardOpt = cs.findCardById(752);		
 		assertTrue("card should be found", cardOpt.isPresent());		
 		
 		cs.deleteCardById(752);
 		
-		Optional<CardDTO> cardOpt2 = cs.findCardById(752);		
+		Optional<Card> cardOpt2 = cs.findCardById(752);		
 		assertFalse("card should NOT be found", cardOpt2.isPresent());		
 	}
 	
@@ -161,10 +161,10 @@ public class CardServiceTest {
 	
 	@AfterAll
 	public void initAfter() {
-		note = new NoteDTO();		
+		note = new Note();		
 		note.setNote("testNote");
 		
-		spell = new SpellCardDTO();
+		spell = new SpellCard();
 		spell.setId(1);
 		spell.setName("TestSpell");
 		spell.setEdition(Editions.UE);
@@ -174,7 +174,7 @@ public class CardServiceTest {
 		spell.setLanguage("English");
 		spell.setType("Field Spell Card");
 		
-		trap = new TrapCardDTO();
+		trap = new TrapCard();
 		trap.setId(2);
 		trap.setName("TestTrap");
 		trap.setEdition(Editions.FE);
@@ -184,7 +184,7 @@ public class CardServiceTest {
 		trap.setLanguage("English");
 		trap.setType("Counter Trap Card");
 		
-		monster = new MonsterCardDTO();
+		monster = new MonsterCard();
 		monster.setId(3);
 		monster.setName("TestMonster");
 		monster.setEdition(Editions.LE);

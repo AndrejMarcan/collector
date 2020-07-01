@@ -38,12 +38,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(
 		type = "object",
 		title = "Card",
-		anyOf = { MonsterCardDTO.class, SpellCardDTO.class, TrapCardDTO.class }
+		anyOf = { MonsterCard.class, SpellCard.class, TrapCard.class }
 )
 @Entity
 @Table(name = "album")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class CardDTO {
+public abstract class Card {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "card_id")
@@ -80,9 +80,9 @@ public abstract class CardDTO {
     
 	@Nonnull
 	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true)
-	private Collection<NoteDTO> notes = new ArrayList<>();
+	private Collection<Note> notes = new ArrayList<>();
 	
-	public CardDTO() {}
+	public Card() {}
     
     public String getName() {
         return name;
@@ -132,11 +132,11 @@ public abstract class CardDTO {
 		this.id = id;
 	}
 
-	public Collection<NoteDTO> getNotes() {
+	public Collection<Note> getNotes() {
 		return notes;
 	}
 
-	public void setNotes(Collection<NoteDTO> notes) {
+	public void setNotes(Collection<Note> notes) {
 		this.notes = notes;
 	}
 

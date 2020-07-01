@@ -6,14 +6,14 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.andy.collector.dto.NoteDTO;
+import com.andy.collector.dto.Note;
 
 public class NoteTest {
-	protected NoteDTO note;
+	protected Note note;
 
 	@BeforeEach
 	void init() {
-		note = new NoteDTO();
+		note = new Note();
 		
 		note.setIdNote(1);
 		note.setNote("something");

@@ -6,21 +6,21 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.andy.collector.dto.NoteDTO;
-import com.andy.collector.dto.TrapCardDTO;
+import com.andy.collector.dto.Note;
+import com.andy.collector.dto.TrapCard;
 import com.andy.collector.enums.Editions;
 import com.andy.collector.enums.Rarities;
 
 public class TrapCardTest {
-	protected static TrapCardDTO trap;
+	protected static TrapCard trap;
 	
 	@BeforeEach
 	void init() {
 		
-		NoteDTO note = new NoteDTO();
+		Note note = new Note();
 		note.setNote("Hello from TrapCardTest");
 		
-		trap = new TrapCardDTO();
+		trap = new TrapCard();
 		trap.setName("TestTrap");
 		trap.setEdition(Editions.FE);
 		trap.setRarity(Rarities.RARE);
