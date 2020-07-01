@@ -17,13 +17,13 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "traps")
-public class TrapCardDTO extends CardDTO{
+public class TrapCard extends Card{
 	
 	@Column(name = "type")
 	@Nonnull
     private String type; //card type
        
-    public TrapCardDTO() {};
+    public TrapCard() {};
     
     
     public String getType() {

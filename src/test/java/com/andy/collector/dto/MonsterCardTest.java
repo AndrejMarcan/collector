@@ -5,20 +5,20 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.andy.collector.dto.MonsterCardDTO;
-import com.andy.collector.dto.NoteDTO;
+import com.andy.collector.dto.MonsterCard;
+import com.andy.collector.dto.Note;
 import com.andy.collector.enums.Editions;
 import com.andy.collector.enums.Rarities;
 
 public class MonsterCardTest {
-	protected MonsterCardDTO monster;
+	protected MonsterCard monster;
 	
 	@BeforeEach
 	void init() {
-		NoteDTO note = new NoteDTO();
+		Note note = new Note();
 		note.setNote("some note");
 		
-		monster = new MonsterCardDTO();
+		monster = new MonsterCard();
 		monster.setName("TestMonster");
 		monster.setEdition(Editions.LE);
 		monster.setRarity(Rarities.GHOST);

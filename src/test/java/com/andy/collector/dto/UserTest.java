@@ -5,14 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.andy.collector.dto.UserDTO;
+import com.andy.collector.dto.User;
 
 public class UserTest {
-	protected UserDTO user;
+	protected User user;
 	
 	@BeforeEach
 	void init() {
-		user = new UserDTO();
+		user = new User();
 		
 		user.setId(1);
 		user.setNickname("John Snow");

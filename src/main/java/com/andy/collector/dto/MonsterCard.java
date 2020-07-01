@@ -17,7 +17,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "monsters")
-public class MonsterCardDTO extends CardDTO {
+public class MonsterCard extends Card {
     
 	@Column(name = "type")
 	@Nonnull
@@ -43,7 +43,7 @@ public class MonsterCardDTO extends CardDTO {
 	@Nonnull
 	private String level;		//monster level
 
-	public MonsterCardDTO() {};
+	public MonsterCard() {};
     
 	  public void setLevel(String level) {
 	  this.level = level;
