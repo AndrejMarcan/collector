@@ -49,14 +49,14 @@ public class NoteControllerTest {
 	@Test
 	@Order(1)
 	public void testupdateCardNote() throws SQLException {
-		ResponseEntity<String> ent = controller.updateCardNote(note, "52");
+		ResponseEntity<String> ent = controller.updateNoteForCard(note, "52");
 		assertEquals(new ResponseEntity<String>("note saved",HttpStatus.OK), ent);	
 	}
 	
 	@Test
 	@Order(2)
 	public void testupdateCardNoteNOT() throws SQLException {
-		ResponseEntity<String> ent = controller.updateCardNote(note, "5555555555");
+		ResponseEntity<String> ent = controller.updateNoteForCard(note, "5555555555");
 		assertEquals(new ResponseEntity<String>(HttpStatus.NOT_FOUND), ent);	
 	}
 	

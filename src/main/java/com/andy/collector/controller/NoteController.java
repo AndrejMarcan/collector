@@ -29,17 +29,17 @@ public class NoteController {
 	}
 	
 	@PutMapping(value = "/update-note/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> updateCardNote(@RequestBody NoteDTO note, @PathVariable("id") String id) throws SQLException {			
+	public ResponseEntity<String> updateNoteForCard(@RequestBody NoteDTO note, @PathVariable("id") String id) throws SQLException {			
 		try {
 			noteService.editNoteByIdCard(note, Integer.valueOf(id));
 			return new ResponseEntity<String>("note saved",HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>("Card not found", HttpStatus.NOT_FOUND);
 		}
 	}
 	
 	@DeleteMapping(value = "/delete-note/{id-card}/{id-note}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> deleteCardNote(@PathVariable("id-card") String idCard, @PathVariable("id-note") String idNote) throws SQLException {	
+	public ResponseEntity<String> deleteNoteFromCard(@PathVariable("id-card") String idCard, @PathVariable("id-note") String idNote) throws SQLException {	
 		try {
 			noteService.deleteNoteById(Integer.valueOf(idCard),Integer.valueOf(idNote));
 			return new ResponseEntity<String>("delete succesful",HttpStatus.OK);
