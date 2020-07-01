@@ -48,6 +48,16 @@ public class NoteController {
 		}
 	}
 	
+	@DeleteMapping(value = "/delete-note/{id-card}/ALL", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> deleteAllNotesFromCard(@PathVariable("id-card") String idCard) throws SQLException {	
+		try {
+			noteService.deleteAllNotesFromCard(Integer.valueOf(idCard));
+			return new ResponseEntity<String>("delete succesful",HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
 	@PostMapping(value = "/add/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> addNoteToCard(@PathVariable("id") String id, @RequestBody Note note) throws SQLException {
 		try {

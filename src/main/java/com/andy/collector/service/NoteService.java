@@ -19,13 +19,25 @@ public class NoteService {
 	@Autowired
 	CardService cardService;
 	
+	//add new note to card
+	public void addNoteToCard(Note note, Integer id) {
+		Card card = cardService.findCardById(id).get();
+		Collection<Note> notes = card.getNotes();
+			
+		notes.add(note);
+		card.setNotes(notes);
+		card.setId(id);
+
+		cardService.addNewCard(card);	
+	}
+	
 	//edit note by id
 	public void editNoteByIdCard(Note note, int id) {
 		note.setIdNote(id);
 		noteRepository.save(note);
 	}
 	
-	//delete note
+	//delete note from card by id
 	public void deleteNoteById(int id_card, int id_note) {
 		Card card = cardService.findCardById(id_card).get();
 		Collection<Note> notes = card.getNotes();
@@ -35,18 +47,17 @@ public class NoteService {
 		cardService.editCard(card, id_card);		
 	}
 	
-	//add new note to card
-	public void addNoteToCard(Note note, Integer id) {
-		Card card = cardService.findCardById(id).get();
+	//delete all notes from card
+	public void deleteAllNotesFromCard(int id_card) {
+		Card card = cardService.findCardById(id_card).get();
 		Collection<Note> notes = card.getNotes();
-		
-		notes.add(note);
+		notes.clear();
 		card.setNotes(notes);
-		card.setId(id);
-
-		cardService.addNewCard(card);	
+			
+		cardService.editCard(card, id_card);		
 	}
-
+	
+	//show note with id
 	public Optional<Note> showNote(Integer id) {
 		return noteRepository.findById(id);		
 	}
