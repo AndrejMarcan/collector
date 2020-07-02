@@ -5,10 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.andy.collector.dto.MonsterCard;
-import com.andy.collector.dto.Note;
 import com.andy.collector.enums.Editions;
 import com.andy.collector.enums.Rarities;
+import com.andy.collector.repository.model.MonsterCard;
+import com.andy.collector.repository.model.Note;
 
 public class MonsterCardTest {
 	protected MonsterCard monster;

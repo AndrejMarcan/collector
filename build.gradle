@@ -60,6 +60,10 @@ dependencies {
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.3.0.RELEASE'
 	
+	// https://mvnrepository.com/artifact/ma.glasnost.orika/orika-core
+	compile group: 'ma.glasnost.orika', name: 'orika-core', version: '1.5.4'
+	
+	
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test
 	testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.3.1.RELEASE'
 	

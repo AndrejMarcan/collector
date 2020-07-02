@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.andy.collector.dto.User;
+import com.andy.collector.dto.UserDTO;
+import com.andy.collector.repository.model.User;
 import com.andy.collector.service.UserService;
 
 @RestController
@@ -30,9 +31,9 @@ public class UserController {
 	}
 	
 	@PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> addUser(@RequestBody User user) {
+	public ResponseEntity<String> addUser(@RequestBody UserDTO userDTO) {
 		try {
-			userService.addNewUser(user);
+			userService.addNewUser(userDTO);
 			return new ResponseEntity<String>("user saved",HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("user not saved",HttpStatus.CONFLICT);
@@ -41,9 +42,9 @@ public class UserController {
 	}
 	
 	@PutMapping(value = "/edit/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> editUser(@RequestBody User user, @PathVariable("id") String id) throws SQLException {		
+	public ResponseEntity<String> editUser(@RequestBody UserDTO userDTO, @PathVariable("id") String id) throws SQLException {		
 		try {
-			userService.updateUserbyId(user, Integer.valueOf(id));
+			userService.updateUserbyId(userDTO, Integer.valueOf(id));
 			return new ResponseEntity<String>("user saved",HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("user saved",HttpStatus.CONFLICT);
@@ -63,25 +64,25 @@ public class UserController {
 	}
 	
 	@GetMapping(value = "/show/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Optional<User>> showUser(@PathVariable("id") String id) throws SQLException{
-		Optional<User> userNew = userService.findUser(Integer.valueOf(id));
+	public ResponseEntity<UserDTO> showUser(@PathVariable("id") String id) throws SQLException{
+		UserDTO userDTO = userService.findUser(Integer.valueOf(id));
 		
-		if (userNew != null) {
-			return new ResponseEntity<Optional<User>>(userNew, HttpStatus.OK);
+		if (userDTO != null) {
+			return new ResponseEntity<UserDTO>(userDTO, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<Optional<User>>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
 		}
 	}
 	
 	@GetMapping(value = "/show/ALL", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<User>> showUser() throws SQLException{
+	public ResponseEntity<List<UserDTO>> showUser() throws SQLException{
 		
-		List<User> userNew = userService.findAllUsers();
+		List<UserDTO> users = userService.findAllUsers();
 		
-		if (userNew != null) {
-			return new ResponseEntity<List<User>>(userNew, HttpStatus.OK);
+		if (users != null) {
+			return new ResponseEntity<List<UserDTO>>(users, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<List<User>>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<List<UserDTO>>(HttpStatus.NOT_FOUND);
 		}
 	}	
 }

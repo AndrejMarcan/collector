@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.andy.collector.dto.Note;
+import com.andy.collector.repository.model.Note;
 
 public class NoteTest {
 	protected Note note;

@@ -7,67 +7,86 @@ import java.util.function.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.andy.collector.dto.Card;
-import com.andy.collector.dto.Note;
+import com.andy.collector.dto.CardDTO;
+import com.andy.collector.dto.NoteDTO;
 import com.andy.collector.repository.NoteRepository;
+import com.andy.collector.repository.model.Card;
+import com.andy.collector.repository.model.Note;
+
+import ma.glasnost.orika.MapperFacade;
+import ma.glasnost.orika.MapperFactory;
+import ma.glasnost.orika.impl.DefaultMapperFactory;
 
 @Service
 public class NoteService {
 	@Autowired
-	NoteRepository noteRepository;
+	private NoteRepository noteRepository;
 	
 	@Autowired
-	CardService cardService;
+	private CardService cardService;
+	
+	private MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
 	
 	//add new note to card
-	public void addNoteToCard(Note note, Integer id) {
-		Card card = cardService.findCardById(id).get();
-		Collection<Note> notes = card.getNotes();
-			
-		notes.add(note);
-		card.setNotes(notes);
-		card.setId(id);
-
-		cardService.addNewCard(card);	
+	public void addNoteToCard(NoteDTO noteDTO, Integer id) {
+		CardDTO cardDTO = cardService.findCardById(id);
+		Collection<NoteDTO> notesDTO = cardDTO.getNotes();	
+		notesDTO.add(noteDTO);		
+		cardDTO.setNotes(notesDTO);
+		
+		cardService.editCard(cardDTO, id);
 	}
 	
 	//edit note by id
-	public void editNoteByIdCard(Note note, int id) {
-		note.setIdNote(id);
-		noteRepository.save(note);
+	public void editNoteByIdCard(NoteDTO noteDTO, int id) {
+		mapperFactory.classMap(NoteDTO.class, Note.class).byDefault();
+	    MapperFacade mapper = mapperFactory.getMapperFacade();	    
+	    Note note = mapper.map(noteDTO, Note.class);
+	    note.setIdNote(id);	   
+	    
+	    noteRepository.save(note);
 	}
 	
 	//delete note from card by id
 	public void deleteNoteById(int id_card, int id_note) {
-		Card card = cardService.findCardById(id_card).get();
-		Collection<Note> notes = card.getNotes();
-		notes.remove(getNoteById(id_note, notes));
-		card.setNotes(notes);
+		CardDTO cardDTO = cardService.findCardById(id_card);
+		Collection<NoteDTO> notesDTO = cardDTO.getNotes();	
+		notesDTO.remove(getNoteById(id_note, notesDTO));
+		cardDTO.setNotes(notesDTO);
 		
-		cardService.editCard(card, id_card);		
+		cardService.editCard(cardDTO, id_card);	
 	}
 	
 	//delete all notes from card
 	public void deleteAllNotesFromCard(int id_card) {
-		Card card = cardService.findCardById(id_card).get();
-		Collection<Note> notes = card.getNotes();
-		notes.clear();
-		card.setNotes(notes);
-			
-		cardService.editCard(card, id_card);		
+		CardDTO cardDTO = cardService.findCardById(id_card);
+		Collection<NoteDTO> notesDTO = cardDTO.getNotes();	
+		notesDTO.clear();
+		cardDTO.setNotes(notesDTO);
+		
+		cardService.editCard(cardDTO, id_card);		
 	}
 	
 	//show note with id
-	public Optional<Note> showNote(Integer id) {
-		return noteRepository.findById(id);		
+	public NoteDTO showNote(Integer id) {
+		mapperFactory.classMap(Note.class, NoteDTO.class).byDefault();
+		MapperFacade mapper = mapperFactory.getMapperFacade();	
+		Optional<Note> note = noteRepository.findById(id);
+		
+		if(note.isPresent()) {
+			NoteDTO noteDTO = mapper.map(note, NoteDTO.class);
+			return noteDTO;
+		} else {
+			return null;
+		}
 	}
 	
-	private Note getNoteById(int id, Collection<Note> notes) {
-		Predicate<Note> byId = p -> p.getIdNote()==id;
+	private NoteDTO getNoteById(int id, Collection<NoteDTO> notes) {
+		Predicate<NoteDTO> byId = p -> p.getIdNote()==id;
 		return filterNote(byId, notes);
 	}
 
-	private Note filterNote(Predicate<Note> strategy, Collection<Note> notes) {
+	private NoteDTO filterNote(Predicate<NoteDTO> strategy, Collection<NoteDTO> notes) {
 		return notes.stream().filter(strategy).findFirst().orElse(null);
 	}
 }

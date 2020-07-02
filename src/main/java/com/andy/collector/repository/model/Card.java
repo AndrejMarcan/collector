@@ -1,7 +1,7 @@
 /*
  * Copyright (c) ...
  */
-package com.andy.collector.dto;
+package com.andy.collector.repository.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -82,18 +82,23 @@ public abstract class Card {
 	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true)
 	private Collection<Note> notes = new ArrayList<>();
 	
+	@Nonnull
+	@Schema(required = true)
+	@Column(name = "cardType")
+	private final String cardType = getCardType();
+	
 	public Card() {}
     
     public String getName() {
         return name;
     }
     
-    public String getRarity() {
-        return rarity.getRarity();
+    public Rarities getRarity() {
+        return rarity;
     }
     
-    public String getEdition() {
-        return edition.getEdition();
+    public Editions getEdition() {
+        return edition;
     }
     
     public String getSet() {
@@ -140,7 +145,7 @@ public abstract class Card {
 		this.notes = notes;
 	}
 
-
+	public abstract String getCardType();
 	
     
     
