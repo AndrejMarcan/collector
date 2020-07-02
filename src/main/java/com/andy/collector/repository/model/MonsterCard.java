@@ -1,7 +1,7 @@
 /*
  * Copyright (c) ...
  */
-package com.andy.collector.dto;
+package com.andy.collector.repository.model;
 
 import javax.annotation.Nonnull;
 import javax.persistence.Column;
@@ -91,6 +91,11 @@ public class MonsterCard extends Card {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+	
+	@Override
+	public String getCardType() {
+		return "Monster Card";
 	}
 }
 

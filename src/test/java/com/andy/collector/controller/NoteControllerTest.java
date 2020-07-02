@@ -22,7 +22,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.andy.collector.Main;
-import com.andy.collector.dto.Note;
+import com.andy.collector.dto.NoteDTO;
+import com.andy.collector.repository.model.Note;
 import com.andy.collector.service.NoteService;
 
 @ExtendWith(SpringExtension.class)
@@ -31,7 +32,7 @@ import com.andy.collector.service.NoteService;
 @TestInstance(Lifecycle.PER_CLASS)
 public class NoteControllerTest {
 	protected NoteController controller;
-	protected Note note;
+	protected NoteDTO note;
 	
 	@Autowired 
 	NoteService noteService;
@@ -39,7 +40,7 @@ public class NoteControllerTest {
 	@BeforeAll
 	void init() {
 		controller = new NoteController(noteService);
-		note = new Note();
+		note = new NoteDTO();
 		note.setNote("Test note 1");
 		
 		//SpringApplication app = new SpringApplication(Main.class);

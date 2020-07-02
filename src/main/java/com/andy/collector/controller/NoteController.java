@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.andy.collector.dto.Note;
+import com.andy.collector.dto.NoteDTO;
+import com.andy.collector.repository.model.Note;
 import com.andy.collector.service.NoteService;
 
 @RestController
@@ -29,9 +30,9 @@ public class NoteController {
 	}
 	
 	@PutMapping(value = "/update-note/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> updateNoteForCard(@RequestBody Note note, @PathVariable("id") String id) throws SQLException {			
+	public ResponseEntity<String> updateNoteForCard(@RequestBody NoteDTO noteDTO, @PathVariable("id") String id) throws SQLException {			
 		try {
-			noteService.editNoteByIdCard(note, Integer.valueOf(id));
+			noteService.editNoteByIdCard(noteDTO, Integer.valueOf(id));
 			return new ResponseEntity<String>("note saved",HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("Card not found", HttpStatus.NOT_FOUND);
@@ -59,9 +60,9 @@ public class NoteController {
 	}
 	
 	@PostMapping(value = "/add/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> addNoteToCard(@PathVariable("id") String id, @RequestBody Note note) throws SQLException {
+	public ResponseEntity<String> addNoteToCard(@PathVariable("id") String id, @RequestBody NoteDTO noteDTO) throws SQLException {
 		try {
-			noteService.addNoteToCard(note, Integer.valueOf(id));
+			noteService.addNoteToCard(noteDTO, Integer.valueOf(id));
 			return new ResponseEntity<String>("note saved",HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("card not found",HttpStatus.NOT_FOUND);
@@ -69,12 +70,12 @@ public class NoteController {
 	}
 	
 	@GetMapping(value = "/show/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Note> showNote(@PathVariable("id") String id) throws SQLException {
-		Optional<Note> note = noteService.showNote(Integer.valueOf(id));
-		if(note.isPresent()) {
-			return new ResponseEntity<Note> (note.get(), HttpStatus.OK);
+	public ResponseEntity<NoteDTO> showNote(@PathVariable("id") String id) throws SQLException {
+		NoteDTO noteDTO = noteService.showNote(Integer.valueOf(id));
+		if(noteDTO != null) {
+			return new ResponseEntity<NoteDTO> (noteDTO, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<Note> (HttpStatus.NOT_FOUND);
+			return new ResponseEntity<NoteDTO> (HttpStatus.NOT_FOUND);
 		}
 	}
 }

@@ -1,4 +1,4 @@
-package com.andy.collector.dto;
+package com.andy.collector.repository.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

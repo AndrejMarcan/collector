@@ -24,7 +24,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.andy.collector.Main;
-import com.andy.collector.dto.User;
+import com.andy.collector.dto.UserDTO;
+import com.andy.collector.repository.model.User;
 import com.andy.collector.service.UserService;
 
 @ExtendWith(SpringExtension.class)
@@ -32,7 +33,7 @@ import com.andy.collector.service.UserService;
 @TestMethodOrder(OrderAnnotation.class)
 @TestInstance(Lifecycle.PER_CLASS)
 public class UserControllerTest {
-	protected User user;
+	protected UserDTO userDTO;
 	protected UserController controller;
 	
 	@Autowired 
@@ -42,9 +43,9 @@ public class UserControllerTest {
 	void init() {
 		controller = new UserController(userService);
 		
-		user = new User();
-		user.setNickname("mordos");
-		user.setPassword("nieco");
+		userDTO = new UserDTO();
+		userDTO.setNickname("mordos");
+		userDTO.setPassword("nieco");
 		
 		//SpringApplication app = new SpringApplication(Main.class);
      	//app.run();
@@ -53,29 +54,29 @@ public class UserControllerTest {
 	@Test
 	@Order(1)
 	public void testAddUser() throws SQLException {
-		ResponseEntity<String> ent = controller.addUser(user);
+		ResponseEntity<String> ent = controller.addUser(userDTO);
 		assertEquals(new ResponseEntity<String>("user saved",HttpStatus.OK), ent);	
 	}	
 	
 	@Test
 	@Order(2)
 	public void testUpdateUser() throws SQLException {
-		ResponseEntity<String> ent = controller.editUser(user, "3");
+		ResponseEntity<String> ent = controller.editUser(userDTO, "3");
 		assertEquals(new ResponseEntity<String>("user saved",HttpStatus.OK), ent);	
 	}
 	
 	@Test
 	@Order(3)
 	public void testShowUser() throws SQLException {
-		ResponseEntity<Optional<User>> ent = controller.showUser("3");
-		assertEquals(new ResponseEntity<Optional<User>>(ent.getBody(),HttpStatus.OK), ent);	
+		ResponseEntity<UserDTO> ent = controller.showUser("3");
+		assertEquals(new ResponseEntity<UserDTO>(ent.getBody(),HttpStatus.OK), ent);	
 	}
 	
 	@Test
 	@Order(4)
 	public void testShowAll() throws SQLException {
-		ResponseEntity<List<User>> ent = controller.showUser();
-		assertEquals(new ResponseEntity<List<User>>(ent.getBody(),HttpStatus.OK), ent);	
+		ResponseEntity<List<UserDTO>> ent = controller.showUser();
+		assertEquals(new ResponseEntity<List<UserDTO>>(ent.getBody(),HttpStatus.OK), ent);	
 	}
 	
 	@Test
