@@ -13,25 +13,24 @@ import com.andy.collector.repository.UserRepository;
 import com.andy.collector.repository.model.User;
 
 import ma.glasnost.orika.BoundMapperFacade;
+import ma.glasnost.orika.MapperFacade;
 
 @Service
 public class UserService {
 	private BCryptPasswordEncoder encoder;
+	private MapperFacade mapper;
 	
 	@Autowired
 	private UserRepository userRepository;
-	
-	private BoundMapperFacade<UserDTO, User> mapper;
-	
+
 	public UserService(@Autowired MapperService mapperService) {
-		mapperService.getMapperFactory().classMap(UserDTO.class, User.class).byDefault().register();			
-		this.mapper = mapperService.getMapperFactory().getMapperFacade(UserDTO.class, User.class);
+		this.mapper = mapperService.getFacade();
 		this.encoder = new BCryptPasswordEncoder(BCryptPasswordEncoder.BCryptVersion.$2A,15);
 	}
 	
 	//add new user 
 	public void addNewUser(UserDTO userDTO) {
-		User user = mapper.map(userDTO);
+		User user = mapper.map(userDTO, User.class);
 		String hashPass = encoder.encode(user.getPassword());
 		user.setPassword(hashPass);
 		
@@ -41,7 +40,7 @@ public class UserService {
 	//update user data by id
 	public void updateUserbyId(UserDTO userDTO, int id) {
 	    userDTO.setId(id);
-	    User user = mapper.map(userDTO);
+	    User user = mapper.map(userDTO, User.class);
 	    
 	    String hashPass = encoder.encode(user.getPassword());
 	    user.setPassword(hashPass);
@@ -59,7 +58,7 @@ public class UserService {
 		Optional<User> user = userRepository.findById(id);
 		
 		if(user.isPresent()) {
-			UserDTO userDTO = mapper.mapReverse(user.get());
+			UserDTO userDTO = mapper.map(user.get(), UserDTO.class);
 			return userDTO;
 		} else {
 			return null;
@@ -69,7 +68,7 @@ public class UserService {
 	//get list of all users
 	public List<UserDTO> findAllUsers(){
 		List<User> users = userRepository.findAll();
-		List<UserDTO> usersDTO = users.stream().map(p -> mapper.mapReverse(p)).collect(Collectors.toList());
+		List<UserDTO> usersDTO = users.stream().map(p -> mapper.map(p, UserDTO.class)).collect(Collectors.toList());
 		
 		return usersDTO;
 	}
