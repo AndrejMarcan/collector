@@ -13,6 +13,7 @@ import com.andy.collector.repository.NoteRepository;
 import com.andy.collector.repository.model.Note;
 
 import ma.glasnost.orika.BoundMapperFacade;
+import ma.glasnost.orika.MapperFacade;
 
 @Service
 public class NoteService {
@@ -22,11 +23,10 @@ public class NoteService {
 	@Autowired
 	private CardService cardService;
 	
-	private BoundMapperFacade<NoteDTO, Note> mapper;
+	private MapperFacade mapper;
 	
 	public NoteService(@Autowired MapperService mapperService) {
-		mapperService.getMapperFactory().classMap(NoteDTO.class, Note.class).byDefault().register();
-		this.mapper = mapperService.getMapperFactory().getMapperFacade(NoteDTO.class, Note.class);
+		this.mapper = mapperService.getFacade();
 	}
 	
 	//add new note to card
@@ -42,7 +42,7 @@ public class NoteService {
 	
 	//edit note by id
 	public void editNoteByIdCard(NoteDTO noteDTO, int id) {	    
-	    Note note = mapper.map(noteDTO);
+	    Note note = mapper.map(noteDTO, Note.class);
 	    note.setIdNote(id);	   
 	    
 	    noteRepository.save(note);
@@ -73,7 +73,7 @@ public class NoteService {
 		Optional<Note> note = noteRepository.findById(id);
 		
 		if(note.isPresent()) {
-			NoteDTO noteDTO = mapper.mapReverse(note.get());
+			NoteDTO noteDTO = mapper.map(note.get(), NoteDTO.class);
 			return noteDTO;
 		} else {
 			return null;

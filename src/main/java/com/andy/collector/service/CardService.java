@@ -18,23 +18,19 @@ import com.andy.collector.repository.model.SpellCard;
 import com.andy.collector.repository.model.TrapCard;
 
 import ma.glasnost.orika.BoundMapperFacade;
+import ma.glasnost.orika.MapperFacade;
 
 @Service
 public class CardService {
+	private MapperFacade mapper;
 	
 	@Autowired
 	private CardRepository cardRepository;
 	
-	private MapperService mapperService;
-	
-	CardService(@Autowired MapperService mapperService){		
-		mapperService.getMapperFactory().classMap(CardDTO.class, Card.class).byDefault().register();
-		mapperService.getMapperFactory().classMap(SpellCardDTO.class, SpellCard.class).byDefault().register();
-		mapperService.getMapperFactory().classMap(TrapCardDTO.class, TrapCard.class).byDefault().register();
-		mapperService.getMapperFactory().classMap(MonsterCardDTO.class, MonsterCard.class).byDefault().register();
-		
-		this.mapperService = mapperService;
+	CardService(@Autowired MapperService mapperService) {
+		this.mapper = mapperService.getFacade();
 	}
+	
 	
 	//add new spell card to DB
 	public void addNewCard(CardDTO cardDTO) {
@@ -92,36 +88,28 @@ public class CardService {
 	
 	//add new spell card to DB
 	private void addNewSpellCard(CardDTO cardDTO) {
-		BoundMapperFacade<SpellCardDTO, SpellCard> mapper = mapperService.getMapperFactory()
-									.getMapperFacade(SpellCardDTO.class, SpellCard.class);
-		Card card = mapper.map((SpellCardDTO) cardDTO);
+		Card card = mapper.map((SpellCardDTO) cardDTO, SpellCard.class);
 		    
 		cardRepository.save(card);
 	}
 		
 	//add new spell card to DB
 	private void addNewTrapCard(CardDTO cardDTO) {
-		BoundMapperFacade<TrapCardDTO, TrapCard> mapper = mapperService.getMapperFactory()
-									.getMapperFacade(TrapCardDTO.class, TrapCard.class);
-		Card card = mapper.map((TrapCardDTO) cardDTO);
+		Card card = mapper.map((TrapCardDTO) cardDTO, TrapCard.class);
 		    
 		cardRepository.save(card);
 	}
 		
 	//add new spell card to DB
 	private void addNewMonsterCard(CardDTO cardDTO) {
-		BoundMapperFacade<MonsterCardDTO, MonsterCard> mapper = mapperService.getMapperFactory()
-									.getMapperFacade(MonsterCardDTO.class, MonsterCard.class);
-		Card card = mapper.map((MonsterCardDTO) cardDTO);
+		Card card = mapper.map((MonsterCardDTO) cardDTO, MonsterCard.class);
 		
 		cardRepository.save(card);
 	}
 	
 	//edit monster card details by ID
 	private void editMonsterCard(CardDTO cardDTO, int id) {
-		BoundMapperFacade<MonsterCardDTO, MonsterCard> mapper = mapperService.getMapperFactory()
-									.getMapperFacade(MonsterCardDTO.class, MonsterCard.class);
-	    MonsterCard monsterCard = mapper.map((MonsterCardDTO) cardDTO);
+	    MonsterCard monsterCard = mapper.map((MonsterCardDTO) cardDTO, MonsterCard.class);
 	    monsterCard.setId(id);
 	    
 	    cardRepository.save(monsterCard);
@@ -129,9 +117,7 @@ public class CardService {
 	
 	//edit spell card details by id
 	private void editSpellCard(CardDTO cardDTO, int id) {
-		BoundMapperFacade<SpellCardDTO, SpellCard> mapper = mapperService.getMapperFactory()
-									.getMapperFacade(SpellCardDTO.class, SpellCard.class);
-	    SpellCard spellCard = mapper.map((SpellCardDTO) cardDTO);
+	    SpellCard spellCard = mapper.map((SpellCardDTO) cardDTO, SpellCard.class);
 	    spellCard.setId(id);
 	    
 	    cardRepository.save(spellCard);
@@ -139,26 +125,24 @@ public class CardService {
 	
 	//edit trap card details by id
 	private void editTrapCard(CardDTO cardDTO, int id) {
-		BoundMapperFacade<TrapCardDTO, TrapCard> mapper = mapperService.getMapperFactory()
-							.getMapperFacade(TrapCardDTO.class, TrapCard.class);
-	    TrapCard trapCard = mapper.map((TrapCardDTO) cardDTO);
+	    TrapCard trapCard = mapper.map((TrapCardDTO) cardDTO, TrapCard.class);
 	    trapCard.setId(id);
 	    
 	    cardRepository.save(trapCard);
 	}
 	
 	private CardDTO mapForFindAll(Card card) {
-		CardDTO cardDTO;
+		CardDTO cardDTO =null;
 		
 		switch(card.getCardType()) {
 			case "Spell Card":
-	        	cardDTO = mapperService.getMapperFactory().getMapperFacade(SpellCardDTO.class, SpellCard.class).mapReverse((SpellCard) card);
+	        	cardDTO = mapper.map((SpellCard) card, SpellCardDTO.class);
 	        	break;
 	        case "Trap Card":
-	        	cardDTO = mapperService.getMapperFactory().getMapperFacade(TrapCardDTO.class, TrapCard.class).mapReverse((TrapCard) card);
+	        	cardDTO = mapper.map((TrapCard) card, TrapCardDTO.class);
 	        	break;
 	        case "Monster Card":
-	        	cardDTO = mapperService.getMapperFactory().getMapperFacade(MonsterCardDTO.class, MonsterCard.class).mapReverse((MonsterCard) card);
+	        	cardDTO = mapper.map((MonsterCard) card, MonsterCardDTO.class);
 	        	break;
 	    	default:
 	    		cardDTO = null;
