@@ -13,9 +13,6 @@ import com.andy.collector.repository.UserRepository;
 import com.andy.collector.repository.model.User;
 
 import ma.glasnost.orika.BoundMapperFacade;
-import ma.glasnost.orika.MapperFacade;
-import ma.glasnost.orika.MapperFactory;
-import ma.glasnost.orika.impl.DefaultMapperFactory;
 
 @Service
 public class UserService {
@@ -24,16 +21,17 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
-	@Autowired
-	private MapperService mapper;
+	private BoundMapperFacade<UserDTO, User> mapper;
 	
-	public UserService() {
+	public UserService(@Autowired MapperService mapperService) {
+		mapperService.getMapperFactory().classMap(UserDTO.class, User.class).byDefault().register();			
+		this.mapper = mapperService.getMapperFactory().getMapperFacade(UserDTO.class, User.class);
 		this.encoder = new BCryptPasswordEncoder(BCryptPasswordEncoder.BCryptVersion.$2A,15);
 	}
 	
 	//add new user 
 	public void addNewUser(UserDTO userDTO) {
-		User user = mapper.getUserBoundMapper().map(userDTO);
+		User user = mapper.map(userDTO);
 		String hashPass = encoder.encode(user.getPassword());
 		user.setPassword(hashPass);
 		
@@ -43,7 +41,7 @@ public class UserService {
 	//update user data by id
 	public void updateUserbyId(UserDTO userDTO, int id) {
 	    userDTO.setId(id);
-	    User user = mapper.getUserBoundMapper().map(userDTO);
+	    User user = mapper.map(userDTO);
 	    
 	    String hashPass = encoder.encode(user.getPassword());
 	    user.setPassword(hashPass);
@@ -61,7 +59,7 @@ public class UserService {
 		Optional<User> user = userRepository.findById(id);
 		
 		if(user.isPresent()) {
-			UserDTO userDTO = mapper.getUserBoundMapper().mapReverse(user.get());
+			UserDTO userDTO = mapper.mapReverse(user.get());
 			return userDTO;
 		} else {
 			return null;
@@ -71,7 +69,7 @@ public class UserService {
 	//get list of all users
 	public List<UserDTO> findAllUsers(){
 		List<User> users = userRepository.findAll();
-		List<UserDTO> usersDTO = users.stream().map(p -> mapper.getUserBoundMapper().mapReverse(p)).collect(Collectors.toList());
+		List<UserDTO> usersDTO = users.stream().map(p -> mapper.mapReverse(p)).collect(Collectors.toList());
 		
 		return usersDTO;
 	}
