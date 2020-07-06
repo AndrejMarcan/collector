@@ -31,7 +31,8 @@ public class CardService {
 	@Autowired
 	private CardRepository cardRepository;
 	
-	private MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
+	@Autowired
+	private MapperService mapper;
 	
 	//add new spell card to DB
 	public void addNewCard(CardDTO cardDTO) {
@@ -61,12 +62,9 @@ public class CardService {
 	}
 	
 	//get list of all cards
-	public List<CardDTO> getAllCards(){
-		mapperFactory.classMap(Card.class, CardDTO.class).byDefault();
-	    MapperFacade mapper = mapperFactory.getMapperFacade();
-	    
+	public List<CardDTO> getAllCards(){    
 		List<Card> cards = cardRepository.findAll();
-		List<CardDTO> cardsDTO = cards.stream().map(p -> mapper.map(p, CardDTO.class)).collect(Collectors.toList());
+		List<CardDTO> cardsDTO = cards.stream().map(p -> mapper.mapForFindAll(p)).collect(Collectors.toList());
 		
 		return cardsDTO;
 	}
@@ -78,14 +76,12 @@ public class CardService {
 	
 	//get card by id
 	public CardDTO findCardById(int id){
-		mapperFactory.classMap(Card.class, SpellCardDTO.class).byDefault();
-	    MapperFacade mapper = mapperFactory.getMapperFacade();
-	    
+		
 		Optional<Card> cardOpt = cardRepository.findById(id);
 		
 		if(cardOpt.isPresent()) {
 			Card card = cardOpt.get();
-			CardDTO cardDTO = mapper.map(card, SpellCardDTO.class);
+			CardDTO cardDTO = mapper.mapForFindAll(card);
 			return cardDTO;
 		} else {
 			return null;
@@ -93,40 +89,29 @@ public class CardService {
 	}
 	
 	//add new spell card to DB
-	private void addNewSpellCard(CardDTO cardDTO) {
-		mapperFactory.classMap(CardDTO.class, SpellCard.class).byDefault();
-		MapperFacade mapper = mapperFactory.getMapperFacade();
-		    
-		Card card = mapper.map(cardDTO, SpellCard.class);
+	private void addNewSpellCard(CardDTO cardDTO) {   
+		Card card = mapper.getSpellCardBoundMapper().map((SpellCardDTO) cardDTO);
 		    
 		cardRepository.save(card);
 	}
 		
 	//add new spell card to DB
 	private void addNewTrapCard(CardDTO cardDTO) {
-		mapperFactory.classMap(CardDTO.class, TrapCard.class).byDefault();
-		MapperFacade mapper = mapperFactory.getMapperFacade();
-		    
-		Card card = mapper.map(cardDTO, TrapCard.class);
+		Card card = mapper.getTrapCardBoundMapper().map((TrapCardDTO) cardDTO);
 		    
 		cardRepository.save(card);
 	}
 		
 	//add new spell card to DB
 	private void addNewMonsterCard(CardDTO cardDTO) {
-		mapperFactory.classMap(CardDTO.class, MonsterCard.class).byDefault();
-		MapperFacade mapper = mapperFactory.getMapperFacade();
-		    
-		Card card = mapper.map(cardDTO, MonsterCard.class);
+		Card card = mapper.getMonsterCardBoundMapper().map((MonsterCardDTO) cardDTO);
 		
 		cardRepository.save(card);
 	}
 	
 	//edit monster card details by ID
 	private void editMonsterCard(CardDTO cardDTO, int id) {
-		mapperFactory.classMap(CardDTO.class, MonsterCard.class).byDefault();
-	    MapperFacade mapper = mapperFactory.getMapperFacade();
-	    MonsterCard monsterCard = mapper.map(cardDTO, MonsterCard.class);
+	    MonsterCard monsterCard = mapper.getMonsterCardBoundMapper().map((MonsterCardDTO) cardDTO);
 	    monsterCard.setId(id);
 	    
 	    cardRepository.save(monsterCard);
@@ -134,9 +119,7 @@ public class CardService {
 	
 	//edit spell card details by id
 	private void editSpellCard(CardDTO cardDTO, int id) {
-		mapperFactory.classMap(CardDTO.class, SpellCard.class).byDefault();
-	    MapperFacade mapper = mapperFactory.getMapperFacade();
-	    SpellCard spellCard = mapper.map(cardDTO, SpellCard.class);
+	    SpellCard spellCard = mapper.getSpellCardBoundMapper().map((SpellCardDTO) cardDTO);
 	    spellCard.setId(id);
 	    
 	    cardRepository.save(spellCard);
@@ -144,9 +127,7 @@ public class CardService {
 	
 	//edit trap card details by id
 	private void editTrapCard(CardDTO cardDTO, int id) {
-		mapperFactory.classMap(CardDTO.class, TrapCard.class).byDefault();
-	    MapperFacade mapper = mapperFactory.getMapperFacade();
-	    TrapCard trapCard = mapper.map(cardDTO, TrapCard.class);
+	    TrapCard trapCard = mapper.getTrapCardBoundMapper().map((TrapCardDTO) cardDTO);
 	    trapCard.setId(id);
 	    
 	    cardRepository.save(trapCard);
