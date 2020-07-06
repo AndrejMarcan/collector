@@ -25,23 +25,23 @@ public class NoteService {
 	@Autowired
 	private CardService cardService;
 	
-	private MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
+	@Autowired
+	private MapperService mapper;
 	
 	//add new note to card
 	public void addNoteToCard(NoteDTO noteDTO, Integer id) {
 		CardDTO cardDTO = cardService.findCardById(id);
 		Collection<NoteDTO> notesDTO = cardDTO.getNotes();	
-		notesDTO.add(noteDTO);		
+		notesDTO.add(noteDTO);	
+		cardDTO.setId(id);
 		cardDTO.setNotes(notesDTO);
 		
 		cardService.editCard(cardDTO, id);
 	}
 	
 	//edit note by id
-	public void editNoteByIdCard(NoteDTO noteDTO, int id) {
-		mapperFactory.classMap(NoteDTO.class, Note.class).byDefault();
-	    MapperFacade mapper = mapperFactory.getMapperFacade();	    
-	    Note note = mapper.map(noteDTO, Note.class);
+	public void editNoteByIdCard(NoteDTO noteDTO, int id) {	    
+	    Note note = mapper.getNoteBoundMapper().map(noteDTO);
 	    note.setIdNote(id);	   
 	    
 	    noteRepository.save(note);
@@ -69,12 +69,10 @@ public class NoteService {
 	
 	//show note with id
 	public NoteDTO showNote(Integer id) {
-		mapperFactory.classMap(Note.class, NoteDTO.class).byDefault();
-		MapperFacade mapper = mapperFactory.getMapperFacade();	
 		Optional<Note> note = noteRepository.findById(id);
 		
 		if(note.isPresent()) {
-			NoteDTO noteDTO = mapper.map(note, NoteDTO.class);
+			NoteDTO noteDTO = mapper.getNoteBoundMapper().mapReverse(note.get());
 			return noteDTO;
 		} else {
 			return null;

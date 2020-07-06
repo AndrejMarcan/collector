@@ -19,22 +19,21 @@ import ma.glasnost.orika.impl.DefaultMapperFactory;
 
 @Service
 public class UserService {
+	private BCryptPasswordEncoder encoder;
+	
 	@Autowired
 	private UserRepository userRepository;
 	
-	private MapperFactory mapperFactory;
-	private BoundMapperFacade<UserDTO, User> boundMapper;
-	private BCryptPasswordEncoder encoder;
+	@Autowired
+	private MapperService mapper;
 	
 	public UserService() {
-		this.mapperFactory = new DefaultMapperFactory.Builder().build();
-		this.boundMapper = mapperFactory.getMapperFacade(UserDTO.class, User.class);
 		this.encoder = new BCryptPasswordEncoder(BCryptPasswordEncoder.BCryptVersion.$2A,15);
 	}
 	
 	//add new user 
 	public void addNewUser(UserDTO userDTO) {
-		User user = boundMapper.map(userDTO);
+		User user = mapper.getUserBoundMapper().map(userDTO);
 		String hashPass = encoder.encode(user.getPassword());
 		user.setPassword(hashPass);
 		
@@ -44,7 +43,7 @@ public class UserService {
 	//update user data by id
 	public void updateUserbyId(UserDTO userDTO, int id) {
 	    userDTO.setId(id);
-	    User user = boundMapper.map(userDTO);
+	    User user = mapper.getUserBoundMapper().map(userDTO);
 	    
 	    String hashPass = encoder.encode(user.getPassword());
 	    user.setPassword(hashPass);
@@ -62,7 +61,7 @@ public class UserService {
 		Optional<User> user = userRepository.findById(id);
 		
 		if(user.isPresent()) {
-			UserDTO userDTO = boundMapper.mapReverse(user.get());
+			UserDTO userDTO = mapper.getUserBoundMapper().mapReverse(user.get());
 			return userDTO;
 		} else {
 			return null;
@@ -72,7 +71,7 @@ public class UserService {
 	//get list of all users
 	public List<UserDTO> findAllUsers(){
 		List<User> users = userRepository.findAll();
-		List<UserDTO> usersDTO = users.stream().map(p -> boundMapper.mapReverse(p)).collect(Collectors.toList());
+		List<UserDTO> usersDTO = users.stream().map(p -> mapper.getUserBoundMapper().mapReverse(p)).collect(Collectors.toList());
 		
 		return usersDTO;
 	}
