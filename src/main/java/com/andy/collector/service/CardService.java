@@ -11,19 +11,13 @@ import com.andy.collector.dto.CardDTO;
 import com.andy.collector.dto.MonsterCardDTO;
 import com.andy.collector.dto.SpellCardDTO;
 import com.andy.collector.dto.TrapCardDTO;
-import com.andy.collector.dto.UserDTO;
-import com.andy.collector.enums.Editions;
-import com.andy.collector.enums.Rarities;
 import com.andy.collector.repository.CardRepository;
 import com.andy.collector.repository.model.Card;
 import com.andy.collector.repository.model.MonsterCard;
 import com.andy.collector.repository.model.SpellCard;
 import com.andy.collector.repository.model.TrapCard;
-import com.andy.collector.repository.model.User;
 
-import ma.glasnost.orika.MapperFacade;
-import ma.glasnost.orika.MapperFactory;
-import ma.glasnost.orika.impl.DefaultMapperFactory;
+import ma.glasnost.orika.BoundMapperFacade;
 
 @Service
 public class CardService {
@@ -31,8 +25,16 @@ public class CardService {
 	@Autowired
 	private CardRepository cardRepository;
 	
-	@Autowired
-	private MapperService mapper;
+	private MapperService mapperService;
+	
+	CardService(@Autowired MapperService mapperService){		
+		mapperService.getMapperFactory().classMap(CardDTO.class, Card.class).byDefault().register();
+		mapperService.getMapperFactory().classMap(SpellCardDTO.class, SpellCard.class).byDefault().register();
+		mapperService.getMapperFactory().classMap(TrapCardDTO.class, TrapCard.class).byDefault().register();
+		mapperService.getMapperFactory().classMap(MonsterCardDTO.class, MonsterCard.class).byDefault().register();
+		
+		this.mapperService = mapperService;
+	}
 	
 	//add new spell card to DB
 	public void addNewCard(CardDTO cardDTO) {
@@ -64,7 +66,7 @@ public class CardService {
 	//get list of all cards
 	public List<CardDTO> getAllCards(){    
 		List<Card> cards = cardRepository.findAll();
-		List<CardDTO> cardsDTO = cards.stream().map(p -> mapper.mapForFindAll(p)).collect(Collectors.toList());
+		List<CardDTO> cardsDTO = cards.stream().map(p -> mapForFindAll(p)).collect(Collectors.toList());
 		
 		return cardsDTO;
 	}
@@ -81,7 +83,7 @@ public class CardService {
 		
 		if(cardOpt.isPresent()) {
 			Card card = cardOpt.get();
-			CardDTO cardDTO = mapper.mapForFindAll(card);
+			CardDTO cardDTO = mapForFindAll(card);
 			return cardDTO;
 		} else {
 			return null;
@@ -89,29 +91,37 @@ public class CardService {
 	}
 	
 	//add new spell card to DB
-	private void addNewSpellCard(CardDTO cardDTO) {   
-		Card card = mapper.getSpellCardBoundMapper().map((SpellCardDTO) cardDTO);
+	private void addNewSpellCard(CardDTO cardDTO) {
+		BoundMapperFacade<SpellCardDTO, SpellCard> mapper = mapperService.getMapperFactory()
+									.getMapperFacade(SpellCardDTO.class, SpellCard.class);
+		Card card = mapper.map((SpellCardDTO) cardDTO);
 		    
 		cardRepository.save(card);
 	}
 		
 	//add new spell card to DB
 	private void addNewTrapCard(CardDTO cardDTO) {
-		Card card = mapper.getTrapCardBoundMapper().map((TrapCardDTO) cardDTO);
+		BoundMapperFacade<TrapCardDTO, TrapCard> mapper = mapperService.getMapperFactory()
+									.getMapperFacade(TrapCardDTO.class, TrapCard.class);
+		Card card = mapper.map((TrapCardDTO) cardDTO);
 		    
 		cardRepository.save(card);
 	}
 		
 	//add new spell card to DB
 	private void addNewMonsterCard(CardDTO cardDTO) {
-		Card card = mapper.getMonsterCardBoundMapper().map((MonsterCardDTO) cardDTO);
+		BoundMapperFacade<MonsterCardDTO, MonsterCard> mapper = mapperService.getMapperFactory()
+									.getMapperFacade(MonsterCardDTO.class, MonsterCard.class);
+		Card card = mapper.map((MonsterCardDTO) cardDTO);
 		
 		cardRepository.save(card);
 	}
 	
 	//edit monster card details by ID
 	private void editMonsterCard(CardDTO cardDTO, int id) {
-	    MonsterCard monsterCard = mapper.getMonsterCardBoundMapper().map((MonsterCardDTO) cardDTO);
+		BoundMapperFacade<MonsterCardDTO, MonsterCard> mapper = mapperService.getMapperFactory()
+									.getMapperFacade(MonsterCardDTO.class, MonsterCard.class);
+	    MonsterCard monsterCard = mapper.map((MonsterCardDTO) cardDTO);
 	    monsterCard.setId(id);
 	    
 	    cardRepository.save(monsterCard);
@@ -119,7 +129,9 @@ public class CardService {
 	
 	//edit spell card details by id
 	private void editSpellCard(CardDTO cardDTO, int id) {
-	    SpellCard spellCard = mapper.getSpellCardBoundMapper().map((SpellCardDTO) cardDTO);
+		BoundMapperFacade<SpellCardDTO, SpellCard> mapper = mapperService.getMapperFactory()
+									.getMapperFacade(SpellCardDTO.class, SpellCard.class);
+	    SpellCard spellCard = mapper.map((SpellCardDTO) cardDTO);
 	    spellCard.setId(id);
 	    
 	    cardRepository.save(spellCard);
@@ -127,9 +139,30 @@ public class CardService {
 	
 	//edit trap card details by id
 	private void editTrapCard(CardDTO cardDTO, int id) {
-	    TrapCard trapCard = mapper.getTrapCardBoundMapper().map((TrapCardDTO) cardDTO);
+		BoundMapperFacade<TrapCardDTO, TrapCard> mapper = mapperService.getMapperFactory()
+							.getMapperFacade(TrapCardDTO.class, TrapCard.class);
+	    TrapCard trapCard = mapper.map((TrapCardDTO) cardDTO);
 	    trapCard.setId(id);
 	    
 	    cardRepository.save(trapCard);
+	}
+	
+	private CardDTO mapForFindAll(Card card) {
+		CardDTO cardDTO;
+		
+		switch(card.getCardType()) {
+			case "Spell Card":
+	        	cardDTO = mapperService.getMapperFactory().getMapperFacade(SpellCardDTO.class, SpellCard.class).mapReverse((SpellCard) card);
+	        	break;
+	        case "Trap Card":
+	        	cardDTO = mapperService.getMapperFactory().getMapperFacade(TrapCardDTO.class, TrapCard.class).mapReverse((TrapCard) card);
+	        	break;
+	        case "Monster Card":
+	        	cardDTO = mapperService.getMapperFactory().getMapperFacade(MonsterCardDTO.class, MonsterCard.class).mapReverse((MonsterCard) card);
+	        	break;
+	    	default:
+	    		cardDTO = null;
+		}	
+		return cardDTO;
 	}
 }

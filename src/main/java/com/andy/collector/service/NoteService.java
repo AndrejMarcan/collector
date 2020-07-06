@@ -10,12 +10,9 @@ import org.springframework.stereotype.Service;
 import com.andy.collector.dto.CardDTO;
 import com.andy.collector.dto.NoteDTO;
 import com.andy.collector.repository.NoteRepository;
-import com.andy.collector.repository.model.Card;
 import com.andy.collector.repository.model.Note;
 
-import ma.glasnost.orika.MapperFacade;
-import ma.glasnost.orika.MapperFactory;
-import ma.glasnost.orika.impl.DefaultMapperFactory;
+import ma.glasnost.orika.BoundMapperFacade;
 
 @Service
 public class NoteService {
@@ -25,8 +22,12 @@ public class NoteService {
 	@Autowired
 	private CardService cardService;
 	
-	@Autowired
-	private MapperService mapper;
+	private BoundMapperFacade<NoteDTO, Note> mapper;
+	
+	public NoteService(@Autowired MapperService mapperService) {
+		mapperService.getMapperFactory().classMap(NoteDTO.class, Note.class).byDefault().register();
+		this.mapper = mapperService.getMapperFactory().getMapperFacade(NoteDTO.class, Note.class);
+	}
 	
 	//add new note to card
 	public void addNoteToCard(NoteDTO noteDTO, Integer id) {
@@ -41,7 +42,7 @@ public class NoteService {
 	
 	//edit note by id
 	public void editNoteByIdCard(NoteDTO noteDTO, int id) {	    
-	    Note note = mapper.getNoteBoundMapper().map(noteDTO);
+	    Note note = mapper.map(noteDTO);
 	    note.setIdNote(id);	   
 	    
 	    noteRepository.save(note);
@@ -72,7 +73,7 @@ public class NoteService {
 		Optional<Note> note = noteRepository.findById(id);
 		
 		if(note.isPresent()) {
-			NoteDTO noteDTO = mapper.getNoteBoundMapper().mapReverse(note.get());
+			NoteDTO noteDTO = mapper.mapReverse(note.get());
 			return noteDTO;
 		} else {
 			return null;
