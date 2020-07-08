@@ -34,65 +34,65 @@ public class UserServiceTest {
 	@Autowired
 	protected UserService us;
 	
-	//inicialization of variables for test methods and starting SpringApplication
-	@BeforeAll
-	public void init() {
-		user = new UserDTO();
-		user.setNickname("mordos");
-		user.setPassword("nieco");
-		
-		userEdit = new UserDTO();
-		userEdit.setNickname("editedUser");
-		userEdit.setPassword("editedPass");
-		
-		list = new ArrayList<>();
-		list.add(user);
-		list.add(user);
-		
-		//SpringApplication app = new SpringApplication(Main.class);
-     	//app.run();
-	}
-	
-	//test if new user was added to DB by comparing list sizes before and after addNewUser 	
-		@Test
-		public void testAddNewUserMethod() {
-			int sizeBefore = us.findAllUsers().size();
-			
-			us.addNewUser(user);
-			
-			int sizeAfter = us.findAllUsers().size();
-			
-			assertTrue(sizeBefore < sizeAfter);
-		}
-	
-	//tests sizes of list from text method and list from DB
-	@Test
-	public void testFindAllUsersMethod() {
-		List<UserDTO> userListFromDb = us.findAllUsers();
-		assertTrue(0<userListFromDb.size());
-	}
-	
-	//test findUserById method and compares nickname and password of User from test method with user fetched form DB
-	@Test
-	public void testFindUserByIdMethod() {
-		UserDTO userFromDb = us.findUser(1);			
-		assertEquals("Johny", userFromDb.getNickname());
-	}
-	
-	//test updateUserById method 
-	@Test
-	public void testUpdateUserByIdMethod() {
-		us.updateUserbyId(userEdit, 2);		
-		UserDTO userFromDb = us.findUser(2);
-		
-		assertEquals(userEdit.getNickname(), userFromDb.getNickname());
-		assertEquals(userEdit.getPassword(), userFromDb.getPassword());
-	}
-	
-	
-	
-	@Test
-	public void testComparePassMethod() {
-		assertTrue("should be true", us.comparePass(1, "nieco"));
-	}
+//	//inicialization of variables for test methods and starting SpringApplication
+//	@BeforeAll
+//	public void init() {
+//		user = new UserDTO();
+//		user.setNickname("mordos");
+//		user.setPassword("nieco");
+//		
+//		userEdit = new UserDTO();
+//		userEdit.setNickname("editedUser");
+//		userEdit.setPassword("editedPass");
+//		
+//		list = new ArrayList<>();
+//		list.add(user);
+//		list.add(user);
+//		
+//		//SpringApplication app = new SpringApplication(Main.class);
+//     	//app.run();
+//	}
+//	
+//	//test if new user was added to DB by comparing list sizes before and after addNewUser 	
+//		@Test
+//		public void testAddNewUserMethod() {
+//			int sizeBefore = us.findAllUsers().size();
+//			
+//			us.addNewUser(user);
+//			
+//			int sizeAfter = us.findAllUsers().size();
+//			
+//			assertTrue(sizeBefore < sizeAfter);
+//		}
+//	
+//	//tests sizes of list from text method and list from DB
+//	@Test
+//	public void testFindAllUsersMethod() {
+//		List<UserDTO> userListFromDb = us.findAllUsers();
+//		assertTrue(0<userListFromDb.size());
+//	}
+//	
+//	//test findUserById method and compares nickname and password of User from test method with user fetched form DB
+//	@Test
+//	public void testFindUserByIdMethod() {
+//		UserDTO userFromDb = us.findUser(1);			
+//		assertEquals("Johny", userFromDb.getNickname());
+//	}
+//	
+//	//test updateUserById method 
+//	@Test
+//	public void testUpdateUserByIdMethod() {
+//		us.updateUserbyId(userEdit, 2);		
+//		UserDTO userFromDb = us.findUser(2);
+//		
+//		assertEquals(userEdit.getNickname(), userFromDb.getNickname());
+//		assertEquals(userEdit.getPassword(), userFromDb.getPassword());
+//	}
+//	
+//	
+//	
+//	@Test
+//	public void testComparePassMethod() {
+//		assertTrue("should be true", us.comparePass(1, "nieco"));
+//	}
 }

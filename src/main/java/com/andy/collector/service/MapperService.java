@@ -21,10 +21,10 @@ import ma.glasnost.orika.impl.DefaultMapperFactory;
 
 @Service
 public class MapperService {
-	private MapperFacade facade;
+	private MapperFactory factory;
 	
 	MapperService(){
-		MapperFactory factory = new DefaultMapperFactory.Builder().build();
+		factory = new DefaultMapperFactory.Builder().build();
 		
 		factory.classMap(CardDTO.class, Card.class).byDefault().register();
 		factory.classMap(SpellCardDTO.class, SpellCard.class).byDefault().register();
@@ -32,16 +32,18 @@ public class MapperService {
 		factory.classMap(MonsterCardDTO.class, MonsterCard.class).byDefault().register();
 		factory.classMap(UserDTO.class, User.class).byDefault().register();
 		factory.classMap(NoteDTO.class, Note.class).byDefault().register();
-		
-		this.facade = factory.getMapperFacade();
 	}
 
 	public MapperFacade getFacade() {
-		return facade;
+		return factory.getMapperFacade();
 	}
 
-	public void setFacade(MapperFacade facade) {
-		this.facade = facade;
+	public MapperFactory getFactory() {
+		return factory;
+	}
+
+	public void setFactory(MapperFactory factory) {
+		this.factory = factory;
 	}
 	
 	

@@ -9,12 +9,9 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
-import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -42,7 +39,7 @@ import com.andy.collector.service.CardService;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-@TestMethodOrder(OrderAnnotation.class)
+//@TestMethodOrder(OrderAnnotation.class)
 @TestInstance(Lifecycle.PER_CLASS)
 public class CardControllerTest {
 	protected CardController controller;
@@ -99,42 +96,42 @@ public class CardControllerTest {
 		SpringApplication app = new SpringApplication(Main.class);
      	app.run();
 	}
-	
-	@Test
-	@Order(1)
-	public void testAddSpellCard() throws SQLException {
-		ResponseEntity<String> ent = controller.addCard(spell);
-		assertEquals(new ResponseEntity<String>("spell saved",HttpStatus.OK), ent, "HttpStatus should be 200 OK");	
-		assertFalse(ent.equals(new ResponseEntity<String>(HttpStatus.CONFLICT)));
-	}
-	
-	@Test
-	@Order(2)
-	public void testAddTrapCard() throws SQLException {
-		ResponseEntity<String> ent = controller.addCard(trap);
-		assertEquals(new ResponseEntity<String>("trap saved",HttpStatus.OK), ent, "HttpStatus should be 200 OK");		
-	}
-	
-	@Test
-	@Order(3)
-	public void testAddMonsterCard() throws SQLException {
-		ResponseEntity<String> ent = controller.addCard(monster);
-		assertEquals(new ResponseEntity<String>("monster saved",HttpStatus.OK), ent, "HttpStatus should be 200 OK");		
-	}
-	
-	@Test
-	@Order(4)
-	public void testUpdateSpellCard() throws SQLException {
-		ResponseEntity<String> ent = controller.updateCard("53", spell);
-		assertEquals(new ResponseEntity<String>("spell edited",HttpStatus.OK), ent);		
-	}
-	
-	@Test
-	@Order(5)
-	public void testUpdateTrapCard() throws SQLException {
-		ResponseEntity<String> ent = controller.updateCard("54", trap);
-		assertEquals(new ResponseEntity<String>("trap edited",HttpStatus.OK), ent);		
-	}
+//	
+//	@Test
+//	//@Order(1)
+//	public void testAddSpellCard() throws SQLException {
+//		ResponseEntity<String> ent = controller.addCard(spell);
+//		assertEquals(new ResponseEntity<String>("spell saved",HttpStatus.OK), ent, "HttpStatus should be 200 OK");	
+//		assertFalse(ent.equals(new ResponseEntity<String>(HttpStatus.CONFLICT)));
+//	}
+//	
+//	@Test
+//	//@Order(2)
+//	public void testAddTrapCard() throws SQLException {
+//		ResponseEntity<String> ent = controller.addCard(trap);
+//		assertEquals(new ResponseEntity<String>("trap saved",HttpStatus.OK), ent, "HttpStatus should be 200 OK");		
+//	}
+//	
+//	@Test
+//	//@Order(3)
+//	public void testAddMonsterCard() throws SQLException {
+//		ResponseEntity<String> ent = controller.addCard(monster);
+//		assertEquals(new ResponseEntity<String>("monster saved",HttpStatus.OK), ent, "HttpStatus should be 200 OK");		
+//	}
+//	
+//	@Test
+//	//@Order(4)
+//	public void testUpdateSpellCard() throws SQLException {
+//		ResponseEntity<String> ent = controller.updateCard("53", spell);
+//		assertEquals(new ResponseEntity<String>("spell edited",HttpStatus.OK), ent);		
+//	}
+//	
+//	@Test
+//	//@Order(5)
+//	public void testUpdateTrapCard() throws SQLException {
+//		ResponseEntity<String> ent = controller.updateCard("54", trap);
+//		assertEquals(new ResponseEntity<String>("trap edited",HttpStatus.OK), ent);		
+//	}
 	
 //	@Test
 //	@Order(6)
@@ -143,46 +140,46 @@ public class CardControllerTest {
 //		assertEquals(new ResponseEntity<String>("monster edited",HttpStatus.OK), ent);			
 //	}
 	
-	@Test
-	@Order(7)
-	public void testShowCardById() throws SQLException {
-		ResponseEntity<CardDTO> ent = controller.showCardById("55");
-		assertEquals(new ResponseEntity<CardDTO> (ent.getBody(),HttpStatus.OK), ent);			
-	}
-	
-	@Test
-	@Order(8)
-	public void testShowAllCards() throws SQLException {
-		ResponseEntity<List<CardDTO>> ent = controller.showAllCards();
-		assertEquals(new ResponseEntity<List<CardDTO>>(ent.getBody(), HttpStatus.OK), ent);			
-	}
-	
-	
-	@Disabled
-	@Test
-	@Order(9)
-	public void testDeleteAll() throws SQLException {
-		ResponseEntity<String> ent1 = controller.deleteAllCard();		
-		assertEquals(new ResponseEntity<String>("ALL CARDS WERE DELETED",HttpStatus.OK), ent1);
-	}
-	
-	@ParameterizedTest
-	@Order(10)
-	@ValueSource(strings = {"102", "103", "104"})
-	public void testDeleteCardNOT(String string) throws SQLException {
-		ResponseEntity<String> ent1 = controller.deleteCard(string);
-		
-		assertEquals(new ResponseEntity<String>("card not found",HttpStatus.NOT_FOUND),ent1);
-	}
-	
-	@ParameterizedTest
-	@Order(10)
-	@ValueSource(strings = {"1102", "1103", "1104"})
-	public void testDeleteCard(String string) throws SQLException {
-		ResponseEntity<String> ent1 = controller.deleteCard(string);
-		
-		assertEquals(new ResponseEntity<String>("delete succesful",HttpStatus.OK),ent1);
-	}
-	
+//	@Test
+//	//@Order(7)
+//	public void testShowCardById() throws SQLException {
+//		ResponseEntity<CardDTO> ent = controller.showCardById("55");
+//		assertEquals(new ResponseEntity<CardDTO> (ent.getBody(),HttpStatus.OK), ent);			
+//	}
+//	
+//	@Test
+//	//@Order(8)
+//	public void testShowAllCards() throws SQLException {
+//		ResponseEntity<List<CardDTO>> ent = controller.showAllCards();
+//		assertEquals(new ResponseEntity<List<CardDTO>>(ent.getBody(), HttpStatus.OK), ent);			
+//	}
+//	
+//	
+//	@Disabled
+//	@Test
+//	//@Order(9)
+//	public void testDeleteAll() throws SQLException {
+//		ResponseEntity<String> ent1 = controller.deleteAllCard();		
+//		assertEquals(new ResponseEntity<String>("ALL CARDS WERE DELETED",HttpStatus.OK), ent1);
+//	}
+//	
+//	@ParameterizedTest
+//	//@Order(10)
+//	@ValueSource(strings = {"102", "103", "104"})
+//	public void testDeleteCardNOT(String string) throws SQLException {
+//		ResponseEntity<String> ent1 = controller.deleteCard(string);
+//		
+//		assertEquals(new ResponseEntity<String>("card not found",HttpStatus.NOT_FOUND),ent1);
+//	}
+//	
+//	@ParameterizedTest
+//	//@Order(10)
+//	@ValueSource(strings = {"1102", "1103", "1104"})
+//	public void testDeleteCard(String string) throws SQLException {
+//		ResponseEntity<String> ent1 = controller.deleteCard(string);
+//		
+//		assertEquals(new ResponseEntity<String>("delete succesful",HttpStatus.OK),ent1);
+//	}
+//	
 	
 }
