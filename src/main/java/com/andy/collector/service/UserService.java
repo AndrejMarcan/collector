@@ -25,7 +25,7 @@ public class UserService {
 
 	public UserService(@Autowired MapperService mapperService) {
 		this.mapper = mapperService.getFacade();
-		this.encoder = new BCryptPasswordEncoder(BCryptPasswordEncoder.BCryptVersion.$2A,15);
+		this.encoder = new BCryptPasswordEncoder();
 	}
 	
 	//add new user 

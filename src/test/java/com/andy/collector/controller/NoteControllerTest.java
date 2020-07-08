@@ -1,7 +1,7 @@
 package com.andy.collector.controller;
 
 import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestMethodOrder;
+//import org.junit.jupiter.api.TestMethodOrder;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -9,9 +9,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.sql.SQLException;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Order;
+//import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+//import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ import com.andy.collector.service.NoteService;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-@TestMethodOrder(OrderAnnotation.class)
+//@TestMethodOrder(OrderAnnotation.class)
 @TestInstance(Lifecycle.PER_CLASS)
 public class NoteControllerTest {
 	protected NoteController controller;
@@ -37,29 +37,29 @@ public class NoteControllerTest {
 	@Autowired 
 	NoteService noteService;
 	
-	@BeforeAll
-	void init() {
-		controller = new NoteController(noteService);
-		note = new NoteDTO();
-		note.setNote("Test note 1");
-		
-		//SpringApplication app = new SpringApplication(Main.class);
-     	//app.run();
-	}
-	
-	@Test
-	@Order(1)
-	public void testupdateCardNote() throws SQLException {
-		ResponseEntity<String> ent = controller.updateNoteForCard(note, "52");
-		assertEquals(new ResponseEntity<String>("note saved",HttpStatus.OK), ent);	
-	}
-	
-	@Test
-	@Order(2)
-	public void testupdateCardNoteNOT() throws SQLException {
-		ResponseEntity<String> ent = controller.updateNoteForCard(note, "5555555555");
-		assertEquals(new ResponseEntity<String>(HttpStatus.NOT_FOUND), ent);	
-	}
+//	@BeforeAll
+//	void init() {
+//		controller = new NoteController(noteService);
+//		note = new NoteDTO();
+//		note.setNote("Test note 1");
+//		
+//		//SpringApplication app = new SpringApplication(Main.class);
+//     	//app.run();
+//	}
+//	
+//	@Test
+//	//@Order(1)
+//	public void testupdateCardNote() throws SQLException {
+//		ResponseEntity<String> ent = controller.updateNoteForCard(note, "52");
+//		assertEquals(new ResponseEntity<String>("note saved",HttpStatus.OK), ent);	
+//	}
+//	
+//	@Test
+//	//@Order(2)
+//	public void testupdateCardNoteNOT() throws SQLException {
+//		ResponseEntity<String> ent = controller.updateNoteForCard(note, "5555555555");
+//		assertEquals(new ResponseEntity<String>(HttpStatus.NOT_FOUND), ent);	
+//	}
 	
 //	@Test
 //	@Order(3)

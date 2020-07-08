@@ -12,11 +12,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Order;
+//import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+//import org.junit.jupiter.api.TestMethodOrder;
+//import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -42,7 +42,7 @@ import com.andy.collector.repository.model.TrapCard;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-@TestMethodOrder(OrderAnnotation.class)
+//@TestMethodOrder(OrderAnnotation.class)
 @TestInstance(Lifecycle.PER_CLASS)
 public class CardServiceTest {
 	
@@ -150,7 +150,7 @@ public class CardServiceTest {
 	
 	@Disabled
 	@Test
-	@Order(6)
+	//@Order(6)
 	public void testDeleteAllCardsMethod() {
 		cs.deleteAll();
 		assertTrue(cs.getAllCards().size()==0);
