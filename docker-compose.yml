@@ -25,6 +25,8 @@ services:
       context: .
       dockerfile: "Dockerfile"
     container_name : "collector"
+    environment:
+      - "andy.database.picker=postgres"
     ports:  
       - "8085:8085"
     links:  
