@@ -1,5 +1,7 @@
-FROM openjdk:latest
+FROM openjdk:8-jre-alpine
 
-ADD build/libs/CollectionManager.jar CollectionManager.jar
+COPY build/libs/CollectionManager.jar CollectionManager.jar
+
 EXPOSE 8085
+
 ENTRYPOINT ["java", "-jar", "CollectionManager.jar"]

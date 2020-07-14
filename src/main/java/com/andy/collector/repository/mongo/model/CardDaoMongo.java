@@ -1,26 +1,52 @@
-package com.andy.collector.dto;
+/*
+ * Copyright (c) ...
+ */
+package com.andy.collector.repository.mongo.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+
 import com.andy.collector.enums.Editions;
 import com.andy.collector.enums.Rarities;
-import com.andy.collector.repository.mongo.model.NoteDaoMongo;
+/**
+ * 
+ * @version		0.1 14. May 2020
+ * @author 		Andrej Marcan
+ */
 
-public abstract class CardDTO {
+@Document(collection = "Cards")
+public abstract class CardDaoMongo {
+	
+	@Indexed
 	private int id;
+	
+	@Field("name")
     private String name;
+	
+	@Field("rarity")
 	private Rarities rarity;
+	
+	@Field("edition")
 	private Editions edition;
-	private String set;			
-	private String language;	  
-	private Collection<NoteDTO> notes = new ArrayList<>();
-	private final String cardType = getCardType();
 	
-	public CardDTO() {}
+	@Field("set")
+	private String set;
+	
+	@Field("language")
+	private String language;
+	
+	@Field("notes")
+	private Collection<NoteDaoMongo> notes = new ArrayList<>();
+	
+	@Field("cardType")
+	private String cardType;
+	
+	public CardDaoMongo() {}
     
-	public abstract String getCardType();
-	
     public String getName() {
         return name;
     }
@@ -69,11 +95,33 @@ public abstract class CardDTO {
 		this.id = id;
 	}
 
-	public Collection<NoteDTO> getNotes() {
+	public Collection<NoteDaoMongo> getNotes() {
 		return notes;
 	}
 
-	public void setNotes(Collection<NoteDTO> notes) {
+	public void setNotes(Collection<NoteDaoMongo> notes) {
 		this.notes = notes;
 	}
+
+	public abstract String getCardType();
+	
+    
+    
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

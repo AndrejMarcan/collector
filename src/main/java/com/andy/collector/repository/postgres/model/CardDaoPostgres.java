@@ -1,7 +1,4 @@
-/*
- * Copyright (c) ...
- */
-package com.andy.collector.repository.model;
+package com.andy.collector.repository.postgres.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,25 +23,10 @@ import com.andy.collector.enums.Rarities;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-
-/**
- * The TrapCard class provides methods for adding a new trap card to database, edit data for trap card
- * in database and to get data for trap card from the database.
- * 
- * @version		0.1 14. May 2020
- * @author 		Andrej Marcan
- */
-
-@Schema(
-		type = "object",
-		title = "Card",
-		anyOf = { MonsterCard.class, SpellCard.class, TrapCard.class }
-)
 @Entity
 @Table(name = "album")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Card {
-	
+public abstract class CardDaoPostgres {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "card_id")
 	@SequenceGenerator(name = "card_id", sequenceName = "card_id")
@@ -80,14 +62,14 @@ public abstract class Card {
     
 	@Nonnull
 	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true)
-	private Collection<Note> notes = new ArrayList<>();
+	private Collection<NoteDaoPostgres> notes = new ArrayList<>();
 	
 	@Nonnull
 	@Schema(required = true)
 	@Column(name = "cardType")
 	private final String cardType = getCardType();
 	
-	public Card() {}
+	public CardDaoPostgres() {}
     
     public String getName() {
         return name;
@@ -137,11 +119,11 @@ public abstract class Card {
 		this.id = id;
 	}
 
-	public Collection<Note> getNotes() {
+	public Collection<NoteDaoPostgres> getNotes() {
 		return notes;
 	}
 
-	public void setNotes(Collection<Note> notes) {
+	public void setNotes(Collection<NoteDaoPostgres> notes) {
 		this.notes = notes;
 	}
 
@@ -150,20 +132,3 @@ public abstract class Card {
     
     
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

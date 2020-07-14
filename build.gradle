@@ -45,27 +45,27 @@ dependencies {
     implementation 'com.google.guava:guava:26.0-jre'  
 	implementation 'commons-dbutils:commons-dbutils:1.7'
 	
-	// https://mvnrepository.com/artifact/org.postgresql/postgresql
+	//DATABASE driver dependencies
+	compile group: 'org.mongodb', name: 'mongodb-driver-core', version: '3.11.2'
 	compile group: 'org.postgresql', name: 'postgresql', version: '42.1.4'
 	
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.3.0.RELEASE'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: '2.2.1.RELEASE'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc', version: '2.3.0.RELEASE'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.3.0.RELEASE'
 	
 	// https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui
 	compile group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.4.0'
 	
-	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc
-	compile group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc', version: '2.3.0.RELEASE'
-	
 	// https://mvnrepository.com/artifact/org.springframework.security/spring-security-crypto
     compile group: 'org.springframework.security', name: 'spring-security-crypto', version: '3.1.0.RELEASE'
     
-    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa
-	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.3.0.RELEASE'
-	
+    // https://mvnrepository.com/artifact/org.springframework.data/spring-data-mongodb
+	compile group: 'org.springframework.data', name: 'spring-data-mongodb', version: '2.2.1.RELEASE'
+    
 	// https://mvnrepository.com/artifact/ma.glasnost.orika/orika-core
 	compile group: 'ma.glasnost.orika', name: 'orika-core', version: '1.5.4'
-	
 	
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test
 	testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.3.1.RELEASE'

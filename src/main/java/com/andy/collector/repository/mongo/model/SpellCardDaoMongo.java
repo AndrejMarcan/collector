@@ -1,12 +1,12 @@
 /*
  * Copyright (c) ...
  */
-package com.andy.collector.repository.model;
+package com.andy.collector.repository.mongo.model;
 
 import javax.annotation.Nonnull;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 /**
  * The SpellCard class provides methods for adding a new spell card to database, edit data for spell card
  * in database and to get data for spell card from the database.    
@@ -15,20 +15,18 @@ import javax.persistence.Table;
  * @author 		Andrej Marcan
  */
 
-@Entity
-@Table(name = "spells")
-public class SpellCard extends Card{
+@Document(collection = "Cards")
+public class SpellCardDaoMongo extends CardDaoMongo{
 	
-	@Column(name = "type")
-	@Nonnull
+	@Field("type")
     private String type;	//card type
     
-    public SpellCard() {}
+    public SpellCardDaoMongo() {}
 
 	public String getType() {
 		return type;
 	}
-
+	
 	public void setType(String type) {
 		this.type = type;
 	}

@@ -1,5 +1,12 @@
 package com.andy.collector.controller;
 
+/**
+ * RestController class for user endpoints.
+ * 
+ * @version		0.1 14. July 2020
+ * @author 		Andrej Marcan
+ */
+
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.andy.collector.dto.UserDTO;
-import com.andy.collector.repository.model.User;
+import com.andy.collector.repository.mongo.model.UserDaoMongo;
 import com.andy.collector.service.UserService;
 
 @RestController

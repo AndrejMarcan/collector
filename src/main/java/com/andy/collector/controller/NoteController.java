@@ -1,5 +1,11 @@
 package com.andy.collector.controller;
 
+/**
+ * RestController class for note endpoints.
+ * 
+ * @version		0.1 14. July 2020
+ * @author 		Andrej Marcan
+ */
 import java.sql.SQLException;
 import java.util.Optional;
 
@@ -17,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.andy.collector.dto.NoteDTO;
-import com.andy.collector.repository.model.Note;
+import com.andy.collector.repository.mongo.model.NoteDaoMongo;
 import com.andy.collector.service.NoteService;
 
 @RestController
@@ -29,10 +35,11 @@ public class NoteController {
 		this.noteService = noteService;
 	}
 	
-	@PutMapping(value = "/update-note/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> updateNoteForCard(@RequestBody NoteDTO noteDTO, @PathVariable("id") String id) throws SQLException {			
+	@PutMapping(value = "/update-note/{idCard}/{idNote}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> updateNoteForCard(@RequestBody NoteDTO noteDTO,@PathVariable("idCard") String idCard,
+													@PathVariable("idNote") String id) throws SQLException {			
 		try {
-			noteService.editNoteByIdCard(noteDTO, Integer.valueOf(id));
+			noteService.editNoteByIdCard(noteDTO, Integer.valueOf(idCard), Integer.valueOf(id));
 			return new ResponseEntity<String>("note saved",HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("Card not found", HttpStatus.NOT_FOUND);

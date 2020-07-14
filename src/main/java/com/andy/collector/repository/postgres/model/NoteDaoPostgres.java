@@ -1,4 +1,4 @@
-package com.andy.collector.repository.model;
+package com.andy.collector.repository.postgres.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,20 +8,21 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-
 @Entity
 @Table(name = "notes")
-public class Note {
-	
+public class NoteDaoPostgres {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "note_id")
 	@SequenceGenerator(name = "note_id", sequenceName = "note_id")
-	private int idNote;
+	private int id;
+	
+	@Column(name = "idCard")
+	private int idCard;
 	
 	@Column(name = "note")
 	private String note;
 	
-	public Note() {}
+	public NoteDaoPostgres() {}
 	
 	public String getNote() {
 		return note;
@@ -32,10 +33,20 @@ public class Note {
 	}
 
 	public int getIdNote() {
-		return idNote;
+		return id;
 	}
 
 	public void setIdNote(int idNote) {
-		this.idNote = idNote;
+		this.id = idNote;
 	}
+
+	public int getIdCard() {
+		return idCard;
+	}
+
+	public void setIdCard(int idCard) {
+		this.idCard = idCard;
+	}
+	
+	
 }

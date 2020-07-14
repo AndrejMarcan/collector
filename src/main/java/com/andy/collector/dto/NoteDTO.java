@@ -1,7 +1,8 @@
 package com.andy.collector.dto;
 
 public class NoteDTO {
-	private int idNote;
+	private int id;
+	private int idCard;
 	private String note;
 	
 	public NoteDTO() {}
@@ -14,11 +15,20 @@ public class NoteDTO {
 		this.note = note;
 	}
 
-	public int getIdNote() {
-		return idNote;
+	public int getId() {
+		return id;
 	}
 
-	public void setIdNote(int idNote) {
-		this.idNote = idNote;
+	public void setId(int id) {
+		this.id = id;
 	}
+
+	public int getIdCard() {
+		return idCard;
+	}
+
+	public void setIdCard(int idCard) {
+		this.idCard = idCard;
+	}
+	
 }
