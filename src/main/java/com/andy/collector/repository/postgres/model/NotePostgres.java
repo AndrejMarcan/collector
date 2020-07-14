@@ -12,8 +12,9 @@ import javax.persistence.Table;
 @Table(name = "notes")
 public class NotePostgres {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "note_id")
-	@SequenceGenerator(name = "note_id", sequenceName = "note_id")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id")
+	@SequenceGenerator(name = "id", sequenceName = "id")
+	@Column(name = "id")
 	private int id;
 	
 	@Column(name = "idCard")
@@ -32,11 +33,11 @@ public class NotePostgres {
 		this.note = note;
 	}
 
-	public int getIdNote() {
+	public int getId() {
 		return id;
 	}
 
-	public void setIdNote(int idNote) {
+	public void setId(int idNote) {
 		this.id = idNote;
 	}
 

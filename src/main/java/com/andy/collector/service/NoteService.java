@@ -95,7 +95,7 @@ public class NoteService {
 			
 	    } else if (layer.equals("postgres")) {
 	    	NotePostgres note = mapperPostgres.map(noteDTO, NotePostgres.class);
-	 	    note.setIdNote(id);	   
+	 	    note.setId(id);	   
 	 	    
 	 	    noteRepositoryPostgres.save(note);
 	    }
