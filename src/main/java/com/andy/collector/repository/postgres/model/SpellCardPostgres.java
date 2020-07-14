@@ -7,13 +7,13 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "spells")
-public class SpellCardDaoPostgres extends CardDaoPostgres{
+public class SpellCardPostgres extends CardPostgres{
 	
 	@Column(name = "type")
 	@Nonnull
     private String type;	//card type
     
-    public SpellCardDaoPostgres() {}
+    public SpellCardPostgres() {}
 
 	public String getType() {
 		return type;

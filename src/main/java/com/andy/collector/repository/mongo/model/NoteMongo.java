@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 
 @Document(collection = "Notes")
-public class NoteDaoMongo {
+public class NoteMongo {
 	
 	@Indexed
 	private int id;
@@ -19,7 +19,7 @@ public class NoteDaoMongo {
 	@Field("note")
 	private String note;
 	
-	public NoteDaoMongo() {}
+	public NoteMongo() {}
 	
 	public String getNote() {
 		return note;

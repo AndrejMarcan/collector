@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "monsters")
-public class MonsterCardDaoPostgres extends CardDaoPostgres{
+public class MonsterCardPostgres extends CardPostgres{
 	   
 		@Column(name = "type")
 		@Nonnull
@@ -33,7 +33,7 @@ public class MonsterCardDaoPostgres extends CardDaoPostgres{
 		@Nonnull
 		private String level;		//monster level
 
-		public MonsterCardDaoPostgres() {};
+		public MonsterCardPostgres() {};
 	    
 		  public void setLevel(String level) {
 		  this.level = level;

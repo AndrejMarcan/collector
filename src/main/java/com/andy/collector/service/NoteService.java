@@ -12,9 +12,9 @@ import com.andy.collector.Main;
 import com.andy.collector.dto.CardDTO;
 import com.andy.collector.dto.NoteDTO;
 import com.andy.collector.repository.mongo.NoteRepositoryMongo;
-import com.andy.collector.repository.mongo.model.NoteDaoMongo;
+import com.andy.collector.repository.mongo.model.NoteMongo;
 import com.andy.collector.repository.postgres.NoteRepositoryPostgres;
-import com.andy.collector.repository.postgres.model.NoteDaoPostgres;
+import com.andy.collector.repository.postgres.model.NotePostgres;
 
 import ma.glasnost.orika.BoundMapperFacade;
 import ma.glasnost.orika.MapperFacade;
@@ -53,7 +53,7 @@ public class NoteService {
 	public void addNoteToCard(NoteDTO noteDTO, Integer id) {
 		noteDTO.setIdCard(id);
 		if (layer.equals("mongo")) {
-			NoteDaoMongo note = mapperMongo.map(noteDTO, NoteDaoMongo.class);		
+			NoteMongo note = mapperMongo.map(noteDTO, NoteMongo.class);		
 			CardDTO cardDTO = cardService.findCardById(id);
 			Collection<NoteDTO> notesDTO = cardDTO.getNotes();	
 			notesDTO.add(noteDTO);	
@@ -89,12 +89,12 @@ public class NoteService {
 			cardDTO.setId(idCard);
 			cardDTO.setNotes(notesDTO);
 			
-			NoteDaoMongo note = mapperMongo.map(noteDTO, NoteDaoMongo.class);
+			NoteMongo note = mapperMongo.map(noteDTO, NoteMongo.class);
 			noteRepositoryMongo.save(note);
 			cardService.editCard(cardDTO, idCard);
 			
 	    } else if (layer.equals("postgres")) {
-	    	NoteDaoPostgres note = mapperPostgres.map(noteDTO, NoteDaoPostgres.class);
+	    	NotePostgres note = mapperPostgres.map(noteDTO, NotePostgres.class);
 	 	    note.setIdNote(id);	   
 	 	    
 	 	    noteRepositoryPostgres.save(note);
@@ -158,7 +158,7 @@ public class NoteService {
 	public NoteDTO showNote(Integer id) {
 		NoteDTO noteDTO = null;
 		if (layer.equals("mongo")) {	
-			Optional<NoteDaoMongo> note = noteRepositoryMongo.findById(id);
+			Optional<NoteMongo> note = noteRepositoryMongo.findById(id);
 			
 			if(note.isPresent()) {
 				noteDTO = mapperMongo.map(note.get(), NoteDTO.class);
@@ -167,7 +167,7 @@ public class NoteService {
 			}
 			
 	    } else if (layer.equals("postgres")) {
-	    	Optional<NoteDaoPostgres> note = noteRepositoryPostgres.findById(id);
+	    	Optional<NotePostgres> note = noteRepositoryPostgres.findById(id);
 			
 			if(note.isPresent()) {
 				noteDTO = mapperPostgres.map(note.get(), NoteDTO.class);

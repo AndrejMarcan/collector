@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "notes")
-public class NoteDaoPostgres {
+public class NotePostgres {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "note_id")
 	@SequenceGenerator(name = "note_id", sequenceName = "note_id")
@@ -22,7 +22,7 @@ public class NoteDaoPostgres {
 	@Column(name = "note")
 	private String note;
 	
-	public NoteDaoPostgres() {}
+	public NotePostgres() {}
 	
 	public String getNote() {
 		return note;

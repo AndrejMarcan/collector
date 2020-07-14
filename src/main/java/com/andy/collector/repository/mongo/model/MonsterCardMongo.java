@@ -16,7 +16,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
  */
 
 @Document(collection = "Cards")
-public class MonsterCardDaoMongo extends CardDaoMongo {
+public class MonsterCardMongo extends CardMongo {
 	
 	@Field("type")
 	private String type;
@@ -36,7 +36,7 @@ public class MonsterCardDaoMongo extends CardDaoMongo {
 	@Field("level")
 	private String level;
 
-	public MonsterCardDaoMongo() {};
+	public MonsterCardMongo() {};
     
 	  public void setLevel(String level) {
 	  this.level = level;

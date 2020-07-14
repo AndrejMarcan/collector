@@ -7,4 +7,6 @@ mongovol
 db-data
 .settings
 bin
+.classpath
+.project
 

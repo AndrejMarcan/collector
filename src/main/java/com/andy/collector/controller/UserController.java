@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.andy.collector.dto.UserDTO;
-import com.andy.collector.repository.mongo.model.UserDaoMongo;
+import com.andy.collector.repository.mongo.model.UserMongo;
 import com.andy.collector.service.UserService;
 
 @RestController
