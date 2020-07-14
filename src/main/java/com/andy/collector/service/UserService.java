@@ -13,9 +13,9 @@ import org.springframework.stereotype.Service;
 import com.andy.collector.Main;
 import com.andy.collector.dto.UserDTO;
 import com.andy.collector.repository.mongo.UserRepositoryMongo;
-import com.andy.collector.repository.mongo.model.UserDaoMongo;
+import com.andy.collector.repository.mongo.model.UserMongo;
 import com.andy.collector.repository.postgres.UserRepositoryPostgres;
-import com.andy.collector.repository.postgres.model.UserDaoPostgres;
+import com.andy.collector.repository.postgres.model.UserPostgres;
 
 import ma.glasnost.orika.BoundMapperFacade;
 import ma.glasnost.orika.MapperFacade;
@@ -52,14 +52,14 @@ public class UserService {
 	public void addNewUser(UserDTO userDTO) {
 		if(layer.equals("mongo")) {
 			
-			UserDaoMongo user = mapperMongo.map(userDTO, UserDaoMongo.class);
+			UserMongo user = mapperMongo.map(userDTO, UserMongo.class);
 			String hashPass = encoder.encode(user.getPassword());
 			user.setPassword(hashPass);			
 			userRepositoryMongo.save(user);
 			
 		} else if (layer.equals("postgres")) {
 			
-			UserDaoPostgres user = mapperPostgres.map(userDTO, UserDaoPostgres.class);
+			UserPostgres user = mapperPostgres.map(userDTO, UserPostgres.class);
 			String hashPass = encoder.encode(user.getPassword());
 			user.setPassword(hashPass);			
 			userRepositoryPostgres.save(user);
@@ -72,14 +72,14 @@ public class UserService {
 	    
 	    if(layer.equals("mongo")){
 	    	
-	    	UserDaoMongo user = mapperMongo.map(userDTO, UserDaoMongo.class);	    
+	    	UserMongo user = mapperMongo.map(userDTO, UserMongo.class);	    
 		    String hashPass = encoder.encode(user.getPassword());
 		    user.setPassword(hashPass);	    
 		    userRepositoryMongo.save(user);
 		    
 	    } else if(layer.equals("postgres")) {
 	    	
-	    	UserDaoPostgres user = mapperPostgres.map(userDTO, UserDaoPostgres.class);	    
+	    	UserPostgres user = mapperPostgres.map(userDTO, UserPostgres.class);	    
 		    String hashPass = encoder.encode(user.getPassword());
 		    user.setPassword(hashPass);	    
 		    userRepositoryPostgres.save(user);
@@ -103,7 +103,7 @@ public class UserService {
 		UserDTO userDTO = null;
 		if(layer.equals("mongo")){
 			
-			Optional<UserDaoMongo> user = userRepositoryMongo.findById(id);		
+			Optional<UserMongo> user = userRepositoryMongo.findById(id);		
 			if(user.isPresent()) {
 				userDTO = mapperMongo.map(user.get(), UserDTO.class);
 			} else {
@@ -112,7 +112,7 @@ public class UserService {
 			
 	    } else if(layer.equals("postgres")) {
 	    	
-	    	Optional<UserDaoPostgres> user = userRepositoryPostgres.findById(id);			
+	    	Optional<UserPostgres> user = userRepositoryPostgres.findById(id);			
 			if(user.isPresent()) {
 				userDTO = mapperPostgres.map(user.get(), UserDTO.class);
 			} else {
@@ -127,12 +127,12 @@ public class UserService {
 		List<UserDTO> usersDTO = new ArrayList<>();
 		if(layer.equals("mongo")){
 			
-			List<UserDaoMongo> users = userRepositoryMongo.findAll();
+			List<UserMongo> users = userRepositoryMongo.findAll();
 			usersDTO = users.stream().map(p -> mapperMongo.map(p, UserDTO.class)).collect(Collectors.toList());
 			
 	    } else if(layer.equals("postgres")) {
 	    	
-	    	List<UserDaoPostgres> users = userRepositoryPostgres.findAll();
+	    	List<UserPostgres> users = userRepositoryPostgres.findAll();
 			usersDTO = users.stream().map(p -> mapperPostgres.map(p, UserDTO.class)).collect(Collectors.toList());
 	    }		
 		return usersDTO;

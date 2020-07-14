@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.andy.collector.dto.NoteDTO;
-import com.andy.collector.repository.mongo.model.NoteDaoMongo;
+import com.andy.collector.repository.mongo.model.NoteMongo;
 import com.andy.collector.service.NoteService;
 
 @RestController

@@ -26,7 +26,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Entity
 @Table(name = "album")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class CardDaoPostgres {
+public abstract class CardPostgres {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "card_id")
 	@SequenceGenerator(name = "card_id", sequenceName = "card_id")
@@ -62,14 +62,14 @@ public abstract class CardDaoPostgres {
     
 	@Nonnull
 	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true)
-	private Collection<NoteDaoPostgres> notes = new ArrayList<>();
+	private Collection<NotePostgres> notes = new ArrayList<>();
 	
 	@Nonnull
 	@Schema(required = true)
 	@Column(name = "cardType")
 	private final String cardType = getCardType();
 	
-	public CardDaoPostgres() {}
+	public CardPostgres() {}
     
     public String getName() {
         return name;
@@ -119,11 +119,11 @@ public abstract class CardDaoPostgres {
 		this.id = id;
 	}
 
-	public Collection<NoteDaoPostgres> getNotes() {
+	public Collection<NotePostgres> getNotes() {
 		return notes;
 	}
 
-	public void setNotes(Collection<NoteDaoPostgres> notes) {
+	public void setNotes(Collection<NotePostgres> notes) {
 		this.notes = notes;
 	}
 

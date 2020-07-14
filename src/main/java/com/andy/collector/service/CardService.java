@@ -17,15 +17,15 @@ import com.andy.collector.dto.SpellCardDTO;
 import com.andy.collector.dto.TrapCardDTO;
 import com.andy.collector.repository.mongo.CardRepositoryMongo;
 import com.andy.collector.repository.mongo.NoteRepositoryMongo;
-import com.andy.collector.repository.mongo.model.CardDaoMongo;
-import com.andy.collector.repository.mongo.model.MonsterCardDaoMongo;
-import com.andy.collector.repository.mongo.model.SpellCardDaoMongo;
-import com.andy.collector.repository.mongo.model.TrapCardDaoMongo;
+import com.andy.collector.repository.mongo.model.CardMongo;
+import com.andy.collector.repository.mongo.model.MonsterCardMongo;
+import com.andy.collector.repository.mongo.model.SpellCardMongo;
+import com.andy.collector.repository.mongo.model.TrapCardMongo;
 import com.andy.collector.repository.postgres.CardRepositoryPostgres;
-import com.andy.collector.repository.postgres.model.CardDaoPostgres;
-import com.andy.collector.repository.postgres.model.MonsterCardDaoPostgres;
-import com.andy.collector.repository.postgres.model.SpellCardDaoPostgres;
-import com.andy.collector.repository.postgres.model.TrapCardDaoPostgres;
+import com.andy.collector.repository.postgres.model.CardPostgres;
+import com.andy.collector.repository.postgres.model.MonsterCardPostgres;
+import com.andy.collector.repository.postgres.model.SpellCardPostgres;
+import com.andy.collector.repository.postgres.model.TrapCardPostgres;
 
 import ma.glasnost.orika.MapperFacade;
 
@@ -93,10 +93,10 @@ public class CardService {
 	public List<CardDTO> getAllCards(){  
 		List<CardDTO> cardsDTO = new ArrayList<>();
 		if (layer.equals("mongo")) {		
-			List<CardDaoMongo> cards = cardRepositoryMongo.findAll();
+			List<CardMongo> cards = cardRepositoryMongo.findAll();
 			cardsDTO = cards.stream().map(p -> mapForFindAll(p)).collect(Collectors.toList());
 	    } else if (layer.equals("postgres")) {	   
-	    	List<CardDaoPostgres> cards = cardRepositoryPostgres.findAll();
+	    	List<CardPostgres> cards = cardRepositoryPostgres.findAll();
 			cardsDTO = cards.stream().map(p -> mapForFindAllPostgres(p)).collect(Collectors.toList());
 	    }
 		return cardsDTO;
@@ -116,19 +116,19 @@ public class CardService {
 	public CardDTO findCardById(int id){
 		CardDTO cardDTO = null;
 		if (layer.equals("mongo")) {		
-			Optional<CardDaoMongo> cardOpt = cardRepositoryMongo.findById(id);
+			Optional<CardMongo> cardOpt = cardRepositoryMongo.findById(id);
 			
 			if(cardOpt.isPresent()) {		
-				CardDaoMongo card = cardOpt.get();
+				CardMongo card = cardOpt.get();
 				cardDTO = mapForFindAll(card);
 			} else {
 				return null;
 			}
 	    } else if (layer.equals("postgres")) {	   
-	    	Optional<CardDaoPostgres> cardOpt = cardRepositoryPostgres.findById(id);
+	    	Optional<CardPostgres> cardOpt = cardRepositoryPostgres.findById(id);
 			
 			if(cardOpt.isPresent()) {		
-				CardDaoPostgres card = cardOpt.get();
+				CardPostgres card = cardOpt.get();
 				cardDTO = mapForFindAllPostgres(card);
 			} else {
 				return null;
@@ -140,10 +140,10 @@ public class CardService {
 	//add new spell card to DB
 	private void addNewSpellCard(CardDTO cardDTO) {
 		if (layer.equals("mongo")) {		
-			CardDaoMongo card = mapperMongo.map((SpellCardDTO) cardDTO, SpellCardDaoMongo.class);    
+			CardMongo card = mapperMongo.map((SpellCardDTO) cardDTO, SpellCardMongo.class);    
 			cardRepositoryMongo.save(card);
 	    } else if (layer.equals("postgres")) {	   
-	    	CardDaoPostgres card = mapperPostgres.map((SpellCardDTO) cardDTO, SpellCardDaoPostgres.class);    
+	    	CardPostgres card = mapperPostgres.map((SpellCardDTO) cardDTO, SpellCardPostgres.class);    
 			cardRepositoryPostgres.save(card);
 	    }
 		
@@ -152,10 +152,10 @@ public class CardService {
 	//add new spell card to DB
 	private void addNewTrapCard(CardDTO cardDTO) {
 		if (layer.equals("mongo")) {		
-			CardDaoMongo card = mapperMongo.map((TrapCardDTO) cardDTO, TrapCardDaoMongo.class);    
+			CardMongo card = mapperMongo.map((TrapCardDTO) cardDTO, TrapCardMongo.class);    
 			cardRepositoryMongo.save(card);
 	    } else if (layer.equals("postgres")) {	   
-	    	CardDaoPostgres card = mapperPostgres.map((TrapCardDTO) cardDTO, TrapCardDaoPostgres.class);    
+	    	CardPostgres card = mapperPostgres.map((TrapCardDTO) cardDTO, TrapCardPostgres.class);    
 			cardRepositoryPostgres.save(card);
 	    }	
 	}
@@ -163,10 +163,10 @@ public class CardService {
 	//add new spell card to DB
 	private void addNewMonsterCard(CardDTO cardDTO) {
 		if (layer.equals("mongo")) {		
-			CardDaoMongo card = mapperMongo.map((MonsterCardDTO) cardDTO, MonsterCardDaoMongo.class);
+			CardMongo card = mapperMongo.map((MonsterCardDTO) cardDTO, MonsterCardMongo.class);
 			cardRepositoryMongo.save(card);
 	    } else if (layer.equals("postgres")) {	   
-	    	CardDaoPostgres card = mapperPostgres.map((MonsterCardDTO) cardDTO, MonsterCardDaoPostgres.class);    
+	    	CardPostgres card = mapperPostgres.map((MonsterCardDTO) cardDTO, MonsterCardPostgres.class);    
 			cardRepositoryPostgres.save(card);
 	    }
 	}
@@ -174,12 +174,12 @@ public class CardService {
 	//edit monster card details by ID
 	private void editMonsterCard(CardDTO cardDTO, int id) {
 		if (layer.equals("mongo")) {		
-			MonsterCardDaoMongo monsterCard = mapperMongo.map((MonsterCardDTO) cardDTO, MonsterCardDaoMongo.class);
+			MonsterCardMongo monsterCard = mapperMongo.map((MonsterCardDTO) cardDTO, MonsterCardMongo.class);
 		    monsterCard.setId(id);		    
 		    cardRepositoryMongo.save(monsterCard);
 		    
 	    } else if (layer.equals("postgres")) {	   
-	    	MonsterCardDaoPostgres monsterCard = mapperPostgres.map((MonsterCardDTO) cardDTO, MonsterCardDaoPostgres.class);
+	    	MonsterCardPostgres monsterCard = mapperPostgres.map((MonsterCardDTO) cardDTO, MonsterCardPostgres.class);
 		    monsterCard.setId(id);		    
 		    cardRepositoryPostgres.save(monsterCard);
 	    }
@@ -189,12 +189,12 @@ public class CardService {
 	//edit spell card details by id
 	private void editSpellCard(CardDTO cardDTO, int id) {
 		if (layer.equals("mongo")) {		
-			 SpellCardDaoMongo spellCard = mapperMongo.map((SpellCardDTO) cardDTO, SpellCardDaoMongo.class);
+			 SpellCardMongo spellCard = mapperMongo.map((SpellCardDTO) cardDTO, SpellCardMongo.class);
 			 spellCard.setId(id);
 			 cardRepositoryMongo.save(spellCard);
 			 
 	    } else if (layer.equals("postgres")) {	   
-	    	SpellCardDaoPostgres spellCard = mapperPostgres.map((SpellCardDTO) cardDTO, SpellCardDaoPostgres.class);
+	    	SpellCardPostgres spellCard = mapperPostgres.map((SpellCardDTO) cardDTO, SpellCardPostgres.class);
 		    spellCard.setId(id);		    
 		    cardRepositoryPostgres.save(spellCard);
 	    }	   
@@ -203,29 +203,29 @@ public class CardService {
 	//edit trap card details by id
 	private void editTrapCard(CardDTO cardDTO, int id) {
 		if (layer.equals("mongo")) {		
-		    TrapCardDaoMongo trapCard = mapperMongo.map((TrapCardDTO) cardDTO, TrapCardDaoMongo.class);
+		    TrapCardMongo trapCard = mapperMongo.map((TrapCardDTO) cardDTO, TrapCardMongo.class);
 		    trapCard.setId(id);
 		    cardRepositoryMongo.save(trapCard);
 		    
 	    } else if (layer.equals("postgres")) {	   
-	    	TrapCardDaoPostgres trapCard = mapperPostgres.map((TrapCardDTO) cardDTO, TrapCardDaoPostgres.class);
+	    	TrapCardPostgres trapCard = mapperPostgres.map((TrapCardDTO) cardDTO, TrapCardPostgres.class);
 		    trapCard.setId(id);		    
 		    cardRepositoryPostgres.save(trapCard);
 	    }
 	}
 	
-	private CardDTO mapForFindAll(CardDaoMongo card) {
+	private CardDTO mapForFindAll(CardMongo card) {
 		CardDTO cardDTO =null;
 		
 		switch(card.getCardType()) {
 			case "Spell Card":
-	        	cardDTO = mapperMongo.map((SpellCardDaoMongo) card, SpellCardDTO.class);
+	        	cardDTO = mapperMongo.map((SpellCardMongo) card, SpellCardDTO.class);
 	        	break;
 	        case "Trap Card":
-	        	cardDTO = mapperMongo.map((TrapCardDaoMongo) card, TrapCardDTO.class);
+	        	cardDTO = mapperMongo.map((TrapCardMongo) card, TrapCardDTO.class);
 	        	break;
 	        case "Monster Card":
-	        	cardDTO = mapperMongo.map((MonsterCardDaoMongo) card, MonsterCardDTO.class);
+	        	cardDTO = mapperMongo.map((MonsterCardMongo) card, MonsterCardDTO.class);
 	        	break;
 	    	default:
 	    		cardDTO = null;
@@ -233,18 +233,18 @@ public class CardService {
 		return cardDTO;
 	}
 	
-	private CardDTO mapForFindAllPostgres(CardDaoPostgres card) {
+	private CardDTO mapForFindAllPostgres(CardPostgres card) {
 		CardDTO cardDTO =null;
 		
 		switch(card.getCardType()) {
 			case "Spell Card":
-	        	cardDTO = mapperPostgres.map((SpellCardDaoPostgres) card, SpellCardDTO.class);
+	        	cardDTO = mapperPostgres.map((SpellCardPostgres) card, SpellCardDTO.class);
 	        	break;
 	        case "Trap Card":
-	        	cardDTO = mapperPostgres.map((TrapCardDaoPostgres) card, TrapCardDTO.class);
+	        	cardDTO = mapperPostgres.map((TrapCardPostgres) card, TrapCardDTO.class);
 	        	break;
 	        case "Monster Card":
-	        	cardDTO = mapperPostgres.map((MonsterCardDaoPostgres) card, MonsterCardDTO.class);
+	        	cardDTO = mapperPostgres.map((MonsterCardPostgres) card, MonsterCardDTO.class);
 	        	break;
 	    	default:
 	    		cardDTO = null;

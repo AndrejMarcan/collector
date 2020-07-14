@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection = "Users")
-public class UserDaoMongo {
+public class UserMongo {
 	
 	@Indexed
 	private int id;

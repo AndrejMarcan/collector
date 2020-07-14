@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class UserDaoPostgres {
+public class UserPostgres {
 	
 	@Id
 	@Column(name = "user_id")

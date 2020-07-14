@@ -5,7 +5,7 @@ import java.util.Collection;
 
 import com.andy.collector.enums.Editions;
 import com.andy.collector.enums.Rarities;
-import com.andy.collector.repository.mongo.model.NoteDaoMongo;
+import com.andy.collector.repository.mongo.model.NoteMongo;
 
 public abstract class CardDTO {
 	private int id;

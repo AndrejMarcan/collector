@@ -19,7 +19,7 @@ import com.andy.collector.enums.Rarities;
  */
 
 @Document(collection = "Cards")
-public abstract class CardDaoMongo {
+public abstract class CardMongo {
 	
 	@Indexed
 	private int id;
@@ -40,12 +40,12 @@ public abstract class CardDaoMongo {
 	private String language;
 	
 	@Field("notes")
-	private Collection<NoteDaoMongo> notes = new ArrayList<>();
+	private Collection<NoteMongo> notes = new ArrayList<>();
 	
 	@Field("cardType")
 	private String cardType;
 	
-	public CardDaoMongo() {}
+	public CardMongo() {}
     
     public String getName() {
         return name;
@@ -95,11 +95,11 @@ public abstract class CardDaoMongo {
 		this.id = id;
 	}
 
-	public Collection<NoteDaoMongo> getNotes() {
+	public Collection<NoteMongo> getNotes() {
 		return notes;
 	}
 
-	public void setNotes(Collection<NoteDaoMongo> notes) {
+	public void setNotes(Collection<NoteMongo> notes) {
 		this.notes = notes;
 	}
 
