@@ -8,12 +8,18 @@ import com.andy.collector.dto.NoteDTO;
 import com.andy.collector.dto.SpellCardDTO;
 import com.andy.collector.dto.TrapCardDTO;
 import com.andy.collector.dto.UserDTO;
-import com.andy.collector.repository.model.Card;
-import com.andy.collector.repository.model.MonsterCard;
-import com.andy.collector.repository.model.Note;
-import com.andy.collector.repository.model.SpellCard;
-import com.andy.collector.repository.model.TrapCard;
-import com.andy.collector.repository.model.User;
+import com.andy.collector.repository.mongo.model.CardDaoMongo;
+import com.andy.collector.repository.mongo.model.MonsterCardDaoMongo;
+import com.andy.collector.repository.mongo.model.NoteDaoMongo;
+import com.andy.collector.repository.mongo.model.SpellCardDaoMongo;
+import com.andy.collector.repository.mongo.model.TrapCardDaoMongo;
+import com.andy.collector.repository.mongo.model.UserDaoMongo;
+import com.andy.collector.repository.postgres.model.CardDaoPostgres;
+import com.andy.collector.repository.postgres.model.MonsterCardDaoPostgres;
+import com.andy.collector.repository.postgres.model.NoteDaoPostgres;
+import com.andy.collector.repository.postgres.model.SpellCardDaoPostgres;
+import com.andy.collector.repository.postgres.model.TrapCardDaoPostgres;
+import com.andy.collector.repository.postgres.model.UserDaoPostgres;
 
 import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.MapperFactory;
@@ -21,29 +27,44 @@ import ma.glasnost.orika.impl.DefaultMapperFactory;
 
 @Service
 public class MapperService {
-	private MapperFactory factory;
+	private MapperFactory factoryMongo;
+	private MapperFactory factoryPostgres;
 	
 	MapperService(){
-		factory = new DefaultMapperFactory.Builder().build();
+		factoryMongo = new DefaultMapperFactory.Builder().build();
+		factoryPostgres = new DefaultMapperFactory.Builder().build();
 		
-		factory.classMap(CardDTO.class, Card.class).byDefault().register();
-		factory.classMap(SpellCardDTO.class, SpellCard.class).byDefault().register();
-		factory.classMap(TrapCardDTO.class, TrapCard.class).byDefault().register();
-		factory.classMap(MonsterCardDTO.class, MonsterCard.class).byDefault().register();
-		factory.classMap(UserDTO.class, User.class).byDefault().register();
-		factory.classMap(NoteDTO.class, Note.class).byDefault().register();
+		//mongo dao 
+		factoryMongo.classMap(CardDTO.class, CardDaoMongo.class).byDefault().register();
+		factoryMongo.classMap(SpellCardDTO.class, SpellCardDaoMongo.class).byDefault().register();
+		factoryMongo.classMap(TrapCardDTO.class, TrapCardDaoMongo.class).byDefault().register();
+		factoryMongo.classMap(MonsterCardDTO.class, MonsterCardDaoMongo.class).byDefault().register();
+		factoryMongo.classMap(UserDTO.class, UserDaoMongo.class).byDefault().register();
+		factoryMongo.classMap(NoteDTO.class, NoteDaoMongo.class).byDefault().register();
+		
+		//postgres dao
+		factoryPostgres.classMap(CardDTO.class, CardDaoPostgres.class).byDefault().register();
+		factoryPostgres.classMap(SpellCardDTO.class, SpellCardDaoPostgres.class).byDefault().register();
+		factoryPostgres.classMap(TrapCardDTO.class, TrapCardDaoPostgres.class).byDefault().register();
+		factoryPostgres.classMap(MonsterCardDTO.class, MonsterCardDaoPostgres.class).byDefault().register();
+		factoryPostgres.classMap(UserDTO.class, UserDaoPostgres.class).byDefault().register();
+		factoryPostgres.classMap(NoteDTO.class, NoteDaoPostgres.class).byDefault().register();
 	}
 
-	public MapperFacade getFacade() {
-		return factory.getMapperFacade();
+	public MapperFacade getFacadeMongo() {
+		return factoryMongo.getMapperFacade();
+	}
+	
+	public MapperFacade getFacadePostgres() {
+		return factoryPostgres.getMapperFacade();
 	}
 
-	public MapperFactory getFactory() {
-		return factory;
+	public MapperFactory getFactoryMongo() {
+		return factoryMongo;
 	}
 
-	public void setFactory(MapperFactory factory) {
-		this.factory = factory;
+	public void setFactoryMongo(MapperFactory factory) {
+		this.factoryMongo = factory;
 	}
 	
 	

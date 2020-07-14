@@ -1,8 +1,13 @@
 package com.andy.collector.controller;
 
+/**
+ * RestController class for card endpoints.
+ * 
+ * @version		0.1 14. July 2020
+ * @author 		Andrej Marcan
+ */
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,11 +26,8 @@ import com.andy.collector.dto.CardDTO;
 import com.andy.collector.dto.MonsterCardDTO;
 import com.andy.collector.dto.SpellCardDTO;
 import com.andy.collector.dto.TrapCardDTO;
-import com.andy.collector.repository.model.Card;
-import com.andy.collector.repository.model.MonsterCard;
-import com.andy.collector.repository.model.SpellCard;
-import com.andy.collector.repository.model.TrapCard;
 import com.andy.collector.service.CardService;
+import com.andy.collector.service.NoteService;
 
 import io.swagger.v3.oas.annotations.Hidden;
 
@@ -33,9 +35,11 @@ import io.swagger.v3.oas.annotations.Hidden;
 @RequestMapping("/collector")
 public class CardController {
 		private final CardService cardService;
+		private final NoteService noteService;
 		
-	CardController( @Autowired CardService cardService){
+	CardController(@Autowired CardService cardService, @Autowired NoteService noteService){
 		this.cardService = cardService;
+		this.noteService = noteService;
 	}
 	
 	@PostMapping(value = "/spell-add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

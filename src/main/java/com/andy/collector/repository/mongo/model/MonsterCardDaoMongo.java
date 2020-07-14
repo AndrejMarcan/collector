@@ -1,12 +1,12 @@
 /*
  * Copyright (c) ...
  */
-package com.andy.collector.repository.model;
+package com.andy.collector.repository.mongo.model;
 
 import javax.annotation.Nonnull;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 /**
  * The MonsterCard class provides methods for adding a new monster card to database,
  * edit data for monster card in database and to get data for monster card from the database.
@@ -15,35 +15,28 @@ import javax.persistence.Table;
  * @author 		Andrej Marcan
  */
 
-@Entity
-@Table(name = "monsters")
-public class MonsterCard extends Card {
-    
-	@Column(name = "type")
-	@Nonnull
+@Document(collection = "Cards")
+public class MonsterCardDaoMongo extends CardDaoMongo {
+	
+	@Field("type")
 	private String type;
 	
-	@Column(name = "summ_method")
-	@Nonnull
-	private String summMethod;	//summoning method
+	@Field("summMethod")
+	private String summMethod;
 	
-	@Column(name = "attribute")
-	@Nonnull
-	private String attribute;	//monster attribute	
+	@Field("attribute")
+	private String attribute;
 	
-	@Column(name = "attack")
-	@Nonnull
-	private String atk;			//attack points
+	@Field("atk")
+	private String atk;
 	
-	@Column(name = "defense")
-	@Nonnull
-	private String def;			//defense points
+	@Field("def")
+	private String def;
 	
-	@Column(name = "level")
-	@Nonnull
-	private String level;		//monster level
+	@Field("level")
+	private String level;
 
-	public MonsterCard() {};
+	public MonsterCardDaoMongo() {};
     
 	  public void setLevel(String level) {
 	  this.level = level;

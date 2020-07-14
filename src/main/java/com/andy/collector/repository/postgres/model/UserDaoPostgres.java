@@ -1,4 +1,4 @@
-package com.andy.collector.repository.model;
+package com.andy.collector.repository.postgres.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class UserDaoPostgres {
 	
 	@Id
 	@Column(name = "user_id")

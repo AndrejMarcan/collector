@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  postgres-1:
+    image: "postgres:latest"
+    container_name: "postgres-1"
+    environment:
+      - "POSTGRES_PASSWORD=root"
+      - "POSTGRES_USERNAME=postgres"
+      - "POSTGRES_DB=collector_jt"
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+  mymongo:
+    image: "mongo:latest"
+    container_name: "mymongo"
+    ports: 
+      - "27017:27017"
+    volumes:
+      - mongovol:/data/db
+  collector:
+    image: "collector-manager-compose-alpine"
+    build:
+      context: .
+      dockerfile: "Dockerfile"
+    container_name : "collector"
+    ports:  
+      - "8085:8085"
+    links:  
+      - "mymongo"
+      - "postgres-1"
+volumes:
+  db-data:
+  mongovol:
