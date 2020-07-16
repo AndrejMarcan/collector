@@ -3,8 +3,6 @@
  */
 package com.andy.collector.repository.mongo.model;
 
-import javax.annotation.Nonnull;
-
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 /**

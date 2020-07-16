@@ -27,7 +27,6 @@ import com.andy.collector.dto.MonsterCardDTO;
 import com.andy.collector.dto.SpellCardDTO;
 import com.andy.collector.dto.TrapCardDTO;
 import com.andy.collector.service.CardService;
-import com.andy.collector.service.NoteService;
 
 import io.swagger.v3.oas.annotations.Hidden;
 
@@ -35,11 +34,9 @@ import io.swagger.v3.oas.annotations.Hidden;
 @RequestMapping("/collector")
 public class CardController {
 		private final CardService cardService;
-		private final NoteService noteService;
 		
-	CardController(@Autowired CardService cardService, @Autowired NoteService noteService){
+	CardController(@Autowired CardService cardService){
 		this.cardService = cardService;
-		this.noteService = noteService;
 	}
 	
 	@PostMapping(value = "/spell-add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

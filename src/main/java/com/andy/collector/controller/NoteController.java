@@ -7,7 +7,6 @@ package com.andy.collector.controller;
  * @author 		Andrej Marcan
  */
 import java.sql.SQLException;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.andy.collector.dto.NoteDTO;
-import com.andy.collector.repository.mongo.model.NoteMongo;
 import com.andy.collector.service.NoteService;
 
 @RestController
