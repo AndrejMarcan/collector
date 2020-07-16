@@ -9,9 +9,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
@@ -24,7 +26,7 @@ import com.andy.collector.enums.Rarities;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Entity
-@Table(name = "album")
+@Table(name = "album", indexes = @Index(name="idx_card_type", columnList = "cardType"))
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class CardPostgres {
 	@Id
@@ -61,7 +63,7 @@ public abstract class CardPostgres {
 	private String language;	//card language
     
 	@Nonnull
-	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true)
+	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, fetch = FetchType.EAGER)
 	private Collection<NotePostgres> notes = new ArrayList<>();
 	
 	@Nonnull

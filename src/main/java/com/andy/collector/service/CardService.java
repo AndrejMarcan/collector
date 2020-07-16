@@ -7,16 +7,13 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
-import com.andy.collector.Main;
 import com.andy.collector.dto.CardDTO;
 import com.andy.collector.dto.MonsterCardDTO;
 import com.andy.collector.dto.SpellCardDTO;
 import com.andy.collector.dto.TrapCardDTO;
 import com.andy.collector.repository.mongo.CardRepositoryMongo;
-import com.andy.collector.repository.mongo.NoteRepositoryMongo;
 import com.andy.collector.repository.mongo.model.CardMongo;
 import com.andy.collector.repository.mongo.model.MonsterCardMongo;
 import com.andy.collector.repository.mongo.model.SpellCardMongo;
@@ -45,16 +42,15 @@ public class CardService {
 	
 	private MapperFacade mapperMongo;
 	private MapperFacade mapperPostgres;
-	
-	@Autowired
 	private CardRepositoryMongo cardRepositoryMongo;
-	
-	@Autowired
 	private CardRepositoryPostgres cardRepositoryPostgres;
 	
-	CardService(@Autowired MapperService mapperService) {
+	CardService(@Autowired MapperService mapperService, @Autowired CardRepositoryMongo cardRepositoryMongo, 
+					@Autowired CardRepositoryPostgres cardRepositoryPostgres) {
 		this.mapperMongo = mapperService.getFacadeMongo();
 		this.mapperPostgres = mapperService.getFacadePostgres();
+		this.cardRepositoryMongo = cardRepositoryMongo;
+		this.cardRepositoryPostgres = cardRepositoryPostgres;
 	}
 	
 	

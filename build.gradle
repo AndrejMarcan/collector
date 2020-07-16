@@ -71,8 +71,19 @@ dependencies {
 	testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.3.1.RELEASE'
 	
     //testImplementation 'junit:junit:4.12' 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.5.1'
+    
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.5.1'
+    
+    // https://mvnrepository.com/artifact/org.junit.platform/junit-platform-engine
+	testCompile group: 'org.junit.platform', name: 'junit-platform-engine', version: '1.6.0'
+	
+	testCompile group: 'org.testcontainers', name: 'testcontainers', version: '1.14.3'
+	testCompile group: 'org.testcontainers', name: 'postgresql', version: '1.14.3'
+	testCompile group: 'org.testcontainers', name: 'junit-jupiter', version: '1.14.3'
+	testCompile "org.testcontainers:mongodb:1.14.3"
+    
 }
 
 task getDeps(type: Copy) {

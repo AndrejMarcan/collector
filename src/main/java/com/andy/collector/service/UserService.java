@@ -10,14 +10,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.andy.collector.Main;
 import com.andy.collector.dto.UserDTO;
 import com.andy.collector.repository.mongo.UserRepositoryMongo;
 import com.andy.collector.repository.mongo.model.UserMongo;
 import com.andy.collector.repository.postgres.UserRepositoryPostgres;
 import com.andy.collector.repository.postgres.model.UserPostgres;
 
-import ma.glasnost.orika.BoundMapperFacade;
 import ma.glasnost.orika.MapperFacade;
 
 /**

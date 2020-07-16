@@ -17,8 +17,8 @@ public class NotePostgres {
 	@Column(name = "id")
 	private int id;
 	
-	@Column(name = "idCard")
-	private int idCard;
+	//@Column(name = "idCard")
+	//private int idCard;
 	
 	@Column(name = "note")
 	private String note;
@@ -41,13 +41,13 @@ public class NotePostgres {
 		this.id = idNote;
 	}
 
-	public int getIdCard() {
-		return idCard;
-	}
-
-	public void setIdCard(int idCard) {
-		this.idCard = idCard;
-	}
-	
+//	public int getIdCard() {
+//		return idCard;
+//	}
+//
+//	public void setIdCard(int idCard) {
+//		this.idCard = idCard;
+//	}
+//	
 	
 }

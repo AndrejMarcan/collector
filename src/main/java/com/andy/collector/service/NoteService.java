@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.andy.collector.Main;
 import com.andy.collector.dto.CardDTO;
 import com.andy.collector.dto.NoteDTO;
 import com.andy.collector.repository.mongo.NoteRepositoryMongo;
@@ -16,7 +15,6 @@ import com.andy.collector.repository.mongo.model.NoteMongo;
 import com.andy.collector.repository.postgres.NoteRepositoryPostgres;
 import com.andy.collector.repository.postgres.model.NotePostgres;
 
-import ma.glasnost.orika.BoundMapperFacade;
 import ma.glasnost.orika.MapperFacade;
 
 /**
