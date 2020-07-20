@@ -4,8 +4,13 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.andy.collector.dto.CardDTO;
@@ -26,9 +31,10 @@ import ma.glasnost.orika.MapperFacade;
 
 @Service
 public class NoteService {
+	private static final Logger LOG = LoggerFactory.getLogger(CardService.class);
 	
 	@Value("${andy.database.picker}")
-	private String layer; //try something else...
+	private String layer;
 	
 	@Autowired
 	private NoteRepositoryMongo noteRepositoryMongo;
@@ -49,6 +55,8 @@ public class NoteService {
 	
 	//add new note to card
 	public void addNoteToCard(NoteDTO noteDTO, Integer id) {
+		LOG.info("Trying to add new note to card by it's ID.");
+		
 		noteDTO.setIdCard(id);
 		if (layer.equals("mongo")) {
 			NoteMongo note = mapperMongo.map(noteDTO, NoteMongo.class);		
@@ -74,8 +82,9 @@ public class NoteService {
 		
 	}
 	
-	//edit note by id
 	public void editNoteByIdCard(NoteDTO noteDTO, int idCard, int id) {	
+		LOG.info("Trying to edit note on card by their IDs.");
+		
 		noteDTO.setId(id);
 	    noteDTO.setIdCard(idCard);	
 	    
@@ -99,9 +108,9 @@ public class NoteService {
 	    }
 	    
 	}
-	
-	//delete note from card by id
+
 	public void deleteNoteById(int id_card, int id_note) {
+		LOG.info("Trying to delete note form card.");
 		
 		if (layer.equals("mongo")) {
 			CardDTO cardDTO = cardService.findCardById(id_card);
@@ -127,6 +136,8 @@ public class NoteService {
 	
 	//delete all notes from card
 	public void deleteAllNotesFromCard(int id_card) {
+		LOG.info("Trying to delete all notes from card.");
+		
 		if (layer.equals("mongo")) {
 			CardDTO cardDTO = cardService.findCardById(id_card);
 			Collection<NoteDTO> notesDTO = cardDTO.getNotes();	
@@ -146,14 +157,16 @@ public class NoteService {
 	    }
 	}
 	
+	//special method for deleting all notes from card in mongoDB
 	public void deleteAllNotesForCardId(int id_card) {
 		CardDTO cardDTO = cardService.findCardById(id_card);
 		Collection<NoteDTO> notesDTO = cardDTO.getNotes();	
 		notesDTO.stream().forEach(p -> noteRepositoryMongo.deleteById(p.getId()));
 	}
 	
-	//show note with id
 	public NoteDTO showNote(Integer id) {
+		LOG.info("Trying to get note by its ID {} " + id);
+		
 		NoteDTO noteDTO = null;
 		if (layer.equals("mongo")) {	
 			Optional<NoteMongo> note = noteRepositoryMongo.findById(id);
