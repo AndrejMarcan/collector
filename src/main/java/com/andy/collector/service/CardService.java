@@ -5,8 +5,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.andy.collector.dto.CardDTO;
@@ -34,7 +40,9 @@ import ma.glasnost.orika.MapperFacade;
  */
 
 @Service
+@CacheConfig(cacheNames = "card_cache")
 public class CardService {
+	private static final Logger LOG = LoggerFactory.getLogger(CardService.class);
 	
 	@Value("${andy.database.picker}")
 	private String layer; //try something else...
@@ -56,6 +64,8 @@ public class CardService {
 	
 	//add new spell card to DB
 	public void addNewCard(CardDTO cardDTO) {
+		LOG.info("Trying to add new card to DB.");
+		
 		if(cardDTO.getCardType().equalsIgnoreCase("Monster Card")) {
 			addNewMonsterCard(cardDTO);
 		} else if(cardDTO.getCardType().equalsIgnoreCase("Spell Card")) {
@@ -66,7 +76,10 @@ public class CardService {
 	}
 
 	//edit monster card details by ID
+	@CacheEvict(key = "#id")
 	public void editCard(CardDTO cardDTO, int id) {
+		LOG.info("Trying to edit card informations for id {} ", id);
+		
 		if(cardDTO.getCardType().equalsIgnoreCase("Monster Card")) {
 			editMonsterCard(cardDTO, id);
 		} else if(cardDTO.getCardType().equalsIgnoreCase("Spell Card")) {
@@ -77,7 +90,10 @@ public class CardService {
 	}
 	
 	//delete card by id
+	@CacheEvict(key = "#id")
 	public void deleteCardById(int id) {
+		LOG.info("Trying to delete card with id {} ", id);
+		
 		if (layer.equals("mongo")) {		
 			cardRepositoryMongo.deleteById(id);
 	    } else if (layer.equals("postgres")) {	   
@@ -86,7 +102,9 @@ public class CardService {
 	}
 	
 	//get list of all cards
-	public List<CardDTO> getAllCards(){  
+	public List<CardDTO> getAllCards(){
+		LOG.info("Trying to get all cards from DB.");
+		
 		List<CardDTO> cardsDTO = new ArrayList<>();
 		if (layer.equals("mongo")) {		
 			List<CardMongo> cards = cardRepositoryMongo.findAll();
@@ -99,7 +117,10 @@ public class CardService {
 	}
 	
 	//delete all cards from db
+	@CacheEvict(allEntries = true)
 	public void deleteAll() {
+		LOG.info("Tryint to delete all cards. ");
+		
 		if (layer.equals("mongo")) {			
 			cardRepositoryMongo.deleteAll();
 			
@@ -109,7 +130,10 @@ public class CardService {
 	}
 	
 	//get card by id
+	@Cacheable(key = "#id", unless = "#result == null")
 	public CardDTO findCardById(int id){
+		LOG.info("Trying to get card information for id {} ", id);
+		
 		CardDTO cardDTO = null;
 		if (layer.equals("mongo")) {		
 			Optional<CardMongo> cardOpt = cardRepositoryMongo.findById(id);

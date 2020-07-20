@@ -57,22 +57,26 @@ dependencies {
 	
 	// https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui
 	compile group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.4.0'
-	
-	// https://mvnrepository.com/artifact/org.springframework.security/spring-security-crypto
-    compile group: 'org.springframework.security', name: 'spring-security-crypto', version: '3.1.0.RELEASE'
-    
+
     // https://mvnrepository.com/artifact/org.springframework.data/spring-data-mongodb
 	compile group: 'org.springframework.data', name: 'spring-data-mongodb', version: '2.2.1.RELEASE'
+	
+	//Encryption dependecies
+    compile group: 'org.springframework.security', name: 'spring-security-crypto', version: '3.1.0.RELEASE'
     
-	// https://mvnrepository.com/artifact/ma.glasnost.orika/orika-core
+	//Mapper dependecies
 	compile group: 'ma.glasnost.orika', name: 'orika-core', version: '1.5.4'
 	
+	//Cache dependecies
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-cache', version: '2.2.1.RELEASE'
+	compile group: 'com.github.ben-manes.caffeine', name: 'caffeine', version: '2.6.2'
+	
+	
+	//TEST dependencies
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test
 	testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.3.1.RELEASE'
-	
     //testImplementation 'junit:junit:4.12' 
-    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.5.1'
-    
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.5.1'   
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.5.1'
     

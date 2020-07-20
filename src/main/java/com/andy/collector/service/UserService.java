@@ -5,8 +5,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +31,9 @@ import ma.glasnost.orika.MapperFacade;
  */
 
 @Service
+@CacheConfig(cacheNames = "user_cache")
 public class UserService {
+	private static final Logger LOG = LoggerFactory.getLogger(CardService.class);
 	
 	@Value("${andy.database.picker}")
 	private String layer; //try something else...
@@ -48,6 +55,8 @@ public class UserService {
 	
 	//add new user 
 	public void addNewUser(UserDTO userDTO) {
+		LOG.info("Trying to add new user to DB.");
+		
 		if(layer.equals("mongo")) {
 			
 			UserMongo user = mapperMongo.map(userDTO, UserMongo.class);
@@ -65,7 +74,10 @@ public class UserService {
 	}
 	
 	//update user data by id
+	@CacheEvict(key = "#id")
 	public void updateUserbyId(UserDTO userDTO, int id) {
+		LOG.info("Trying to edit user in DB by its id.");
+		
 	    userDTO.setId(id);
 	    
 	    if(layer.equals("mongo")){
@@ -85,7 +97,10 @@ public class UserService {
 	}
 	
 	//delete user by id
+	@CacheEvict(key = "#id")
 	public void deleteUser(int id) {
+		LOG.info("Trying to delete user by its ID.");
+		
 		if(layer.equals("mongo")){
 			
 			userRepositoryMongo.deleteById(id);
@@ -97,7 +112,10 @@ public class UserService {
 	}
 	
 	//get user by id
+	@Cacheable(key = "#id", unless = "#result == null")
 	public UserDTO findUser(int id) {
+		LOG.info("Trying to find user by ID {}" + id);
+		
 		UserDTO userDTO = null;
 		if(layer.equals("mongo")){
 			
@@ -122,6 +140,8 @@ public class UserService {
 	
 	//get list of all users
 	public List<UserDTO> findAllUsers(){
+		LOG.info("Trying to get all users from DB.");
+		
 		List<UserDTO> usersDTO = new ArrayList<>();
 		if(layer.equals("mongo")){
 			
